@@ -16,7 +16,9 @@
     <v-flex xs12 sm8 offset-sm2>
       
       <br>
-<template v-if="false">
+<template>
+
+<template v-if="true">
   <v-card hover @click="alertUser('yaswant')">
     <v-card-text>
       <p class="text-xs-center"><v-icon x-large>add</v-icon></p>
@@ -49,19 +51,37 @@
       </v-card>
       <v-stepper value="2">
         <v-stepper-header>
-          <v-stepper-step step="1" complete class="white--text"><span class="black--text">Logged</span></v-stepper-step>
+          <v-stepper-step step="1" complete>Logged
+            <small>Summarize if needed</small>
+          </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="2" class="white--text"><span class="black--text">Processing</span></v-stepper-step>
+          <v-stepper-step step="2">Processing
+            <small>Summarize if needed</small>
+          </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="3">completed</v-stepper-step>
-
-            <div class="text-xs-center">
-            <v-btn round primary dark flat>raise issue</v-btn>
-            </div>
-
+          <v-stepper-step step="3">completed
+            <small>Summarize if needed</small>
+          </v-stepper-step>
         </v-stepper-header>
       </v-stepper>
+
+<template>
+  <v-stepper vertical>
+    <v-stepper-step step="1" v-bind:complete="e6 > 1">Select an app
+      <small>Summarize if needed</small>
+    </v-stepper-step>
+    <v-stepper-step step="2" v-bind:complete="e6 > 2">Configure analytics for this app
+      <small>Summarize if needed</small>
+    </v-stepper-step>
+    <v-stepper-step step="3" v-bind:complete="e6 > 3">Select an ad format and name ad unit
+      <small>Summarize if needed</small>
+    </v-stepper-step>
+  </v-stepper>
+</template>
+
       <br>
+
+    </template>
 
     </template>
 

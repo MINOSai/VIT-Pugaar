@@ -17,7 +17,7 @@
       
       <br>
 
-      <template v-if="isEdit">
+      <template v-if="isEdit == 'true'">
         <v-card hover @click="invertEdit">
           <v-card-text>
             <p class="text-xs-center"><v-icon x-large>add</v-icon></p>
@@ -27,7 +27,7 @@
         <br>
       </template>
 
-    <template v-if="!isEdit">
+    <template v-if="isEdit == 'false'">
       <v-card>
         <v-card-actions>
             <v-radio-group v-model="type" :mandatory="false" row>
@@ -48,37 +48,37 @@
       <br>
     </template>
 
-    <template v-for="i in 2">
+    <template v-for="complaint in complaints">
 
       <v-card>
         <v-card-title primary-title>
           <div>
-            <h3 class="headline mb-0">Complaint ID</h3>
+            <h3 class="headline mb-0">{{ complaint.id }}</h3>
             <br><v-divider></v-divider><br>
-            <div>This is a complaint description. This is a complaint description. This is a complaint description. This is a complaint description.</div>
+            <div>{{ complaint.description }}</div>
           </div>
         </v-card-title>
 
-        <v-card-actions v-if="true" style="margin:0px;">
+        <v-card-actions v-if="complaint.statusNum>2" style="margin:0px;">
           <v-spacer></v-spacer>
           <!-- <v-btn flat >raise issue</v-btn> -->
             <div class="text-xs-center">
-            <v-btn round primary dark flat>raise issue</v-btn>
+            <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
             </div>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
-      <v-stepper value="3" class="hidden-sm-and-down">
+      <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down">
         <v-stepper-header>
-          <v-stepper-step step="1" complete>Logged
+          <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
             <small>Summarize if needed</small>
           </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="2" complete>Processing
+          <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
             <small>Summarize if needed</small>
           </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="3">completed
+          <v-stepper-step step="3" :complete="complaint.statusNum >3">completed
             <small>Summarize if needed</small>
           </v-stepper-step>
         </v-stepper-header>
@@ -114,12 +114,33 @@ export default {
     data () {
       return {
         type: 'Hostel',
-        isEdit: true
+        isEdit: 'true',
+        complaints: [
+          {
+            id: 'ABC1234',
+            description: '1. This is a description and this will come in description section.',
+            statusNum: 1
+          },
+          {
+            id: 'DKB3887',
+            description: '2. This is a description and this will come in description section.',
+            statusNum: 2
+          },
+          {
+            id: 'AOM4383',
+            description: '3. This is a description and this will come in description section.',
+            statusNum: 3
+          }
+        ]
       }
     },
     methods: {
       invertEdit () {
-        this.isEdit = !this.isEdit
+        if(this.isEdit == 'true'){
+          this.isEdit = 'false'
+        }else{
+          this.isEdit = 'true'
+        }
       }
     }
 }

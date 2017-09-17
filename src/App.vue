@@ -17,8 +17,8 @@
       
       <br>
 
-      <template v-if="isEdit == 'true'">
-        <v-card hover @click="invertEdit">
+      <template v-if="isEdit">
+        <v-card class="mx-3" hover @click="isEdit=!isEdit">
           <v-card-text>
             <p class="text-xs-center"><v-icon x-large>add</v-icon></p>
             <p class="text-xs-center">Register new complaint</p>
@@ -27,8 +27,8 @@
         <br>
       </template>
 
-    <template v-if="isEdit == 'false'">
-      <v-card>
+    <template v-if="!isEdit">
+      <v-card class="mx-3" @click="isEdit=!isEdit">
         <v-card-actions>
             <v-radio-group v-model="type" :mandatory="false" row>
               <v-spacer></v-spacer>
@@ -40,17 +40,19 @@
         <p v-if="type=='Hostel'">You pressed hostel</p>
         <p v-else>You pressed mess</P>
         <v-card-actions>
+          <v-switch class="hidden-sm-and-down mx-3" label="Anonymous tip" v-model="tip"></v-switch>
+          <v-switch class="hidden-md-and-up mx-3" label="Tip" v-model="tip"></v-switch>
           <v-spacer></v-spacer>
           <v-btn flat class="orange--text">cancel</v-btn>
-          <v-btn @click="invertEdit" flat class="orange--text">submit</v-btn>
+          <v-btn @click="isEdit=!isEdit" flat class="orange--text">submit</v-btn>
         </v-card-actions>
       </v-card>
       <br>
     </template>
 
-    <template v-for="complaint in complaints">
+    <template v-for="complaint in complaints" >
 
-      <v-card>
+      <v-card class="mx-3">
         <v-card-title primary-title>
           <div>
             <h3 class="headline mb-0">{{ complaint.id }}</h3>
@@ -68,7 +70,7 @@
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
-      <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down">
+      <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down mx-3">
         <v-stepper-header>
           <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
             <small>Summarize if needed</small>
@@ -83,15 +85,14 @@
           </v-stepper-step>
         </v-stepper-header>
       </v-stepper>
-
-        <v-stepper value="2" vertical class="hidden-md-and-up">
-          <v-stepper-step step="1" complete>Logged
+        <v-stepper :value="complaint.statusNum" vertical class="hidden-md-and-up mx-3">
+          <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
             <small>Summarize if needed</small>
           </v-stepper-step>
-          <v-stepper-step step="2">Processing
+          <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
             <small>Summarize if needed</small>
           </v-stepper-step>
-          <v-stepper-step step="3">Completed
+          <v-stepper-step step="3" :complete="complaint.statusNum >3">Completed
             <small>Summarize if needed</small>
           </v-stepper-step>
         </v-stepper>
@@ -115,11 +116,12 @@ export default {
       return {
         type: 'Hostel',
         isEdit: 'true',
+        tip: false,
         complaints: [
           {
             id: 'ABC1234',
             description: '1. This is a description and this will come in description section.',
-            statusNum: 1
+            statusNum: 1,
           },
           {
             id: 'DKB3887',
@@ -151,5 +153,8 @@ export default {
 }
 #toolBar,#logoutBtn{
   height:90px;
+}
+.card{
+  padding-left: 10px;
 }
 </style>

@@ -45,17 +45,17 @@
                 <v-container grid-list-md>
                   <v-flex xs12>
                     <v-radio-group v-model="type" row>
+                      <v-spacer></v-spacer>
                       <v-radio label="Hostel" value="hostel"></v-radio>
+                      <v-spacer></v-spacer>
                       <v-radio label="Mess" value="mess"></v-radio>
+                      <v-spacer></v-spacer>
                     </v-radio-group>
                   </v-flex>
 
                   <v-layout v-if="type=='hostel'" wrap>
-                    <v-flex sm8>
-                      <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                    </v-flex>
                     <v-flex xs12>
-                      <v-text-field label="Password" type="password" required></v-text-field>
+                      <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
                     </v-flex>
                   </v-layout>
 

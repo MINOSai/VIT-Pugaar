@@ -4,16 +4,16 @@
     <v-app>
 
       <!-- <v-toolbar class="primary" id="toolBar">
-                                                                <v-toolbar-title class="white--text">VIT Pugaar</v-toolbar-title>
-                                                                <img src="./assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
-                                                                <v-spacer></v-spacer>
-                                                                <v-toolbar-items>
-                                                                  <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
-                                                                </v-toolbar-items>
-                                                                <v-toolbar-items>
-                                                                  <v-btn flat class="white--text" id="editBtn">Edit</v-btn>
-                                                                </v-toolbar-items>
-                                                              </v-toolbar> -->
+                                                                    <v-toolbar-title class="white--text">VIT Pugaar</v-toolbar-title>
+                                                                    <img src="./assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-toolbar-items>
+                                                                      <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
+                                                                    </v-toolbar-items>
+                                                                    <v-toolbar-items>
+                                                                      <v-btn flat class="white--text" id="editBtn">Edit</v-btn>
+                                                                    </v-toolbar-items>
+                                                                  </v-toolbar> -->
 
       <app-bar></app-bar>
 
@@ -25,65 +25,65 @@
           <template>
 
             <!-- <transition name="fade">
-                              <v-card v-if="isEdit" class="mx-3 card" :hover="true" @click="invertEdit">
-                                <v-card-text>
-                                  <p class="text-xs-center">
-                                    <v-icon x-large>add</v-icon>
-                                  </p>
-                                  <p class="text-xs-center">Register new complaint</p>
-                                </v-card-text>
-                              </v-card>
-                            </transition>
+                                  <v-card v-if="isEdit" class="mx-3 card" :hover="true" @click="invertEdit">
+                                    <v-card-text>
+                                      <p class="text-xs-center">
+                                        <v-icon x-large>add</v-icon>
+                                      </p>
+                                      <p class="text-xs-center">Register new complaint</p>
+                                    </v-card-text>
+                                  </v-card>
+                                </transition>
 
-                            <transition name="fade">
-                              <v-card class="mx-3 card" v-if="!isEdit">
-                                <v-card-title>
-                                  <span class="headline">New complaint</span>
-                                </v-card-title>
-                                <v-card-text>
+                                <transition name="fade">
+                                  <v-card class="mx-3 card" v-if="!isEdit">
+                                    <v-card-title>
+                                      <span class="headline">New complaint</span>
+                                    </v-card-title>
+                                    <v-card-text>
 
-                                  <v-container grid-list-md>
-                                    <v-flex xs12>
-                                      <v-radio-group v-model="type" row>
-                                        <v-spacer></v-spacer>
-                                        <v-radio label="Hostel" value="hostel"></v-radio>
-                                        <v-spacer></v-spacer>
-                                        <v-radio label="Mess" value="mess"></v-radio>
-                                        <v-spacer></v-spacer>
-                                      </v-radio-group>
-                                    </v-flex>
-
-                                    <transition name="fade">
-                                      <v-layout v-if="type=='hostel'" wrap>
+                                      <v-container grid-list-md>
                                         <v-flex xs12>
-                                          <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                                          <v-radio-group v-model="type" row>
+                                            <v-spacer></v-spacer>
+                                            <v-radio label="Hostel" value="hostel"></v-radio>
+                                            <v-spacer></v-spacer>
+                                            <v-radio label="Mess" value="mess"></v-radio>
+                                            <v-spacer></v-spacer>
+                                          </v-radio-group>
                                         </v-flex>
-                                      </v-layout>
-                                    </transition>
 
-                                    <v-layout wrap>
-                                      <v-flex xs12>
-                                        <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
-                                      </v-flex>
-                                    </v-layout>
+                                        <transition name="fade">
+                                          <v-layout v-if="type=='hostel'" wrap>
+                                            <v-flex xs12>
+                                              <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                                            </v-flex>
+                                          </v-layout>
+                                        </transition>
 
-                                  </v-container>
+                                        <v-layout wrap>
+                                          <v-flex xs12>
+                                            <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
+                                          </v-flex>
+                                        </v-layout>
 
-                                  <small>*indicates required field</small>
-                                </v-card-text>
-                                <v-card-actions>
-                                  <v-switch label="Tip" v-model="ex11"></v-switch>
-                                  <v-spacer></v-spacer>
-                                  <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                                  <v-btn class="blue--text darken-1" flat>send</v-btn>
-                                </v-card-actions>
-                              </v-card>
-                            </transition> -->
+                                      </v-container>
 
-            <v-card class="mx-3 card my-card" :hover="isEdit" v-transition>
+                                      <small>*indicates required field</small>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                      <v-switch label="Tip" v-model="ex11"></v-switch>
+                                      <v-spacer></v-spacer>
+                                      <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
+                                      <v-btn class="blue--text darken-1" flat>send</v-btn>
+                                    </v-card-actions>
+                                  </v-card>
+                                </transition> -->
 
-              <transition name="fade">
-                <v-card-text v-if="isEdit" @click="invertEdit">
+            <v-card class="mx-3 card" :hover="isEdit">
+
+              <transition name="fade" mode="out-in">
+                <v-card-text class="my-card" v-if="isEdit" @click="invertEdit">
                   <p class="text-xs-center">
                     <v-icon x-large>add</v-icon>
                   </p>
@@ -91,14 +91,14 @@
                 </v-card-text>
               </transition>
 
-              <transition name="fade">
+              <transition name="fade" mode="out-in">
                 <v-card-title v-if="!isEdit">
                   <span class="headline">New complaint</span>
                 </v-card-title>
               </transition>
 
               <transition name="fade">
-                <v-card-text v-if="!isEdit">
+                <v-card-text class="my-card" v-if="!isEdit">
 
                   <v-container grid-list-md>
                     <v-flex xs12>
@@ -139,49 +139,6 @@
                   <v-btn class="blue--text darken-1" flat>send</v-btn>
                 </v-card-actions>
               </transition>
-
-              <!-- <v-card-title v-if="!isEdit">
-                            <span class="headline">New complaint</span>
-                          </v-card-title> -->
-
-              <!-- <v-card-text v-if="!isEdit">
-
-                            <v-container grid-list-md>
-                              <v-flex xs12>
-                                <v-radio-group v-model="type" row>
-                                  <v-spacer></v-spacer>
-                                  <v-radio label="Hostel" value="hostel"></v-radio>
-                                  <v-spacer></v-spacer>
-                                  <v-radio label="Mess" value="mess"></v-radio>
-                                  <v-spacer></v-spacer>
-                                </v-radio-group>
-                              </v-flex>
-
-                              <transition name="fade">
-                                <v-layout v-if="type=='hostel'" wrap>
-                                  <v-flex xs12>
-                                    <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                                  </v-flex>
-                                </v-layout>
-                              </transition>
-
-                              <v-layout wrap>
-                                <v-flex xs12>
-                                  <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
-                                </v-flex>
-                              </v-layout>
-
-                            </v-container>
-
-                            <small>*indicates required field</small>
-                          </v-card-text> -->
-
-              <!-- <v-card-actions v-if="!isEdit">
-                          <v-switch label="Tip" v-model="ex11"></v-switch>
-                          <v-spacer></v-spacer>
-                          <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                          <v-btn class="blue--text darken-1" flat>send</v-btn>
-                        </v-card-actions> -->
 
             </v-card>
 
@@ -233,8 +190,8 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn flat >raise issue</v-btn> -->
                 <!-- <div class="text-xs-center">
-                                                                          <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                        </div> -->
+                                                                              <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
+                                                                            </div> -->
                 <v-spacer></v-spacer>
               </v-card-actions>
 
@@ -324,26 +281,23 @@ export default {
 
 .fade-enter {
   opacity: 0;
+  height: 0;
 }
 
 .fade-enter-active {
-  transition: opacity 0.5s ease;
-  /* transition-delay: 0.25s; */
+  transition: all 0.5s ease;
 }
 
-.fade-leave {}
+.fade-leave {
+  /* height: auto; */
+}
 
 .fade-leave-active {
-  transition: opacity 0s ease;
-  /* transition-delay: 0.25s; */
+  transition: all 0s ease;
   opacity: 0;
 }
 
 .my-card {
-  -moz-transition: height .5s;
-  -ms-transition: height .5s;
-  -o-transition: height .5s;
-  -webkit-transition: height .5s;
-  transition: height .5s;
+  /* height: 10px; */
 }
 </style>

@@ -1,19 +1,48 @@
 <template>
   <div id="app">
 
-    <v-app>
+    <v-app v-if="!loggedIn">
+
+      <main>
+        <v-container fill-height>
+          <v-layout row wrap align-center>
+            <v-flex xs12 sm6 offset-sm3>
+              <!-- <v-btn>test</v-btn> -->
+              <!-- <v-card>
+                  <v-card-media src="../assets/logo1.png" height="400px">
+                  </v-card-media>
+                  <v-card-title>
+                    <div class="headline">Use Google's location service?</div>
+                  </v-card-title>
+                  <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
+                    <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Agree</v-btn>
+                    <v-spacer></v-spacer>
+                  </v-card-actions>
+                </v-card> -->
+              <login-signup></login-signup>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </main>
+
+    </v-app>
+
+    <v-app v-else>
 
       <!-- <v-toolbar class="primary" id="toolBar">
-                                                                        <v-toolbar-title class="white--text">VIT Pugaar</v-toolbar-title>
-                                                                        <img src="./assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
-                                                                        <v-spacer></v-spacer>
-                                                                        <v-toolbar-items>
-                                                                          <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
-                                                                        </v-toolbar-items>
-                                                                        <v-toolbar-items>
-                                                                          <v-btn flat class="white--text" id="editBtn">Edit</v-btn>
-                                                                        </v-toolbar-items>
-                                                                      </v-toolbar> -->
+                                                                                    <v-toolbar-title class="white--text">VIT Pugaar</v-toolbar-title>
+                                                                                    <img src="./assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
+                                                                                    <v-spacer></v-spacer>
+                                                                                    <v-toolbar-items>
+                                                                                      <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
+                                                                                    </v-toolbar-items>
+                                                                                    <v-toolbar-items>
+                                                                                      <v-btn flat class="white--text" id="editBtn">Edit</v-btn>
+                                                                                    </v-toolbar-items>
+                                                                                  </v-toolbar> -->
 
       <app-bar></app-bar>
 
@@ -25,60 +54,60 @@
           <template>
 
             <!-- <transition name="fade">
-                                      <v-card v-if="isEdit" class="mx-3 card" :hover="true" @click="invertEdit">
-                                        <v-card-text>
-                                          <p class="text-xs-center">
-                                            <v-icon x-large>add</v-icon>
-                                          </p>
-                                          <p class="text-xs-center">Register new complaint</p>
-                                        </v-card-text>
-                                      </v-card>
-                                    </transition>
+                                                  <v-card v-if="isEdit" class="mx-3 card" :hover="true" @click="invertEdit">
+                                                    <v-card-text>
+                                                      <p class="text-xs-center">
+                                                        <v-icon x-large>add</v-icon>
+                                                      </p>
+                                                      <p class="text-xs-center">Register new complaint</p>
+                                                    </v-card-text>
+                                                  </v-card>
+                                                </transition>
 
-                                    <transition name="fade">
-                                      <v-card class="mx-3 card" v-if="!isEdit">
-                                        <v-card-title>
-                                          <span class="headline">New complaint</span>
-                                        </v-card-title>
-                                        <v-card-text>
+                                                <transition name="fade">
+                                                  <v-card class="mx-3 card" v-if="!isEdit">
+                                                    <v-card-title>
+                                                      <span class="headline">New complaint</span>
+                                                    </v-card-title>
+                                                    <v-card-text>
 
-                                          <v-container grid-list-md>
-                                            <v-flex xs12>
-                                              <v-radio-group v-model="type" row>
-                                                <v-spacer></v-spacer>
-                                                <v-radio label="Hostel" value="hostel"></v-radio>
-                                                <v-spacer></v-spacer>
-                                                <v-radio label="Mess" value="mess"></v-radio>
-                                                <v-spacer></v-spacer>
-                                              </v-radio-group>
-                                            </v-flex>
+                                                      <v-container grid-list-md>
+                                                        <v-flex xs12>
+                                                          <v-radio-group v-model="type" row>
+                                                            <v-spacer></v-spacer>
+                                                            <v-radio label="Hostel" value="hostel"></v-radio>
+                                                            <v-spacer></v-spacer>
+                                                            <v-radio label="Mess" value="mess"></v-radio>
+                                                            <v-spacer></v-spacer>
+                                                          </v-radio-group>
+                                                        </v-flex>
 
-                                            <transition name="fade">
-                                              <v-layout v-if="type=='hostel'" wrap>
-                                                <v-flex xs12>
-                                                  <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                                                </v-flex>
-                                              </v-layout>
-                                            </transition>
+                                                        <transition name="fade">
+                                                          <v-layout v-if="type=='hostel'" wrap>
+                                                            <v-flex xs12>
+                                                              <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                                                            </v-flex>
+                                                          </v-layout>
+                                                        </transition>
 
-                                            <v-layout wrap>
-                                              <v-flex xs12>
-                                                <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
-                                              </v-flex>
-                                            </v-layout>
+                                                        <v-layout wrap>
+                                                          <v-flex xs12>
+                                                            <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
+                                                          </v-flex>
+                                                        </v-layout>
 
-                                          </v-container>
+                                                      </v-container>
 
-                                          <small>*indicates required field</small>
-                                        </v-card-text>
-                                        <v-card-actions>
-                                          <v-switch label="Tip" v-model="ex11"></v-switch>
-                                          <v-spacer></v-spacer>
-                                          <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                                          <v-btn class="blue--text darken-1" flat>send</v-btn>
-                                        </v-card-actions>
-                                      </v-card>
-                                    </transition> -->
+                                                      <small>*indicates required field</small>
+                                                    </v-card-text>
+                                                    <v-card-actions>
+                                                      <v-switch label="Tip" v-model="ex11"></v-switch>
+                                                      <v-spacer></v-spacer>
+                                                      <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
+                                                      <v-btn class="blue--text darken-1" flat>send</v-btn>
+                                                    </v-card-actions>
+                                                  </v-card>
+                                                </transition> -->
 
             <v-card class="mx-3 card" :hover="isEdit">
 
@@ -144,25 +173,6 @@
 
             <br>
 
-            <v-expansion-panel>
-              <v-expansion-panel-content>
-                <div slot="header" @click="isEdit=!isEdit">
-                  <br>
-                  <div v-if="isEdit">
-                    <p class="text-xs-center">
-                      <v-icon x-large>add</v-icon>
-                    </p>
-                    <p class="text-xs-center">Register new complaint</p>
-                  </div>
-                </div>
-                <v-card>
-                  <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-                </v-card>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-
-            <br>
-
           </template>
 
           <template v-for="complaint in complaints">
@@ -209,8 +219,8 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn flat >raise issue</v-btn> -->
                 <!-- <div class="text-xs-center">
-                                                                                  <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                </div> -->
+                                                                                              <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
+                                                                                            </div> -->
                 <v-spacer></v-spacer>
               </v-card-actions>
 
@@ -245,6 +255,7 @@
 
 <script>
 import AppBar from './components/AppBar.vue'
+import LoginSignup from './components/LoginSignup.vue'
 export default {
   data() {
     return {
@@ -252,6 +263,7 @@ export default {
       type: 'hostel',
       desc: null,
       ex11: false,
+      loggedIn: false,
       newComplaint: [{
         newTitle: this.type
       }],
@@ -285,6 +297,7 @@ export default {
   },
   components: {
     'app-bar': AppBar,
+    'login-signup': LoginSignup
   }
 }
 </script>

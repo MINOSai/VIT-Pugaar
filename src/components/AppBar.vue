@@ -4,7 +4,7 @@
             <img src="../assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
+                <v-btn flat class="white--text" @click="logout()" id="logoutBtn">Logout</v-btn>
             </v-toolbar-items>
         </v-toolbar>
     </div>
@@ -12,7 +12,11 @@
 
 <script>
 export default {
-
+    methods: {
+        logout() {
+            this.$emit('logout',false);
+        }
+    }
 }
 </script>
 

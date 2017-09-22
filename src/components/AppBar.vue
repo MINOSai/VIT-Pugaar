@@ -6,9 +6,6 @@
             <v-toolbar-items>
                 <v-btn flat class="white--text" id="logoutBtn">Logout</v-btn>
             </v-toolbar-items>
-            <!-- <v-toolbar-items>
-                <v-btn flat class="white--text" id="editBtn">Edit</v-btn>
-            </v-toolbar-items> -->
         </v-toolbar>
     </div>
 </template>

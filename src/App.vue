@@ -82,7 +82,7 @@
                   <v-switch label="Tip" v-model="ex11"></v-switch>
                   <v-spacer></v-spacer>
                   <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                  <v-btn class="blue--text darken-1" @click="complaints.push({id: 'ODN0928', description: type, statusNum: 3})" flat>send</v-btn>
+                  <v-btn class="blue--text darken-1" @click="complaints.unshift({id: 'ODN0928', description: type, statusNum: 3})" flat>send</v-btn>
                 </v-card-actions>
               </transition>
 

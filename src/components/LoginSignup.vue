@@ -30,7 +30,7 @@
                                         <v-text-field label="Email" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
-                                        <v-text-field label="Password" v-model="login.password" type="password" hint="Password is not the as v-top password" required></v-text-field>
+                                        <v-text-field label="Password" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
@@ -94,6 +94,13 @@ export default {
     data: function() {
         return {
             login: {
+                email: '',
+                password: '',
+                pShow: true
+            },
+            signup: {
+                name: '',
+                regno: '',
                 email: '',
                 password: ''
             }

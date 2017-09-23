@@ -7,7 +7,7 @@
         <v-container fill-height>
           <v-layout row wrap align-center>
             <v-flex xs12 sm8 offset-sm2 md6 offset-md3>
-              <login-signup @login="loggedIn = $event"></login-signup>
+              <login-signup @loginAction="loggedIn = $event"></login-signup>
             </v-flex>
           </v-layout>
         </v-container>

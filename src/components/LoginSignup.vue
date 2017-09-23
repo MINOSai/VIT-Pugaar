@@ -7,7 +7,7 @@
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-tabs dark fixed centered v-model="active">
+        <v-tabs dark fixed centered>
 
             <v-tabs-bar>
                 <v-tabs-item href="#loginTab">
@@ -27,10 +27,10 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
-                                        <v-text-field label="Email" hint="Enter your student mail id" required></v-text-field>
+                                        <v-text-field label="Email" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
-                                        <v-text-field label="Password" type="password" hint="Password is not the as v-top password" required></v-text-field>
+                                        <v-text-field label="Password" v-model="login.password" type="password" hint="Password is not the as v-top password" required></v-text-field>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
@@ -39,7 +39,7 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn flat="flat" @click="login()">login</v-btn>
+                            <v-btn flat="flat" @click="loginAction()">login</v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
                     </v-card>
@@ -91,19 +91,27 @@
 <script>
 import AppBar from './AppBar.vue'
 export default {
+    data: function() {
+        return {
+            login: {
+                email: '',
+                password: ''
+            }
+        }
+    },
     components: {
         'app-bar': AppBar,
     },
     methods: {
-        login() {
-            this.$emit('login',true);
+        loginAction() {
+            this.$emit('loginAction', true);
         }
     }
 }
 </script>
 
 <style scoped>
-#tool-bar{
+#tool-bar {
     height: 100px;
 }
 </style>

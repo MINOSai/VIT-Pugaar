@@ -26,19 +26,7 @@
             <main>
                 <v-container fluid>
                     <!--v-router-->
-                    <v-layout row wrap>
-                        <v-flex xs12>
-                            <v-card class="blue-grey darken-2 white--text">
-                                <v-card-title primary-title>
-                                    <div class="headline">Unlimited music now</div>
-                                    <div>Listen to your favorite artists and albums whenenver and wherever, online and offline.</div>
-                                </v-card-title>
-                                <v-card-actions>
-                                    <v-btn flat dark>Listen now</v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </v-flex>
-                    </v-layout>
+                    
                 </v-container>
             </main>
         </v-app>
@@ -46,6 +34,7 @@
 </template>
 
 <script>
+import Dashboard from './admin/dashboard.vue';
 export default {
     data() {
         return {
@@ -56,6 +45,9 @@ export default {
             ],
             right: null
         }
+    },
+    comments: {
+        'dashboard-view': Dashboard
     }
 }
 </script>

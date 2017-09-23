@@ -15,7 +15,7 @@
 
     </v-app>
 
-    <v-app v-else>
+    <v-app v-else-if="loggedIn && !isAdmin">
 
       <app-bar @logout="loggedIn = $event"></app-bar>
 
@@ -167,17 +167,24 @@
 
     </v-app>
 
+    <v-app v-else-if="loggedIn && isAdmin">
+
+      <admin-console></admin-console>
+
+    </v-app>
+
   </div>
 </template>
 
 <script>
 import AppBar from './components/AppBar.vue'
 import LoginSignup from './components/LoginSignup.vue'
+import Admin from './components/Admin.vue'
 export default {
   data() {
     return {
       loggedIn: false,
-      isAdmin: false,
+      isAdmin: true,
       isEdit: true,
       type: 'hostel',
       desc: null,
@@ -219,7 +226,8 @@ export default {
   },
   components: {
     'app-bar': AppBar,
-    'login-signup': LoginSignup
+    'login-signup': LoginSignup,
+    'admin-console': Admin
   }
 }
 </script>

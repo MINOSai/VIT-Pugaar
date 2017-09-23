@@ -26,7 +26,7 @@
             <main>
                 <v-container fluid>
                     <!--v-router-->
-                    
+                    <dashboard-view></dashboard-view>
                 </v-container>
             </main>
         </v-app>
@@ -46,8 +46,8 @@ export default {
             right: null
         }
     },
-    comments: {
-        'dashboard-view': Dashboard
+    components: {
+        'dashboard-view': Dashboard,
     }
 }
 </script>

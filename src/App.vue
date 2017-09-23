@@ -176,11 +176,12 @@ import LoginSignup from './components/LoginSignup.vue'
 export default {
   data() {
     return {
+      loggedIn: false,
+      isAdmin: false,
       isEdit: true,
       type: 'hostel',
       desc: null,
       ex11: false,
-      loggedIn: false,
       newComplaint: [{
         newTitle: this.type
       }],

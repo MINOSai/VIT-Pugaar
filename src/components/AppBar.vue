@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-toolbar class="primary" id="toolBar">
+        <v-toolbar class="primary" style="background-color: #3B5998;" id="toolBar">
             <img src="../assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
             <v-spacer></v-spacer>
             <v-toolbar-items>

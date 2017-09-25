@@ -2,7 +2,7 @@
     <div>
         <v-card>
             <v-card-title>
-                Hostel Complaints
+                <span style="font-size: 1.5em;"><strong>Hostel</strong> Complaints</span>
                 <v-spacer></v-spacer>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
             </v-card-title>
@@ -37,7 +37,7 @@
         
         <v-card>
             <v-card-title>
-                Mess Complaints
+                <span style="font-size: 1.5em;"><strong>Mess</strong> Complaints</span>
                 <v-spacer></v-spacer>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
             </v-card-title>

@@ -1,21 +1,31 @@
 <template>
     <div>
         <v-app id="example-3" toolbar>
-            <v-navigation-drawer permanent floating light class="transparent">
+            <v-navigation-drawer permanent floating light class="transparent hidden-sm-and-down">
                 <v-card class="ma-3">
                     <v-list dense class="py-0">
-                        <v-list-tile v-for="item in items" :key="item.title" @click="">
+                        <v-list-tile @click="selectedComponent='dashboard-view'">
                             <v-list-tile-action>
-                                <v-icon>{{ item.icon }}</v-icon>
+                                <v-icon>dashboard</v-icon>
                             </v-list-tile-action>
                             <v-list-tile-content>
-                                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                <v-list-tile-title>Complaints</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </v-list>
+                    <v-list dense class="py-0">
+                        <v-list-tile @click="selectedComponent='departments-view'">
+                            <v-list-tile-action>
+                                <v-icon>people</v-icon>
+                            </v-list-tile-action>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Departments</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                     </v-list>
                 </v-card>
             </v-navigation-drawer>
-            <v-toolbar class="primary" dark>
+            <v-toolbar class="primary" fixed dark>
                 <img src="../assets/logo.png" alt="logo" style="height:50px">
                 <v-toolbar-title>Admin console</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -26,7 +36,14 @@
             <main>
                 <v-container fluid>
                     <!--v-router-->
-                    <dashboard-view></dashboard-view>
+                    <!-- <dashboard-view></dashboard-view> -->
+                    <transition name="fade" mode="out-in">
+                        <keep-alive>
+                        <component :is="selectedComponent">
+                            <!-- inactive components will be cached! -->
+                        </component>
+                    </keep-alive>
+                    </transition>
                 </v-container>
             </main>
         </v-app>
@@ -35,23 +52,33 @@
 
 <script>
 import Dashboard from './admin/dashboard.vue';
+import Departments from './admin/Departments.vue'
 export default {
     data() {
         return {
             drawer: null,
-            items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'person' }
-            ],
-            right: null
+            right: null,
+            selectedComponent: 'dashboard-view'
         }
     },
     components: {
         'dashboard-view': Dashboard,
+        'departments-view': Departments,
     }
 }
 </script>
 
-<style>
+<style scoped>
+
+    .fade-enter-active {
+        transition: all 0.15s
+    }
+    .fade-enter {
+        opacity: 0;
+    }
+    .fade-leave-active {
+        transition: all 0.15s;
+        opacity: 0;
+    }
 
 </style>

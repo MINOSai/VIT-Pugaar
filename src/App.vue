@@ -57,17 +57,20 @@
                       </v-radio-group>
                     </v-flex>
 
-                    <transition name="fade">
+                    <transition name="fade-full">
                       <v-layout v-if="type=='hostel'" wrap>
-                        <v-flex xs12>
-                          <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
+                        <v-flex xs12 sm6>
+                          <v-select label="Place" v-model="place" required :items="['FLoor', 'Room']"></v-select>
+                        </v-flex>
+                        <v-flex xs12 sm6>
+                          <v-select label="Type" v-model="department" required :items="['Cleaning', 'Electrical', 'Carpentry', 'Plumbing']"></v-select>
                         </v-flex>
                       </v-layout>
                     </transition>
 
                     <v-layout wrap>
                       <v-flex xs12>
-                        <v-text-field label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
+                        <v-text-field v-model="description" label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
                       </v-flex>
                     </v-layout>
 
@@ -79,7 +82,9 @@
 
               <transition name="fade">
                 <v-card-actions v-if="!isEdit">
-                  <v-switch label="Tip" v-model="ex11"></v-switch>
+                  <transition name="fade-full">
+                    <v-switch v-if="type=='hostel'" label="Tip" v-model="isTip"></v-switch>
+                  </transition>
                   <v-spacer></v-spacer>
                   <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
                   <v-btn class="blue--text darken-1" @click="addNewComplaint" flat>send</v-btn>
@@ -136,8 +141,8 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn flat >raise issue</v-btn> -->
                 <!-- <div class="text-xs-center">
-                                                                                                    <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                                  </div> -->
+                                                                                                      <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
+                                                                                                    </div> -->
                 <v-spacer></v-spacer>
               </v-card-actions>
 
@@ -187,8 +192,11 @@ export default {
       isAdmin: true,
       isEdit: true,
       type: 'hostel',
+      place: null,
+      department: null,
+      description: null,
       desc: null,
-      ex11: false,
+      isTip: false,
       newComplaint: [{
         newTitle: this.type
       }],
@@ -220,7 +228,7 @@ export default {
       }
     },
     addNewComplaint() {
-      this.complaints.unshift({id: 'ODN0928', description: this.type, statusNum: 3});
+      this.complaints.unshift({ id: 'ODN0928', description: this.type, statusNum: 3 });
       this.invertEdit()
     }
   },
@@ -256,6 +264,19 @@ export default {
 .fade-leave-active {
   transition: all 0s ease;
   opacity: 1;
+}
+
+.fade-full-enter-active {
+  transition: all 0.25s
+}
+
+.fade-full-enter {
+  opacity: 0;
+}
+
+.fade-full-leave-active {
+  transition: all 0.25s;
+  opacity: 0;
 }
 
 .my-card {

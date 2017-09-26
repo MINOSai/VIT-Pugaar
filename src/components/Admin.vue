@@ -3,7 +3,7 @@
         <v-app id="example-3" toolbar>
             <v-navigation-drawer permanent floating light class="transparent hidden-sm-and-down">
                 <v-card class="ma-3">
-                    <v-list dense class="py-0" :class="{grey: selectedComponent=='dashboard-view'}">
+                    <v-list dense class="py-0" :class="{myactive: selectedComponent=='dashboard-view'}">
                         <v-list-tile @click="selectedComponent='dashboard-view'">
                             <v-list-tile-action>
                                 <v-icon>dashboard</v-icon>
@@ -79,6 +79,11 @@ export default {
     .fade-leave-active {
         transition: all 0.15s;
         opacity: 0;
+    }
+
+    myactive{
+        border-left-style: solid;
+        border-color: blue;
     }
 
 </style>

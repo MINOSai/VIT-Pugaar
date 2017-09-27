@@ -61,9 +61,9 @@
                                                     <v-flex xs12>
                                                         <v-text-field label="Email" required></v-text-field>
                                                     </v-flex>
-                                                    <v-flex xs12>
+                                                    <!-- <v-flex xs12>
                                                         <v-text-field label="Password" type="password" required></v-text-field>
-                                                    </v-flex>
+                                                    </v-flex> -->
                                                 </v-layout>
                                             </v-container>
                                             <small>*indicates required field</small>
@@ -71,7 +71,7 @@
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
                                             <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Close</v-btn>
-                                            <v-btn class="blue--text darken-1" flat @click.native="dialog = false">Save</v-btn>
+                                            <v-btn class="blue--text darken-1" flat @click.native="dialog = false">send</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -88,33 +88,40 @@
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Legal first name" required></v-text-field>
+                                        <v-text-field label="Registration no." required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Legal last name" hint="example of persistent helper text" required></v-text-field>
+                                        <v-text-field label="Name" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
-                                        <v-text-field label="Email" hint="Enter your student mail id" required></v-text-field>
+                                        <v-text-field label="Email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field label="Password" type="password" hint="Password may not be same as v-top password" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-select label="Age" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                        <v-select label="Mess" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-select label="Age" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                        <v-select label="Hostel" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-select label="Interests" multiple autocomplete chips :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-select>
+                                        <v-select label="Floor" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
                                     </v-flex>
                                     <v-flex xs12 sm6>
-                                        <v-select label="Interests" multiple autocomplete chips :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-select>
+                                        <v-text-field label="Room no." type="number" required></v-text-field>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
                             <small>*indicates required field</small>
                         </v-card-text>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn round primary outline dark @click="loginAction()">signup</v-btn>
+                            <v-spacer></v-spacer>
+                        </v-card-actions>
+                        <br>
 
                     </v-card>
                 </v-tabs-content>

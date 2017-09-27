@@ -142,8 +142,8 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn flat >raise issue</v-btn> -->
                 <!-- <div class="text-xs-center">
-                                                                                                                  <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                                                </div> -->
+                                                                                                                    <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
+                                                                                                                  </div> -->
                 <v-spacer></v-spacer>
               </v-card-actions>
 
@@ -156,7 +156,21 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn v-if="complaint.statusNum>2" dark flat class="orange--text">raise issue</v-btn>
-                      <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn>
+                      <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
+                      <v-dialog v-else v-model="dialog" lazy absolute>
+                        <v-btn flat slot="activator">Cancel</v-btn>
+                        <v-card>
+                          <v-card-title>
+                            <div class="headline">Cancel complaint</div>
+                          </v-card-title>
+                          <v-card-text>Are you sure you want to cancel this complaint?</v-card-text>
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn flat="flat" @click.native="dialog = false">No</v-btn>
+                            <v-btn class="orange--text" flat="flat" @click.native="removeComplaint(index)">Yes</v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-dialog>
                     </v-card-actions>
                   </v-card>
                 </v-expansion-panel-content>
@@ -198,6 +212,7 @@ export default {
       description: null,
       desc: null,
       isTip: false,
+      dialog: false,
       newComplaint: [{
         newTitle: this.type
       }],

@@ -70,7 +70,7 @@
 
                     <v-layout wrap>
                       <v-flex xs12>
-                        <v-text-field v-model="description" label="description" type="text" hint="Type the description of your complaint" required></v-text-field>
+                        <v-text-field v-model="description" label="description" type="text" hint="This text will go through a spam filter" required></v-text-field>
                       </v-flex>
                     </v-layout>
 
@@ -97,17 +97,18 @@
 
           </template>
 
-          <template v-for="complaint in complaints">
+          <template v-for="(complaint,index) in complaints">
 
             <v-card class="mx-3" :key="complaint.id">
               <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">{{ complaint.id }}</h3>
-                  <br>
-                  <!-- <v-divider></v-divider><br> -->
-                  <div>{{ complaint.description }}</div>
-                </div>
+                <h3 class="headline mb-0">{{ complaint.id }}</h3>
+                <v-spacer></v-spacer>
+                <p>{{complaint.date}}</p>
               </v-card-title>
+
+              <v-card-text>
+                {{ complaint.description }}
+              </v-card-text>
 
               <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down mx-3 elevation-0">
                 <v-stepper-header>
@@ -141,8 +142,8 @@
                 <v-spacer></v-spacer>
                 <!-- <v-btn flat >raise issue</v-btn> -->
                 <!-- <div class="text-xs-center">
-                                                                                                      <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                                    </div> -->
+                                                                                                                  <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
+                                                                                                                </div> -->
                 <v-spacer></v-spacer>
               </v-card-actions>
 
@@ -155,7 +156,7 @@
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <v-btn v-if="complaint.statusNum>2" dark flat class="orange--text">raise issue</v-btn>
-                      <v-btn v-else flat>Cancel</v-btn>
+                      <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-expansion-panel-content>
@@ -189,7 +190,7 @@ export default {
   data() {
     return {
       loggedIn: false,
-      isAdmin: true,
+      isAdmin: false,
       isEdit: true,
       type: 'hostel',
       place: null,
@@ -205,16 +206,28 @@ export default {
           id: 'ABC1234',
           description: '1. This is a description and this will come in description section.',
           statusNum: 1,
+          type: 'Hostel',
+          place: 'Floor',
+          department: 'Cleaning',
+          date: '12/12/2012'
         },
         {
           id: 'DKB3887',
           description: '2. This is a description and this will come in description section.',
-          statusNum: 2
+          statusNum: 2,
+          type: 'Hostel',
+          place: 'Floor',
+          department: 'Cleaning',
+          date: '12/12/2012'
         },
         {
           id: 'AOM4383',
           description: '3. This is a description and this will come in description section.',
-          statusNum: 3
+          statusNum: 3,
+          type: 'Hostel',
+          place: 'Floor',
+          department: 'Cleaning',
+          date: '12/12/2012'
         }
       ],
     }
@@ -227,9 +240,38 @@ export default {
         this.isEdit = true
       }
     },
+    getCurrnetDate() {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
+
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+
+      if (mm < 10) {
+        mm = '0' + mm
+      }
+
+      today = dd + '/' + mm + '/' + yyyy;
+      return today;
+    },
     addNewComplaint() {
-      this.complaints.unshift({ id: 'ODN0928', description: this.type, statusNum: 3 });
+      this.complaints.unshift({
+        id: 'ODN0928',
+        description: this.description,
+        statusNum: 1,
+        type: this.type,
+        place: this.place,
+        department: this.department,
+        date: this.getCurrnetDate()
+      });
+      this.description = null
       this.invertEdit()
+    },
+    removeComplaint(index) {
+      this.complaints.splice(index, 1);
     }
   },
   components: {

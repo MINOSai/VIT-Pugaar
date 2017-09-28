@@ -1,31 +1,31 @@
-<template>
-    <div>
+<template style="background-color: white;">
+    <div class="tabs-content">
 
-        <v-toolbar class="primary" id="tool-bar">
+        <v-toolbar class="transparent elevation-0" id="tool-bar">
             <v-spacer></v-spacer>
-            <img src="../assets/logo.png" alt="logo" style="height:90px;margin-top:60px;margin-bottom:10px;">
+            <img src="../assets/logo1.png" alt="logo" class="topImage">
             <v-spacer></v-spacer>
         </v-toolbar>
 
-        <v-tabs dark fixed centered>
+        <v-tabs class="transparent elevation-0 dark tabs-content" fixed centered>
 
-            <v-tabs-bar>
+            <v-tabs-bar class="transparent tabs-content elevation-0">
                 <v-tabs-item href="#loginTab">
                     Login
                 </v-tabs-item>
                 <v-tabs-item href="#signupTab">
                     Signup
                 </v-tabs-item>
-                <v-tabs-slider class="white"></v-tabs-slider>
+                <v-tabs-slider class="primary"></v-tabs-slider>
             </v-tabs-bar>
 
-            <v-tabs-items class="elevation-0">
-                <v-tabs-content flat id="loginTab">
-                    <v-card class="elevation-0" flat>
+            <v-tabs-items flat class="tabs-content">
+                <v-tabs-content flat id="loginTab" class="tabs-content">
+                    <v-card flat class="transparent tabs-content">
 
-                        <v-card-text>
-                            <v-container grid-list-md>
-                                <v-layout wrap>
+                        <v-card-text flat>
+                            <v-container flat grid-list-md>
+                                <v-layout flat wrap>
                                     <v-flex xs12>
                                         <v-text-field label="Email" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                     </v-flex>
@@ -62,8 +62,8 @@
                                                         <v-text-field label="Email" required></v-text-field>
                                                     </v-flex>
                                                     <!-- <v-flex xs12>
-                                                        <v-text-field label="Password" type="password" required></v-text-field>
-                                                    </v-flex> -->
+                                                            <v-text-field label="Password" type="password" required></v-text-field>
+                                                        </v-flex> -->
                                                 </v-layout>
                                             </v-container>
                                             <small>*indicates required field</small>
@@ -81,8 +81,8 @@
                     </v-card>
                 </v-tabs-content>
 
-                <v-tabs-content id="signupTab">
-                    <v-card flat>
+                <v-tabs-content id="signupTab" class="transparent">
+                    <v-card class="transparent">
 
                         <v-card-text>
                             <v-container grid-list-md>
@@ -164,5 +164,15 @@ export default {
 <style scoped>
 #tool-bar {
     height: 100px;
+}
+
+.topImage {
+    height: 90px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.tabs-content{
+    border: none;
 }
 </style>

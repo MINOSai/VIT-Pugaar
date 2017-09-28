@@ -20,7 +20,7 @@
             </v-tabs-bar>
 
             <v-tabs-items flat class="tabs-content">
-                <v-tabs-content flat id="loginTab" class="tabs-content">
+                <v-tabs-content flat id="loginTab" class="no-border">
                     <v-card flat class="transparent tabs-content">
 
                         <v-card-text flat>
@@ -174,5 +174,6 @@ export default {
 
 .tabs-content{
     border: none;
+    border-width: 0px,0px,0px,0px;
 }
 </style>

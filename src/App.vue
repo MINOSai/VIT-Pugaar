@@ -204,7 +204,7 @@ export default {
   data() {
     return {
       loggedIn: false,
-      isAdmin: false,
+      isAdmin: true,
       isEdit: true,
       type: 'hostel',
       place: null,

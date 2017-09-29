@@ -40,7 +40,7 @@
         <v-card>
             <v-card-title>
                 <span style="font-size: 1.5em;">
-                    <strong>Employees</strong> Complaints</span>
+                    <strong>Employees</strong></span>
                 <v-spacer></v-spacer>
                 <v-text-field append-icon="search" label="Search" single-line hide-details v-model="search"></v-text-field>
             </v-card-title>

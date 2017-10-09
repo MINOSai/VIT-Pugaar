@@ -200,6 +200,7 @@
 import AppBar from './components/AppBar.vue'
 import LoginSignup from './components/LoginSignup.vue'
 import Admin from './components/Admin.vue'
+import admintest from './components/admintest.vue'
 export default {
   data() {
     return {
@@ -292,7 +293,7 @@ export default {
   components: {
     'app-bar': AppBar,
     'login-signup': LoginSignup,
-    'admin-console': Admin
+    'admin-console': admintest
   }
 }
 </script>

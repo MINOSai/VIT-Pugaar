@@ -29,55 +29,27 @@
 
             <!-- <v-card class="d-inline-block pa-5"> -->
             <!-- <v-navigation-drawer permanent floating light>
-                <v-list dense class="pt-0">
-                    <v-list-tile @click="selectedComponent='dashboard-view'">
-                        <v-list-tile-action>
-                            <v-icon>dashboard</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Complaints</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    </v-list-tile>
-                    <v-list-tile @click="selectedComponent='departments-view'">
-                        <v-list-tile-action>
-                            <v-icon>people</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>Departments</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer> -->
+                                                <v-list dense class="pt-0">
+                                                    <v-list-tile @click="selectedComponent='dashboard-view'">
+                                                        <v-list-tile-action>
+                                                            <v-icon>dashboard</v-icon>
+                                                        </v-list-tile-action>
+                                                        <v-list-tile-content>
+                                                            <v-list-tile-title>Complaints</v-list-tile-title>
+                                                        </v-list-tile-content>
+                                                    </v-list-tile>
+                                                    </v-list-tile>
+                                                    <v-list-tile @click="selectedComponent='departments-view'">
+                                                        <v-list-tile-action>
+                                                            <v-icon>people</v-icon>
+                                                        </v-list-tile-action>
+                                                        <v-list-tile-content>
+                                                            <v-list-tile-title>Departments</v-list-tile-title>
+                                                        </v-list-tile-content>
+                                                    </v-list-tile>
+                                                </v-list>
+                                            </v-navigation-drawer> -->
             <!-- </v-card> -->
-
-            <template>
-  <v-card class="d-inline-block pa-5">
-    <v-navigation-drawer permanent floating light>
-      <v-list dense class="pt-0">
-        <v-list-tile @click="selectedComponent='dashboard-view'">
-                            <v-list-tile-action>
-                                <v-icon>dashboard</v-icon>
-                            </v-list-tile-action>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Complaints</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                        
-      </v-list>
-      <v-list dense class="pt-0">
-          <v-list-tile @click="selectedComponent='departments-view'">
-                            <v-list-tile-action>
-                                <v-icon>people</v-icon>
-                            </v-list-tile-action>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Departments</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
-  </v-card>
-</template>
 
             <v-toolbar class="primary" fixed dark>
                 <img src="../assets/logo.png" alt="logo" style="height:50px">

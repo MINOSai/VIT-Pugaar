@@ -1,8 +1,9 @@
 <template>
     <div>
         <v-app>
+            <main>
 
-            <v-navigation-drawer permanent light>
+            <v-navigation-drawer permanent light v-if="">
                 <v-toolbar dark flat class="toolbar primary" style="background-color: #3B5998;">
                     <v-spacer></v-spacer>
                     <img src="../assets/logo.png" alt="logo" style="height:50px;margin-top:0px;">
@@ -29,7 +30,7 @@
             </v-navigation-drawer>
 
             <!-- <main> -->
-            <v-container grid-list-md text-xs-center>
+            <v-container fluid style="background-color: blue;padding-left: 6%" grid-list-md>
                 <!--v-router-->
                 <!-- <dashboard-view></dashboard-view> -->
                 <!-- <v-layout row wrap> -->
@@ -41,12 +42,7 @@
                             </component>
                         </keep-alive>
                     </transition>
-                </v-flex>
-                <!-- </v-layout> -->
-            </v-container>
-            <!-- </main> -->
-
-            <v-speed-dial v-model="fabConfig.fab" :top="fabConfig.top" :bottom="fabConfig.bottom" :right="fabConfig.right" :left="fabConfig.left" :direction="fabConfig.direction" :hover="fabConfig.hover" :transition="fabConfig.transition">
+                     <v-speed-dial v-model="fabConfig.fab" :top="fabConfig.top" :bottom="fabConfig.bottom" :right="fabConfig.right" :left="fabConfig.left" :direction="fabConfig.direction" :hover="fabConfig.hover" :transition="fabConfig.transition">
                 <v-btn slot="activator" color="blue darken-2" dark fab hover v-model="fab">
                     <v-icon>account_circle</v-icon>
                     <v-icon>close</v-icon>
@@ -61,6 +57,27 @@
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-speed-dial>
+                </v-flex>
+                <!-- </v-layout> -->
+            </v-container>
+            <!-- </main> -->
+
+            <!-- <v-speed-dial v-model="fabConfig.fab" :top="fabConfig.top" :bottom="fabConfig.bottom" :right="fabConfig.right" :left="fabConfig.left" :direction="fabConfig.direction" :hover="fabConfig.hover" :transition="fabConfig.transition">
+                <v-btn slot="activator" color="blue darken-2" dark fab hover v-model="fab">
+                    <v-icon>account_circle</v-icon>
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="green">
+                    <v-icon>edit</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="indigo">
+                    <v-icon>add</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="red">
+                    <v-icon>delete</v-icon>
+                </v-btn>
+            </v-speed-dial> -->
+            </main>
         </v-app>
     </div>
 </template>

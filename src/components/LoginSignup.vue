@@ -1,4 +1,4 @@
-<template style="background-color: white;">
+<template>
     <div class="tabs-content">
 
         <v-toolbar class="transparent elevation-0" id="tool-bar">

@@ -19,7 +19,7 @@
 
       <app-bar @logout="loggedIn = $event"></app-bar>
 
-      <not-admin></not-admin>
+      <user></user>
 
     </v-app>
 
@@ -37,7 +37,7 @@ import AppBar from './components/AppBar.vue'
 import LoginSignup from './components/LoginSignup.vue'
 import Admin from './components/Admin.vue'
 import admintest from './components/admintest.vue'
-import NotAdmin from './components/NotAdmin'
+import user from './components/user/user.vue'
 export default {
   data() {
     return {
@@ -52,7 +52,7 @@ export default {
     'app-bar': AppBar,
     'login-signup': LoginSignup,
     'admin-console': admintest,
-    'not-admin' : NotAdmin
+    'user' : user
   }
 }
 </script>

@@ -39,7 +39,7 @@
                                     </v-flex>
 
                                     <transition name="fade-full">
-                                        <v-layout v-if="type=='hostel'" wrap>
+                                        <v-layout v-if="newComplaint.type=='hostel'" wrap>
                                             <v-flex xs12 sm6>
                                                 <v-select label="Place" v-model="newComplaint.place" required :items="['FLoor', 'Room']"></v-select>
                                             </v-flex>

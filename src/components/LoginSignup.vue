@@ -27,7 +27,7 @@
                             <v-container flat grid-list-md>
                                 <v-layout flat wrap>
                                     <v-flex xs8 offset-xs2>
-                                        <v-text-field label="Email" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
+                                        <v-text-field label="Email" :rules="login.rules.emailRule" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs8 offset-xs2>
                                         <v-text-field label="Password" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
@@ -42,7 +42,7 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn round primary outline dark @click="loginAction()">login</v-btn>
+                            <v-btn round primary outline dark @click="loginAction()" :disabled="!login.valid">login</v-btn>
                             <v-spacer></v-spacer>
                         </v-card-actions>
 
@@ -65,8 +65,8 @@
                                                         <v-text-field label="Email" required></v-text-field>
                                                     </v-flex>
                                                     <!-- <v-flex xs12>
-                                                            <v-text-field label="Password" type="password" required></v-text-field>
-                                                        </v-flex> -->
+                                                                <v-text-field label="Password" type="password" required></v-text-field>
+                                                            </v-flex> -->
                                                 </v-layout>
                                             </v-container>
                                             <small>*indicates required field</small>
@@ -143,7 +143,14 @@ export default {
             login: {
                 email: '',
                 password: '',
-                pShow: true
+                pShow: true,
+                rules: {
+                    valid: true,
+                    emailRule: [
+                        (v) => !!v || 'E-mail is required',
+                        (v) => /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) || 'E-mail must be valid'
+                    ]
+                }
             },
             signup: {
                 name: '',
@@ -175,8 +182,8 @@ export default {
     margin-bottom: 20px;
 }
 
-.tabs-content{
+.tabs-content {
     border: none;
-    border-width: 0px,0px,0px,0px;
+    border-width: 0px, 0px, 0px, 0px;
 }
 </style>

@@ -1,68 +1,52 @@
 <template>
     <div>
         <v-app>
-            <main>
 
-            <v-navigation-drawer permanent light v-if="">
-                <v-toolbar dark flat class="toolbar primary" style="background-color: #3B5998;">
-                    <v-spacer></v-spacer>
-                    <img src="../assets/logo.png" alt="logo" style="height:50px;margin-top:0px;">
-                    <v-spacer></v-spacer><br>
-                    <v-list>
-                        <v-list-tile>
-                            <v-list-tile-title class="title" style="color: white;">
-                                Admin
-                            </v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-toolbar>
-                <v-divider></v-divider>
-                <v-list dense class="pt-0">
-                    <v-list-tile v-for="item in items" :key="item.title" @click="">
-                        <v-list-tile-action>
-                            <v-icon>{{ item.icon }}</v-icon>
-                        </v-list-tile-action>
-                        <v-list-tile-content>
-                            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-            </v-navigation-drawer>
-
-            <!-- <main> -->
-            <v-container fluid style="padding-left: 6%" grid-list-md>
-                <!--v-router-->
-                <!-- <dashboard-view></dashboard-view> -->
-                <!-- <v-layout row wrap> -->
-                <v-flex xs10 offset-xs2>
-                    <transition name="fade" mode="out-in">
-                        <keep-alive>
-                            <component :is="selectedComponent">
-                                <!-- inactive components will be cached! -->
-                            </component>
-                        </keep-alive>
-                    </transition>
-                </v-flex>
-                <!-- </v-layout> -->
+            <v-container fluid grid-list-md style="padding:0px; margin:0px">
+                <v-layout row wrap>
+                    <v-flex xs12>
+                        <app-bar1></app-bar1>
+                    </v-flex>
+                    <v-flex xs2>
+                        <v-container fluid style="padding-left:10px;padding-right:5px;padding-top:5px;">
+                            <v-card color="blue-grey darken-2" class="white--text">
+                                <v-list dense class="py-0" :class="{myactive: selectedComponent=='dashboard-view'}">
+                                    <v-list-tile @click="selectedComponent='dashboard-view'">
+                                        <v-list-tile-action>
+                                            <v-icon>dashboard</v-icon>
+                                        </v-list-tile-action>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>Complaints</v-list-tile-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </v-list>
+                                <v-list dense class="py-0">
+                                    <v-list-tile @click="selectedComponent='departments-view'">
+                                        <v-list-tile-action>
+                                            <v-icon>people</v-icon>
+                                        </v-list-tile-action>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>Departments</v-list-tile-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </v-list>
+                            </v-card>
+                        </v-container>
+                    </v-flex>
+                    <v-flex xs10>
+                        <v-container fluid style="padding-left:5px;padding-top:5px;">
+                            <!--v-router-->
+                            <transition name="fade" mode="out-in">
+                                <keep-alive>
+                                    <component :is="selectedComponent">
+                                        <!-- inactive components will be cached! -->
+                                    </component>
+                                </keep-alive>
+                            </transition>
+                        </v-container>
+                    </v-flex>
+                </v-layout>
             </v-container>
-            <!-- </main> -->
-
-            <!-- <v-speed-dial v-model="fabConfig.fab" :top="fabConfig.top" :bottom="fabConfig.bottom" :right="fabConfig.right" :left="fabConfig.left" :direction="fabConfig.direction" :hover="fabConfig.hover" :transition="fabConfig.transition">
-                <v-btn slot="activator" color="blue darken-2" dark fab hover v-model="fab">
-                    <v-icon>account_circle</v-icon>
-                    <v-icon>close</v-icon>
-                </v-btn>
-                <v-btn fab dark small color="green">
-                    <v-icon>edit</v-icon>
-                </v-btn>
-                <v-btn fab dark small color="indigo">
-                    <v-icon>add</v-icon>
-                </v-btn>
-                <v-btn fab dark small color="red">
-                    <v-icon>delete</v-icon>
-                </v-btn>
-            </v-speed-dial> -->
-            </main>
         </v-app>
     </div>
 </template>
@@ -70,70 +54,35 @@
 <script>
 import Dashboard from './admin/dashboard.vue';
 import Departments from './admin/Departments.vue'
+import AppBar from './AppBar.vue'
 export default {
     data() {
         return {
-            drawer: null,
+            drawer: false,
             items: [
                 { title: 'Home', icon: 'dashboard' },
                 { title: 'About', icon: 'question_answer' }
             ],
             right: null,
             selectedComponent: 'dashboard-view',
-            fabConfig: {
-                direction: "top",
-                fab: false,
-                fling: false,
-                hover: false,
-                tabs: null,
-                top: false,
-                right: true,
-                bottom: true,
-                left: false,
-                transition: 'slide-y-reverse-transition'
-            }
         }
     },
     components: {
+        'app-bar1': AppBar,
         'dashboard-view': Dashboard,
         'departments-view': Departments,
-    },
-
-    watch: {
-      top (val) {
-        this.fabConfig.bottom = !val
-      },
-      right (val) {
-        this.fabConfig.left = !val
-      },
-      bottom (val) {
-        this.fabConfig.top = !val
-      },
-      left (val) {
-        this.fabConfig.right = !val
-      }
-    },
-
-    computed: {
-      activeFab () {
-        switch (this.fabConfig.tabs) {
-          case 'one': return { 'class': 'purple', icon: 'account_circle' }
-          case 'two': return { 'class': 'red', icon: 'edit' }
-          case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
-          default: return {}
-        }
-      }
     }
 }
 </script>
 
 <style>
-  /* This is for documentation purposes and will not be needed in your application */
-  #create .speed-dial {
-    position: absolute;
-  }
+/* This is for documentation purposes and will not be needed in your application */
 
-  #create .btn--floating {
+#create .speed-dial {
+    position: absolute;
+}
+
+#create .btn--floating {
     position: relative;
-  }
+}
 </style>

@@ -62,7 +62,6 @@
             <main>
                 <v-container fluid>
                     <!--v-router-->
-                    <!-- <dashboard-view></dashboard-view> -->
                     <transition name="fade" mode="out-in">
                         <keep-alive>
                             <component :is="selectedComponent">

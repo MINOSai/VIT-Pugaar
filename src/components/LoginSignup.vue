@@ -66,8 +66,8 @@
                                                         <v-text-field label="Email" required></v-text-field>
                                                     </v-flex>
                                                     <!-- <v-flex xs12>
-                                                                            <v-text-field label="Password" type="password" required></v-text-field>
-                                                                        </v-flex> -->
+                                                                                    <v-text-field label="Password" type="password" required></v-text-field>
+                                                                                </v-flex> -->
                                                 </v-layout>
                                             </v-container>
                                             <small>*indicates required field</small>
@@ -87,46 +87,46 @@
 
                 <v-tabs-content id="signupTab" class="transparent">
                     <v-card class="transparent">
+                        <v-form v-model="signup.rules.valid" ref="form" lazy-validation>
+                            <v-card-text>
+                                <v-container grid-list-md>
+                                    <v-layout wrap>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Registration no." required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Name" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12>
+                                            <v-text-field label="Email" :rules="signup.rules.emailRule" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12>
+                                            <v-text-field label="Password" :rules="signup.rules.passwordRule" type="password" hint="Password may not be same as v-top password" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
+                                            <v-select label="Mess" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
+                                            <v-select label="Hostel" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
+                                            <v-select label="Floor" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm6>
+                                            <v-text-field label="Room no." type="number" required></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                                <small>*indicates required field</small>
+                            </v-card-text>
 
-                        <v-card-text>
-                            <v-container grid-list-md>
-                                <v-layout wrap>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Registration no." required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6 md6>
-                                        <v-text-field label="Name" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        <v-text-field label="Email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12>
-                                        <v-text-field label="Password" type="password" hint="Password may not be same as v-top password" required></v-text-field>
-                                    </v-flex>
-                                    <v-flex xs12 sm6>
-                                        <v-select label="Mess" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
-                                    </v-flex>
-                                    <v-flex xs12 sm6>
-                                        <v-select label="Hostel" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
-                                    </v-flex>
-                                    <v-flex xs12 sm6>
-                                        <v-select label="Floor" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
-                                    </v-flex>
-                                    <v-flex xs12 sm6>
-                                        <v-text-field label="Room no." type="number" required></v-text-field>
-                                    </v-flex>
-                                </v-layout>
-                            </v-container>
-                            <small>*indicates required field</small>
-                        </v-card-text>
-
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn round primary outline dark @click="loginAction()">signup</v-btn>
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-                        <br>
-
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn round primary outline dark @click="loginAction()">signup</v-btn>
+                                <v-spacer></v-spacer>
+                            </v-card-actions>
+                            <br>
+                        </v-form>
                     </v-card>
                 </v-tabs-content>
             </v-tabs-items>
@@ -160,7 +160,18 @@ export default {
                 name: '',
                 regno: '',
                 email: '',
-                password: ''
+                password: '',
+                rules: {
+                    valid: false,
+                    emailRule: [
+                        (v) => !!v || 'E-mail is required',
+                        (v) => /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) || 'E-mail must be valid'
+                    ],
+                    passwordRule: [
+                        (v) => !!v || 'Enter a password',
+                        (v) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter'
+                    ]
+                }
             }
         }
     },

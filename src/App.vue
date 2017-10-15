@@ -19,171 +19,7 @@
 
       <app-bar @logout="loggedIn = $event"></app-bar>
 
-      <v-layout>
-        <v-flex xs12 sm8 offset-sm2>
-
-          <br>
-
-          <template>
-
-            <v-card class="mx-3 card" :hover="isEdit">
-
-              <transition name="fade" mode="out-in">
-                <v-card-text class="my-card" v-if="isEdit" @click="invertEdit">
-                  <p class="text-xs-center">
-                    <v-icon x-large>add</v-icon>
-                  </p>
-                  <p class="text-xs-center">Register new complaint</p>
-                </v-card-text>
-              </transition>
-
-              <transition name="fade" mode="out-in">
-                <v-card-title v-if="!isEdit">
-                  <span class="headline">New complaint</span>
-                </v-card-title>
-              </transition>
-
-              <transition name="fade">
-                <v-card-text class="my-card" v-if="!isEdit">
-
-                  <v-container grid-list-md>
-                    <v-flex xs12>
-                      <v-radio-group v-model="type" row>
-                        <v-spacer></v-spacer>
-                        <v-radio label="Hostel" value="hostel"></v-radio>
-                        <v-spacer></v-spacer>
-                        <v-radio label="Mess" value="mess"></v-radio>
-                        <v-spacer></v-spacer>
-                      </v-radio-group>
-                    </v-flex>
-
-                    <transition name="fade-full">
-                      <v-layout v-if="type=='hostel'" wrap>
-                        <v-flex xs12 sm6>
-                          <v-select label="Place" v-model="place" required :items="['FLoor', 'Room']"></v-select>
-                        </v-flex>
-                        <v-flex xs12 sm6>
-                          <v-select label="Type" v-model="department" required :items="['Cleaning', 'Electrical', 'Carpentry', 'Plumbing']"></v-select>
-                        </v-flex>
-                      </v-layout>
-                    </transition>
-
-                    <v-layout wrap>
-                      <v-flex xs12>
-                        <v-text-field v-model="description" label="description" type="text" hint="This text will go through a spam filter" required></v-text-field>
-                      </v-flex>
-                    </v-layout>
-
-                  </v-container>
-
-                  <small>*indicates required field</small>
-                </v-card-text>
-              </transition>
-
-              <transition name="fade">
-                <v-card-actions v-if="!isEdit">
-                  <transition name="fade-full">
-                    <v-switch v-if="type=='hostel'" label="Tip" v-model="isTip"></v-switch>
-                  </transition>
-                  <v-spacer></v-spacer>
-                  <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                  <v-btn class="blue--text darken-1" @click="addNewComplaint" flat>send</v-btn>
-                </v-card-actions>
-              </transition>
-
-            </v-card>
-
-            <br>
-
-          </template>
-
-          <template v-for="(complaint,index) in complaints">
-
-            <v-card class="mx-3" :key="complaint.id">
-              <v-card-title primary-title>
-                <h3 class="headline mb-0">{{ complaint.id }}</h3>
-                <v-spacer></v-spacer>
-                <p>{{complaint.date}}</p>
-              </v-card-title>
-
-              <v-card-text>
-                {{ complaint.description }}
-              </v-card-text>
-
-              <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down mx-3 elevation-0">
-                <v-stepper-header>
-                  <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
-                    <!-- <small>Summarize if needed</small> -->
-                  </v-stepper-step>
-                  <v-divider></v-divider>
-                  <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
-                    <!-- <small>Summarize if needed</small> -->
-                  </v-stepper-step>
-                  <v-divider></v-divider>
-                  <v-stepper-step step="3" :complete="complaint.statusNum >3">completed
-                    <!-- <small>Summarize if needed</small> -->
-                  </v-stepper-step>
-                </v-stepper-header>
-              </v-stepper>
-
-              <v-stepper :value="complaint.statusNum" vertical class="hidden-md-and-up mx-3 elevation-0">
-                <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
-                  <!-- <small>Summarize if needed</small> -->
-                </v-stepper-step>
-                <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
-                  <!-- <small>Summarize if needed</small> -->
-                </v-stepper-step>
-                <v-stepper-step step="3" :complete="complaint.statusNum >3">Completed
-                  <!-- <small>Summarize if needed</small> -->
-                </v-stepper-step>
-              </v-stepper>
-
-              <v-card-actions v-if="complaint.statusNum>2" style="margin:0px;">
-                <v-spacer></v-spacer>
-                <!-- <v-btn flat >raise issue</v-btn> -->
-                <!-- <div class="text-xs-center">
-                                                                                                                    <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                                                  </div> -->
-                <v-spacer></v-spacer>
-              </v-card-actions>
-
-              <v-expansion-panel class="elevation-0">
-                <!-- <v-divider></v-divider> -->
-                <v-expansion-panel-content>
-                  <div slot="header">More details</div>
-                  <v-card>
-                    <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn v-if="complaint.statusNum>2" dark flat class="orange--text">raise issue</v-btn>
-                      <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
-                      <v-dialog v-else v-model="dialog" lazy absolute>
-                        <v-btn flat slot="activator">Cancel</v-btn>
-                        <v-card>
-                          <v-card-title>
-                            <div class="headline">Cancel complaint</div>
-                          </v-card-title>
-                          <v-card-text>Are you sure you want to cancel this complaint?</v-card-text>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn flat="flat" @click.native="dialog = false">No</v-btn>
-                            <v-btn class="orange--text" flat="flat" @click.native="removeComplaint(index)">Yes</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                    </v-card-actions>
-                  </v-card>
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-
-            </v-card>
-
-            <br>
-
-          </template>
-
-        </v-flex>
-      </v-layout>
+      <not-admin></not-admin>
 
     </v-app>
 
@@ -201,99 +37,22 @@ import AppBar from './components/AppBar.vue'
 import LoginSignup from './components/LoginSignup.vue'
 import Admin from './components/Admin.vue'
 import admintest from './components/admintest.vue'
+import NotAdmin from './components/NotAdmin'
 export default {
   data() {
     return {
       loggedIn: false,
       isAdmin: false,
-      isEdit: true,
-      type: 'hostel',
-      place: null,
-      department: null,
-      description: null,
-      desc: null,
-      isTip: false,
-      dialog: false,
-      newComplaint: [{
-        newTitle: this.type
-      }],
-      complaints: [
-        {
-          id: 'ABC1234',
-          description: '1. This is a description and this will come in description section.',
-          statusNum: 1,
-          type: 'Hostel',
-          place: 'Floor',
-          department: 'Cleaning',
-          date: '12/12/2012'
-        },
-        {
-          id: 'DKB3887',
-          description: '2. This is a description and this will come in description section.',
-          statusNum: 2,
-          type: 'Hostel',
-          place: 'Floor',
-          department: 'Cleaning',
-          date: '12/12/2012'
-        },
-        {
-          id: 'AOM4383',
-          description: '3. This is a description and this will come in description section.',
-          statusNum: 3,
-          type: 'Hostel',
-          place: 'Floor',
-          department: 'Cleaning',
-          date: '12/12/2012'
-        }
-      ],
     }
   },
   methods: {
-    invertEdit() {
-      if (this.isEdit == true) {
-        this.isEdit = false
-      } else {
-        this.isEdit = true
-      }
-    },
-    getCurrnetDate() {
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth() + 1;
-      var yyyy = today.getFullYear();
-
-      if (dd < 10) {
-        dd = '0' + dd
-      }
-
-      if (mm < 10) {
-        mm = '0' + mm
-      }
-
-      today = dd + '/' + mm + '/' + yyyy;
-      return today;
-    },
-    addNewComplaint() {
-      this.complaints.unshift({
-        id: 'ODN0928',
-        description: this.description,
-        statusNum: 1,
-        type: this.type,
-        place: this.place,
-        department: this.department,
-        date: this.getCurrnetDate()
-      });
-      this.description = null
-      this.invertEdit()
-    },
-    removeComplaint(index) {
-      this.complaints.splice(index, 1);
-    }
+    
   },
   components: {
     'app-bar': AppBar,
     'login-signup': LoginSignup,
-    'admin-console': admintest
+    'admin-console': admintest,
+    'not-admin' : NotAdmin
   }
 }
 </script>

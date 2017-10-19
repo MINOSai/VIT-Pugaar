@@ -66,6 +66,10 @@ export default {
   height: 90px;
 }
 
+.toolBarItem{
+  height: 90;
+}
+
 .fade-enter {
   opacity: 0;
 }

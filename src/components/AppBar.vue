@@ -4,6 +4,7 @@
             <img src="../assets/logo.png" alt="logo" style="height:80px;margin-top:25px;">
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
+                <account-edit></account-edit>
                 <v-btn flat class="white--text" @click="logout()" id="logoutBtn">Logout</v-btn>
             </v-toolbar-items>
             <v-menu bottom right class="hidden-md-and-up">
@@ -24,11 +25,15 @@
 </template>
 
 <script>
+import AccountEdit from './user/AccountEdit.vue'
 export default {
     methods: {
         logout() {
             this.$emit('logout', false);
         }
+    },
+    components: {
+        'account-edit': AccountEdit
     }
 }
 </script>

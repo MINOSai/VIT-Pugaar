@@ -13,7 +13,7 @@
                 </v-btn>
                 <v-list>
                     <v-list-tile>
-                        <v-list-tile-title @click="logout()">Logout</v-list-tile-title>
+                        <account-edit></account-edit>
                     </v-list-tile>
                     <v-list-tile>
                         <v-list-tile-title @click="logout()">Logout</v-list-tile-title>
@@ -25,17 +25,20 @@
 </template>
 
 <script>
-import AccountEdit from './user/AccountEdit.vue'
+import AccountEdit from "./user/AccountEdit.vue";
 export default {
-    methods: {
-        logout() {
-            this.$emit('logout', false);
-        }
+    data: {
+        dialog: false,
     },
-    components: {
-        'account-edit': AccountEdit
+  methods: {
+    logout() {
+      this.$emit("logout", false);
     }
-}
+  },
+  components: {
+    "account-edit": AccountEdit
+  }
+};
 </script>
 
 <style>

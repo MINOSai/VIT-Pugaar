@@ -4,6 +4,7 @@
       <v-btn flat class="white--text hidden-sm-and-down" style="height: 90px;margin:0px;" slot="activator">Account Edit</v-btn>
       <v-list-tile-title slot="activator" class="hidden-md-and-up">Account Edit</v-list-tile-title>
       <v-card>
+
         <v-toolbar dark color="primary">
           <v-btn icon @click.native="dialog = false" dark>
             <v-icon>close</v-icon>
@@ -14,22 +15,28 @@
             <v-btn dark flat @click.native="dialog = false">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
+
         <v-list three-line subheader>
           <v-subheader>Reset Password</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-list-tile-title>Content filtering</v-list-tile-title>
-              <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title>
+              <!-- <v-list-tile-title>Content filtering</v-list-tile-title> -->
+              <v-text-field label="Old Password" required></v-text-field>
+              <!-- <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title> -->
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-list-tile-title>Password</v-list-tile-title>
-              <v-list-tile-sub-title>Require password for purchase or use password to restrict purchase</v-list-tile-sub-title>
+              <v-text-field label="New Password" hint="Password may not be same as v-top password" persistent-hint required></v-text-field>
+              <!-- <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title> -->
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
+
+        <br>
+
         <v-divider></v-divider>
+        
         <v-list three-line subheader>
           <v-subheader>General</v-subheader>
           <v-list-tile avatar>
@@ -60,20 +67,21 @@
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
+        
       </v-card>
     </v-dialog>
   </v-layout>
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        dialog: false,
-        notifications: false,
-        sound: true,
-        widgets: false
-      }
-    }
+export default {
+  data() {
+    return {
+      dialog: false,
+      notifications: false,
+      sound: true,
+      widgets: false
+    };
   }
+};
 </script>

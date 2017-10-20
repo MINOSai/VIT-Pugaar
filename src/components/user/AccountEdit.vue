@@ -39,37 +39,8 @@
         
         <v-list three-line subheader>
           <v-subheader>General</v-subheader>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
-                <v-icon v-if="editInfo.regnoEdit">done</v-icon>
-                <v-icon v-else>edit</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Registration number</v-list-tile-title>
-              <v-text-field v-if="editInfo.regnoEdit" v-model="general.regno" required></v-text-field>
-              <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary" @click="editInfo.nameEdit = ! editInfo.nameEdit">
-                <v-icon v-if="editInfo.nameEdit">done</v-icon>
-                <v-icon v-else>edit</v-icon>
-              </v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Name</v-list-tile-title>
-              <v-text-field v-if="editInfo.nameEdit" v-model="general.name" required></v-text-field>
-              <v-list-tile-sub-title>{{ general.name }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-        
-        <v-layout row wrap>
-          <v-flex sm4>
-            <v-list three-line subheader>
+          <v-layout row wrap>
+            <v-flex sm4 xs12>
               <v-list-tile avatar>
                 <v-list-tile-action>
                   <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
@@ -83,26 +54,25 @@
                   <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
-            </v-list>
-          </v-flex>
-          <v-flex sm4>
-            <v-list three-line subheader>
+            </v-flex>
+            <v-flex xs12 sm4>
               <v-list-tile avatar>
                 <v-list-tile-action>
-                  <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
-                    <v-icon v-if="editInfo.regnoEdit">done</v-icon>
+                  <v-btn flat icon color="primary" @click="editInfo.nameEdit = ! editInfo.nameEdit">
+                    <v-icon v-if="editInfo.nameEdit">done</v-icon>
                     <v-icon v-else>edit</v-icon>
                   </v-btn>
                 </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-title>Registration number</v-list-tile-title>
-                  <v-text-field v-if="editInfo.nameEdit" v-model=" general.name " required></v-text-field>
+                  <v-list-tile-title>Name</v-list-tile-title>
+                  <v-text-field v-if="editInfo.nameEdit" v-model="general.name" required></v-text-field>
                   <v-list-tile-sub-title v-else>{{ general.name }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
-            </v-list>
-          </v-flex>
-        </v-layout>
+            </v-flex>
+          </v-layout>
+        </v-list>
+      
       </v-card>
     </v-dialog>
   </v-layout>

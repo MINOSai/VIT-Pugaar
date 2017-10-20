@@ -41,7 +41,6 @@
           <v-subheader>General</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-action>
-              <!-- <v-checkbox v-model="notifications"></v-checkbox> -->
               <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
                 <v-icon v-if="editInfo.regnoEdit">done</v-icon>
                 <v-icon v-else>edit</v-icon>
@@ -62,53 +61,44 @@
               <v-list-tile-sub-title>{{ general.name }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <!-- <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile> -->
         </v-list>
         
+        <v-layout row wrap>
+          <v-flex sm4>
+            <v-list three-line subheader>
+              <v-list-tile avatar>
+                <v-list-tile-action>
+                  <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
+                    <v-icon v-if="editInfo.regnoEdit">done</v-icon>
+                    <v-icon v-else>edit</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Registration number</v-list-tile-title>
+                  <v-text-field v-if="editInfo.regnoEdit" v-model="general.regno" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-flex>
+          <v-flex sm4>
+            <v-list three-line subheader>
+              <v-list-tile avatar>
+                <v-list-tile-action>
+                  <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
+                    <v-icon v-if="editInfo.regnoEdit">done</v-icon>
+                    <v-icon v-else>edit</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Registration number</v-list-tile-title>
+                  <v-text-field v-if="editInfo.regnoEdit" v-model="general.regno" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-flex>
+        </v-layout>
       </v-card>
     </v-dialog>
   </v-layout>
@@ -120,12 +110,12 @@ export default {
     return {
       dialog: false,
       password: {
-        old: '',
-        new: ''
+        old: "",
+        new: ""
       },
       general: {
-        regno: '16BCE0587',
-        name: 'yaswant'
+        regno: "16BCE0587",
+        name: "yaswant"
       },
       editInfo: {
         regnoEdit: false,

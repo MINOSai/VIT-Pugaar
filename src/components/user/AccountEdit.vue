@@ -21,13 +21,13 @@
           <v-list-tile avatar>
             <v-list-tile-content>
               <!-- <v-list-tile-title>Content filtering</v-list-tile-title> -->
-              <v-text-field label="Old Password" required></v-text-field>
+              <v-text-field v-model="password.old" label="Old Password" required></v-text-field>
               <!-- <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title> -->
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-text-field label="New Password" required></v-text-field>
+              <v-text-field v-model="password.new" label="New Password" required></v-text-field>
               <v-list-tile-title>Password may not be same as v-top password. Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -42,11 +42,15 @@
           <v-list-tile avatar>
             <v-list-tile-action>
               <!-- <v-checkbox v-model="notifications"></v-checkbox> -->
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+              <v-btn flat icon color="primary" @click="editInfo.regnoEdit = !editInfo.regnoEdit">
+                <v-icon v-if="editInfo.regnoEdit">done</v-icon>
+                <v-icon v-else>edit</v-icon>
+              </v-btn>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Notifications</v-list-tile-title>
-              <v-list-tile-sub-title>Notify me about updates to apps or games that I downloaded</v-list-tile-sub-title>
+              <v-list-tile-title>Registration number</v-list-tile-title>
+              <v-text-field v-if="editInfo.regnoEdit" v-model="general.regno" required></v-text-field>
+              <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
@@ -54,17 +58,8 @@
               <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
             </v-list-tile-action>
             <v-list-tile-content>
-              <v-list-tile-title>Sound</v-list-tile-title>
-              <v-list-tile-sub-title>Auto-update apps at any time. Data charges may apply</v-list-tile-sub-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-action>
-              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
-              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+              <v-list-tile-title>Name</v-list-tile-title>
+              <v-list-tile-sub-title>{{ general.name }}</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
@@ -103,6 +98,15 @@
               <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
             </v-list-tile-content>
           </v-list-tile>
+          <!-- <v-list-tile avatar>
+            <v-list-tile-action>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile> -->
         </v-list>
         
       </v-card>
@@ -115,9 +119,18 @@ export default {
   data() {
     return {
       dialog: false,
-      notifications: false,
-      sound: true,
-      widgets: false
+      password: {
+        old: '',
+        new: ''
+      },
+      general: {
+        regno: '16BCE0587',
+        name: 'yaswant'
+      },
+      editInfo: {
+        regnoEdit: false,
+        nameEdit: false
+      }
     };
   }
 };

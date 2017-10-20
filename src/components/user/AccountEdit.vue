@@ -41,7 +41,8 @@
           <v-subheader>General</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-action>
-              <v-checkbox v-model="notifications"></v-checkbox>
+              <!-- <v-checkbox v-model="notifications"></v-checkbox> -->
+              <v-icon>mdi-account</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Notifications</v-list-tile-title>

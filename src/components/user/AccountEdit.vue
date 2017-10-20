@@ -27,8 +27,8 @@
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-text-field label="New Password" hint="Password may not be same as v-top password" persistent-hint required></v-text-field>
-              <!-- <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title> -->
+              <v-text-field label="New Password" required></v-text-field>
+              <v-list-tile-title>Password may not be same as v-top password. Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -42,7 +42,7 @@
           <v-list-tile avatar>
             <v-list-tile-action>
               <!-- <v-checkbox v-model="notifications"></v-checkbox> -->
-              <v-icon>mdi-account</v-icon>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Notifications</v-list-tile-title>
@@ -51,7 +51,7 @@
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-action>
-              <v-checkbox v-model="sound"></v-checkbox>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Sound</v-list-tile-title>
@@ -60,7 +60,43 @@
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-action>
-              <v-checkbox v-model="widgets"></v-checkbox>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile avatar>
+            <v-list-tile-action>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile avatar>
+            <v-list-tile-action>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile avatar>
+            <v-list-tile-action>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Auto-add widgets</v-list-tile-title>
+              <v-list-tile-sub-title>Automatically add home screen widgets</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile avatar>
+            <v-list-tile-action>
+              <v-btn flat icon color="primary"><v-icon>edit</v-icon></v-btn>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>Auto-add widgets</v-list-tile-title>

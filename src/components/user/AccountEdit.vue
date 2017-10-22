@@ -20,9 +20,7 @@
           <v-subheader>Reset Password</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <!-- <v-list-tile-title>Content filtering</v-list-tile-title> -->
               <v-text-field v-model="password.old" label="Old Password" required></v-text-field>
-              <!-- <v-list-tile-sub-title>Set the content filtering level to restrict appts that can be downloaded</v-list-tile-sub-title> -->
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
@@ -71,6 +69,38 @@
               </v-list-tile>
             </v-flex>
           </v-layout>
+          <v-layout row wrap>
+            <v-flex sm4 xs12>
+              <v-list-tile avatar>
+                <v-list-tile-action>
+                  <v-btn flat icon color="primary" @click="editInfo.messEdit = !editInfo.messEdit">
+                    <v-icon v-if="editInfo.messEdit">done</v-icon>
+                    <v-icon v-else>edit</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Registration number</v-list-tile-title>
+                  <v-text-field v-if="editInfo.messEdit" v-model="regno" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ regno }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-flex>
+            <v-flex xs12 sm4>
+              <v-list-tile avatar>
+                <v-list-tile-action>
+                  <v-btn flat icon color="primary" @click="editInfo.nameEdit = ! editInfo.nameEdit">
+                    <v-icon v-if="editInfo.nameEdit">done</v-icon>
+                    <v-icon v-else>edit</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                  <v-list-tile-title>Name</v-list-tile-title>
+                  <v-text-field v-if="editInfo.nameEdit" v-model="general.name" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ general.name }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-flex>
+          </v-layout>
         </v-list>
       
       </v-card>
@@ -88,24 +118,24 @@ export default {
         new: ""
       },
       general: {
-        regno: "16BCE0587",
+        // regno: "16BCE0587",
         name: "yaswant"
       },
       editInfo: {
         regnoEdit: false,
-        nameEdit: false
+        nameEdit: false,
+        messEdit: false,
+        blockEdit: false
       }
     };
   },
   computed: {
-    regno: {
-      get(){
-        return this.$store.getters.regno;
-      },
-      set(regno){
-        this.$store.dispatch('updateregno',regno);
-      }
+    regno() {
+      return this.$store.getters.regno;
     }
+  },
+  created: {
+    // created life cycle hook
   }
 };
 </script>

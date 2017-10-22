@@ -50,8 +50,8 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                   <v-list-tile-title>Registration number</v-list-tile-title>
-                  <v-text-field v-if="editInfo.regnoEdit" v-model="general.regno" required></v-text-field>
-                  <v-list-tile-sub-title v-else>{{ general.regno }}</v-list-tile-sub-title>
+                  <v-text-field v-if="editInfo.regnoEdit" v-model="value" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ value }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-flex>
@@ -96,6 +96,16 @@ export default {
         nameEdit: false
       }
     };
+  },
+  computed: {
+    value: {
+      get(){
+        return this.$store.getters.value;
+      },
+      pug(value){
+        this.$store.dispatch('updateValue',value);
+      }
+    }
   }
 };
 </script>

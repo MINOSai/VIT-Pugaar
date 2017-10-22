@@ -5,10 +5,10 @@ Vue.use(Vuex);
 
 export const store = new Vue.Store({
     state: {
-        value: 0;
+        value: '16BCE0587'
     },
     getters: {
-        value: state = > {
+        value: state => {
             return state.value;
         }
     },

@@ -169,95 +169,96 @@
 </template>
 
 <script>
-
 export default {
-    data() {
-        return {
-            isEdit: true,
-            newComplaint: {
-                type: 'hostel',
-                place: null,
-                department: null,
-                description: null,
-                isTip: false
-            },
-            complaints: [
-                {
-                    id: 'ABC1234',
-                    description: '1. This is a description and this will come in description section.',
-                    statusNum: 1,
-                    type: 'Hostel',
-                    place: 'Floor',
-                    department: 'Cleaning',
-                    date: '12/12/2012'
-                },
-                {
-                    id: 'DKB3887',
-                    description: '2. This is a description and this will come in description section.',
-                    statusNum: 2,
-                    type: 'Hostel',
-                    place: 'Floor',
-                    department: 'Cleaning',
-                    date: '12/12/2012'
-                },
-                {
-                    id: 'AOM4383',
-                    description: '3. This is a description and this will come in description section.',
-                    statusNum: 3,
-                    type: 'Hostel',
-                    place: 'Floor',
-                    department: 'Cleaning',
-                    date: '12/12/2012'
-                }
-            ],
-            dialog: false,
+  data() {
+    return {
+      isEdit: true,
+      newComplaint: {
+        type: "hostel",
+        place: null,
+        department: null,
+        description: null,
+        isTip: false
+      },
+      complaints: [
+        {
+          id: "ABC1234",
+          description:
+            "1. This is a description and this will come in description section.",
+          statusNum: 1,
+          type: "Hostel",
+          place: "Floor",
+          department: "Cleaning",
+          date: "12/12/2012"
+        },
+        {
+          id: "DKB3887",
+          description:
+            "2. This is a description and this will come in description section.",
+          statusNum: 2,
+          type: "Hostel",
+          place: "Floor",
+          department: "Cleaning",
+          date: "12/12/2012"
+        },
+        {
+          id: "AOM4383",
+          description:
+            "3. This is a description and this will come in description section.",
+          statusNum: 3,
+          type: "Hostel",
+          place: "Floor",
+          department: "Cleaning",
+          date: "12/12/2012"
         }
+      ],
+      dialog: false
+    };
+  },
+  methods: {
+    invertEdit() {
+      if (this.isEdit == true) {
+        this.isEdit = false;
+      } else {
+        this.isEdit = true;
+      }
     },
-    methods: {
-        invertEdit() {
-            if (this.isEdit == true) {
-                this.isEdit = false
-            } else {
-                this.isEdit = true
-            }
-        },
-        getCurrnetDate() {
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth() + 1;
-            var yyyy = today.getFullYear();
+    getCurrnetDate() {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth() + 1;
+      var yyyy = today.getFullYear();
 
-            if (dd < 10) {
-                dd = '0' + dd
-            }
+      if (dd < 10) {
+        dd = "0" + dd;
+      }
 
-            if (mm < 10) {
-                mm = '0' + mm
-            }
+      if (mm < 10) {
+        mm = "0" + mm;
+      }
 
-            today = dd + '/' + mm + '/' + yyyy;
-            return today;
-        },
-        addNewComplaint() {
-            this.complaints.unshift({
-                id: 'ODN0928',
-                description: this.newComplaint.description,
-                statusNum: 1,
-                type: this.newComplaint.type,
-                place: this.newComplaint.place,
-                department: this.newComplaint.department,
-                date: this.getCurrnetDate()
-            });
-            this.newComplaint.description = null
-            this.invertEdit()
-        },
-        removeComplaint(index) {
-            this.dialog = false;
-            this.complaints.splice(index, 1);
-        }
+      today = dd + "/" + mm + "/" + yyyy;
+      return today;
+    },
+    addNewComplaint() {
+      this.complaints.unshift({
+        id: "ODN0928",
+        description: this.newComplaint.description,
+        statusNum: 1,
+        type: this.newComplaint.type,
+        place: this.newComplaint.place,
+        department: this.newComplaint.department,
+        date: this.getCurrnetDate()
+      });
+      this.newComplaint.description = null;
+      this.invertEdit();
+    },
+    removeComplaint(index) {
+      this.dialog = false;
+      this.complaints.splice(index, 1);
     }
-
-}
+  }
+};
 </script>
 
 <style>

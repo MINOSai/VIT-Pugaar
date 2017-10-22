@@ -117,10 +117,7 @@ export default {
         old: "",
         new: ""
       },
-      general: {
-        // regno: "16BCE0587",
-        name: "yaswant"
-      },
+      details: null,
       editInfo: {
         regnoEdit: false,
         nameEdit: false,
@@ -129,13 +126,19 @@ export default {
       }
     };
   },
+  methods: {
+    updateRegno() {
+      this.$store.commit('updateregno',)
+    }
+  },
   computed: {
     regno() {
       return this.$store.getters.regno;
     }
   },
-  created: {
+  created: function() {
     // created life cycle hook
+    this.details = this.$store.state;
   }
 };
 </script>

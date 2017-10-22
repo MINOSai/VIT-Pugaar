@@ -3,9 +3,9 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-export const store = new Vue.Store({
+export const store = new Vuex.Store({
     state: {
-        value: '16BCE0587'
+        value: '16BCE0904'
     },
     getters: {
         value: state => {

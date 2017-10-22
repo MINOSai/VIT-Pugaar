@@ -102,7 +102,7 @@ export default {
       get(){
         return this.$store.getters.value;
       },
-      pug(value){
+      set(value){
         this.$store.dispatch('updateValue',value);
       }
     }

@@ -6,7 +6,7 @@
       <v-card>
 
         <v-toolbar dark color="primary">
-          <v-btn icon @click.native="dialog = false" dark>
+          <v-btn icon @click.native="reset()" dark>
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Account Settings</v-toolbar-title>
@@ -134,6 +134,17 @@ export default {
   methods: {
     saveData() {
       this.$store.replaceState(this.details);
+      this.dialog = false;
+      reset();
+    },
+    reset() {
+      this.editInfo = {
+        regnoEdit: false,
+        nameEdit: false,
+        messEdit: false,
+        blockEdit: false
+      };
+      this.details = null;
       this.dialog = false;
     }
   },

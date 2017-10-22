@@ -5,21 +5,21 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        value: '16BCE0904'
+        regno: '16BCE0904'
     },
     getters: {
-        value: state => {
-            return state.value;
+        regno: state => {
+            return state.regno;
         }
     },
     mutations: {
-        updateValue: (state, payload) => {
-            state.value = payload;
+        updateregno: (state, payload) => {
+            state.regno = payload;
         }
     },
     actions: {
-        updateValue({commit},payload){
-            commit('updateValue', payload);
+        updateregno({commit},payload){
+            commit('updateregno', payload);
         }
     }
 });

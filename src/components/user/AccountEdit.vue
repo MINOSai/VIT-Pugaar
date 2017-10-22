@@ -12,7 +12,7 @@
           <v-toolbar-title>Account Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark flat @click.native="dialog = false">Save</v-btn>
+            <v-btn dark flat @click.native="saveData()">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
@@ -48,8 +48,8 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                   <v-list-tile-title>Registration number</v-list-tile-title>
-                  <v-text-field v-if="editInfo.regnoEdit" v-model="regno" required></v-text-field>
-                  <v-list-tile-sub-title v-else>{{ regno }}</v-list-tile-sub-title>
+                  <v-text-field v-if="editInfo.regnoEdit" v-model="details.regno" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ details.regno }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-flex>
@@ -63,8 +63,8 @@
                 </v-list-tile-action>
                 <v-list-tile-content>
                   <v-list-tile-title>Name</v-list-tile-title>
-                  <v-text-field v-if="editInfo.nameEdit" v-model="general.name" required></v-text-field>
-                  <v-list-tile-sub-title v-else>{{ general.name }}</v-list-tile-sub-title>
+                  <v-text-field v-if="editInfo.nameEdit" v-model="details.name" required></v-text-field>
+                  <v-list-tile-sub-title v-else>{{ details.name }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
             </v-flex>
@@ -110,7 +110,7 @@
 
 <script>
 export default {
-  data() {
+  data: function() {
     return {
       dialog: false,
       password: {
@@ -118,26 +118,26 @@ export default {
         new: ""
       },
       details: null,
+      general: {
+        // regno: "16BCE0587",
+        name: "yaswant"
+      },
       editInfo: {
         regnoEdit: false,
         nameEdit: false,
         messEdit: false,
         blockEdit: false
-      }
+      },
+      validDetails: true
     };
   },
   methods: {
-    updateRegno() {
-      this.$store.commit('updateregno',)
-    }
-  },
-  computed: {
-    regno() {
-      return this.$store.getters.regno;
+    saveData() {
+      this.$store.replaceState(this.details);
+      this.dialog = false;
     }
   },
   created: function() {
-    // created life cycle hook
     this.details = this.$store.state;
   }
 };

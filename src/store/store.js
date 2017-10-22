@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        regno: '16BCE0904',
+        regno: '16BCE0587',
         name: 'Yaswant Narayan',
         mess: 'F-Block mess',
         block: 'F-block',

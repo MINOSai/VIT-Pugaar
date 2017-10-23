@@ -6,7 +6,7 @@
       <v-card>
 
         <v-toolbar dark color="primary">
-          <v-btn icon @click.native="reset()" dark>
+          <v-btn icon @click.native="dialog = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Account Settings</v-toolbar-title>

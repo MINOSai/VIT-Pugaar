@@ -119,7 +119,6 @@ export default {
       },
       details: null,
       general: {
-        // regno: "16BCE0587",
         name: "yaswant"
       },
       editInfo: {

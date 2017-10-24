@@ -11,9 +11,9 @@ import 'vuetify/dist/vuetify.css'
 
 Vue.use(Vuetify);
 Vue.use(VueResource);
-Vue.use(VueResource);
 Vue.use(Vuex);
 Vue.config.productionTip = false
+Vue.http.options.root= 'https://jsonplaceholder.typicode.com/';
 
 /* eslint-disable no-new */
 new Vue({

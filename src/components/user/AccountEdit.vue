@@ -109,7 +109,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   data: function() {
     return {
@@ -133,7 +132,6 @@ export default {
   },
   methods: {
     saveData() {
-      this.postData();
       this.$store.replaceState(this.details);
       this.dialog = false;
       reset();
@@ -147,16 +145,6 @@ export default {
       };
       this.details = null;
       this.dialog = false;
-    },
-    postData() {
-      axios
-        .put('https://myapplication-ab7bc.firebaseio.com/details.json', {
-          body: this.details
-        })
-        .then(response => {})
-        .catch(e => {
-          console.log(e);
-        });
     }
   },
   created: function() {

@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import VueResource from 'vue-resource'
 import { store } from './store/store'
 import Vuex from 'vuex'
 import App from './App'
@@ -13,7 +12,6 @@ Vue.use(Vuetify);
 Vue.use(VueResource);
 Vue.use(Vuex);
 Vue.config.productionTip = false
-Vue.http.options.root= 'https://jsonplaceholder.typicode.com/';
 
 /* eslint-disable no-new */
 new Vue({

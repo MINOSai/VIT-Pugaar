@@ -133,22 +133,20 @@ export default {
   methods: {
     saveData() {
       this.$store.replaceState(this.details);
-      this.dialog = false;
-      reset();
+      this.reset();
     },
     reset() {
-      this.editInfo = {
-        regnoEdit: false,
-        nameEdit: false,
-        messEdit: false,
-        blockEdit: false
-      };
-      this.details = null;
       this.dialog = false;
     }
   },
   created: function() {
     this.details = this.$store.state;
+    this.editInfo = {
+      regnoEdit: false,
+      nameEdit: false,
+      messEdit: false,
+      blockEdit: false
+    };
   }
 };
 </script>

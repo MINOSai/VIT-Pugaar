@@ -26,6 +26,7 @@
 
 <script>
 import AccountEdit from "./user/AccountEdit.vue";
+import axios from 'axios';
 export default {
   data: {
     dialog: false,
@@ -43,7 +44,7 @@ export default {
   },
   created() {
     axios
-      .get('http://jsonplaceholder.typicode.com/posts')
+      .get('http://jsonplaceholder.typicode.com/posts/1')
       .then(response => {
         // JSON responses are automatically parsed.
         this.posts = response.data;

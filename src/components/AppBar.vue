@@ -27,16 +27,30 @@
 <script>
 import AccountEdit from "./user/AccountEdit.vue";
 export default {
-    data: {
-        dialog: false,
-    },
+  data: {
+    dialog: false,
+    posts: [],
+    errors: []
+  },
   methods: {
     logout() {
-      this.$emit("logout", false);
+    //   this.$emit("logout", false);
+    console.log(this.posts);
     }
   },
   components: {
     "account-edit": AccountEdit
+  },
+  created() {
+    axios
+      .get('http://jsonplaceholder.typicode.com/posts')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data;
+      })
+      .catch(e => {
+        this.errors.push(e);
+      });
   }
 };
 </script>

@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     saveData() {
-      putData();
+      this.postData();
       this.$store.replaceState(this.details);
       this.dialog = false;
       reset();
@@ -150,12 +150,12 @@ export default {
     },
     postData() {
       axios
-        .post('https://myapplication-ab7bc.firebaseio.com/details', {
+        .put('https://myapplication-ab7bc.firebaseio.com/details.json', {
           body: this.details
         })
         .then(response => {})
         .catch(e => {
-          this.errors.push(e);
+          console.log(e);
         });
     }
   },

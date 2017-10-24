@@ -44,7 +44,7 @@ export default {
   },
   created() {
     axios
-      .get('http://jsonplaceholder.typicode.com/posts/1')
+      .get('https://jsonplaceholder.typicode.com/posts/1')
       .then(response => {
         // JSON responses are automatically parsed.
         this.posts = response.data;

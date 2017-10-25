@@ -1,16 +1,18 @@
 const state ={
-    regno: '16BCE0587',
-    name: 'Yaswant Narayan',
+    registration_number: '16BCE0587',
+    first_name: 'Yaswant',
+    last_name: 'Narayan',
+    mess: 'F-block mess',
     block: 'F-block',
     floor: '5',
-    room: '654'
+    room_no: '654'
 };
 
 const getters = {
-    getDetails: state => {
+    getUserDetails: state => {
         return {
             'regno' : state.registration_number,
-            'name' : state.first_name + state.last_name,
+            'name' : state.first_name +' '+ state.last_name,
             'mess' : 'F-Block mess',
             'block' : state.block,
             'floor' : state.floor,
@@ -27,7 +29,11 @@ const getters = {
 
 const mutations = {
     updateDetails: (state, payload) => {
-        state = payload;
+        state.registration_number = payload.regno;
+        state.mess = payload.mess;
+        state.block = payload.block;
+        state.floor = payload.floor;
+        state.room_no = payload.room;
     }
 };
 

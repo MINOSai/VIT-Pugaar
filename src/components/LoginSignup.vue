@@ -177,7 +177,8 @@ export default {
               "Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter"
           ]
         }
-      }
+      },
+      errors: []
     };
   },
   components: {
@@ -192,11 +193,10 @@ export default {
     },
     getUserData() {
       axios
-        .get("http://127.0.0.1:8080/api/users/16BCE0587/", {
+        .get("http://127.0.0.1:8080/api/users/16BCE0587/?format=json", {
           headers: { "Access-Control-Allow-Origin": "*" }
         })
         .then(response => {
-            console.log(response.data)
             this.$store.commit('updateDetails',response.data);
         })
         .catch(e => {

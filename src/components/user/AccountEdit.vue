@@ -140,7 +140,7 @@ export default {
     }
   },
   created: function() {
-    this.details = this.$store.state.user.getters.getDetails;
+    this.details = this.$store.getters.getUserDetails;
     this.editInfo = {
       regnoEdit: false,
       nameEdit: false,

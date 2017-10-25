@@ -197,6 +197,7 @@ export default {
         })
         .then(response => {
             console.log(response.data)
+            this.$store.commit('updateDetails',response.data);
         })
         .catch(e => {
           this.errors.push(e);

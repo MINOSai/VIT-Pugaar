@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     saveData() {
-      this.$store.replaceState(this.details);
+      this.$store.commit('updateDetails',this.details);
       this.reset();
     },
     reset() {
@@ -140,7 +140,7 @@ export default {
     }
   },
   created: function() {
-    this.details = this.$store.state;
+    this.details = this.$store.state.user;
     this.editInfo = {
       regnoEdit: false,
       nameEdit: false,

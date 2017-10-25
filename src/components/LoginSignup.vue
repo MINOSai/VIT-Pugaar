@@ -136,71 +136,89 @@
 </template>
 
 <script>
-import AppBar from './AppBar.vue'
+import axios from 'axios'
+import AppBar from "./AppBar.vue";
 export default {
-    data: function() {
-        return {
-            dialog: false,
-            login: {
-                email: '',
-                password: '',
-                pShow: true,
-                rules: {
-                    valid: false,
-                    emailRule: [
-                        (v) => !!v || 'E-mail is required',
-                        (v) => /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) || 'E-mail must be valid'
-                    ],
-                    passwordRule: [
-                        (v) => !!v || 'Enter a password'
-                    ]
-                }
-            },
-            signup: {
-                name: '',
-                regno: '',
-                email: '',
-                password: '',
-                rules: {
-                    valid: false,
-                    emailRule: [
-                        (v) => !!v || 'E-mail is required',
-                        (v) => /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) || 'E-mail must be valid'
-                    ],
-                    passwordRule: [
-                        (v) => !!v || 'Enter a password',
-                        (v) => /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter'
-                    ]
-                }
-            }
+  data: function() {
+    return {
+      dialog: false,
+      login: {
+        email: "",
+        password: "",
+        pShow: true,
+        rules: {
+          valid: false,
+          emailRule: [
+            v => !!v || "E-mail is required",
+            v =>
+              /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) ||
+              "E-mail must be valid"
+          ],
+          passwordRule: [v => !!v || "Enter a password"]
         }
-    },
-    components: {
-        'app-bar': AppBar,
-    },
-    methods: {
-        loginAction() {
-            if (this.login.rules.valid) {
-                this.$emit('loginAction', true);
-            }
+      },
+      signup: {
+        name: "",
+        regno: "",
+        email: "",
+        password: "",
+        rules: {
+          valid: false,
+          emailRule: [
+            v => !!v || "E-mail is required",
+            v =>
+              /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) ||
+              "E-mail must be valid"
+          ],
+          passwordRule: [
+            v => !!v || "Enter a password",
+            v =>
+              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) ||
+              "Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter"
+          ]
         }
+      }
+    };
+  },
+  components: {
+    "app-bar": AppBar
+  },
+  methods: {
+    loginAction() {
+      if (this.login.rules.valid) {
+        this.getUserData();
+        this.$emit("loginAction", true);
+      }
+    },
+    getUserData() {
+      axios
+        .get("http://127.0.0.1:8080/api/users/16BCE0587/", {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        })
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
-}
+  }
+};
 </script>
 
 <style scoped>
 #tool-bar {
-    height: 100px;
+  height: 100px;
 }
 
 .topImage {
-    height: 90px;
-    margin-top: 60px;
-    margin-bottom: 20px;
+  height: 90px;
+  margin-top: 60px;
+  margin-bottom: 20px;
 }
 
 .tabs-content {
-    border: none;
-    border-width: 0px, 0px, 0px, 0px;
+  border: none;
+  border-width: 0px, 0px, 0px, 0px;
 }
 </style>

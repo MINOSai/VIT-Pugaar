@@ -35,23 +35,11 @@ export default {
   },
   methods: {
     logout() {
-    //   this.$emit("logout", false);
-    console.log(this.posts);
+      this.$emit("logout", false);
     }
   },
   components: {
     "account-edit": AccountEdit
-  },
-  created() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts/1')
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.posts = response.data;
-      })
-      .catch(e => {
-        this.errors.push(e);
-      });
   }
 };
 </script>

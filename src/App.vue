@@ -33,41 +33,37 @@
 </template>
 
 <script>
-import AppBar from './components/AppBar.vue'
-import LoginSignup from './components/LoginSignup.vue'
-import Admin from './components/Admin.vue'
-import admintest from './components/admintest.vue'
-import user from './components/user/user.vue'
+import AppBar from "./components/AppBar.vue";
+import LoginSignup from "./components/LoginSignup.vue";
+import Admin from "./components/Admin.vue";
+import admintest from "./components/admintest.vue";
+import user from "./components/user/user.vue";
 export default {
   data() {
     return {
       loggedIn: false,
-      isAdmin: false,
-    }
+      isAdmin: false
+    };
   },
-  methods: {
-    
-  },
+  methods: {},
   components: {
-    'app-bar': AppBar,
-    'login-signup': LoginSignup,
-    'admin-console': admintest,
-    'user' : user
+    "app-bar": AppBar,
+    "login-signup": LoginSignup,
+    "admin-console": admintest,
+    user: user
   }
-}
+};
 </script>
 
 <style>
-#app {}
-
 #toolBar,
 #logoutBtn,
 #editBtn {
   height: 90px;
 }
 
-.toolBarItem{
-  height: 90px ;
+.toolBarItem {
+  height: 90px;
 }
 
 .fade-enter {
@@ -78,17 +74,13 @@ export default {
   transition: all 0.5s ease;
 }
 
-.fade-leave {
-  /* height: auto; */
-}
-
 .fade-leave-active {
   transition: all 0s ease;
   opacity: 1;
 }
 
 .fade-full-enter-active {
-  transition: all 0.25s
+  transition: all 0.25s;
 }
 
 .fade-full-enter {
@@ -98,9 +90,5 @@ export default {
 .fade-full-leave-active {
   transition: all 0.25s;
   opacity: 0;
-}
-
-.my-card {
-  /* height: 10px; */
 }
 </style>

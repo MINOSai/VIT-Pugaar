@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import { store } from './store/store'
+import VueResource from 'vue-resource'
 import Vuex from 'vuex'
 import App from './App'
 import router from './router'
@@ -10,6 +11,7 @@ import 'vuetify/dist/vuetify.css'
 
 Vue.use(Vuetify);
 Vue.use(Vuex);
+Vue.use(VueResource );
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

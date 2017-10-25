@@ -2,10 +2,11 @@ const state ={
     registration_number: '16BCE0587',
     first_name: 'Yaswant',
     last_name: 'Narayan',
-    mess: 'F-block mess',
-    block: 'F-block',
+    mess: 'F-Block Mess',
+    block: 'A-Block',
     floor: '5',
-    room_no: '654'
+    room_no: '554',
+    complaints: []
 };
 
 const getters = {
@@ -19,8 +20,8 @@ const getters = {
             'room' : state.room_no
         }
     },
-    name: store => {
-        return state.name;
+    getComplaints: store => {
+        return state.complaints;
     },
     mess: store => {
         return state.mess;
@@ -34,6 +35,12 @@ const mutations = {
         state.block = payload.block;
         state.floor = payload.floor;
         state.room_no = payload.room;
+    },
+    putDetails: (state, payload) => {
+        state.registration_number = payload.registration_number;
+        state.first_name = payload.first_name;
+        state.last_name = payload.last_name;
+        state.complaints = payload.complaints;
     }
 };
 

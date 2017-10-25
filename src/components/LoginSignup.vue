@@ -193,11 +193,13 @@ export default {
     },
     getUserData() {
       axios
-        .get("http://127.0.0.1:8080/api/users/16BCE0587/?format=json", {
+        .get('http://127.0.0.1:8080/api/users/'+this.login.password+'/?format=json', {
           headers: { "Access-Control-Allow-Origin": "*" }
         })
         .then(response => {
-            this.$store.commit('updateDetails',response.data);
+            console.log(response.data)
+            this.$store.commit('putDetails',response.data);
+            console.log('login',this.$store.getters.getUserDetails)
         })
         .catch(e => {
           this.errors.push(e);

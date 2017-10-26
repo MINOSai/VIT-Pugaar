@@ -119,8 +119,9 @@
                             <v-expansion-panel-content>
                                 <div slot="header">More details</div>
                                 <v-card>
-                                    <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text>
-                                    <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text>
+                                    <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{getEmployeeName(complaint.employee)}}</strong>.</v-card-text>
+                                    <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.issue"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
@@ -157,6 +158,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -246,12 +248,33 @@ export default {
       this.complaints.splice(index, 1);
     },
     getComplaints() {
-        console.log('inside user template',this.$store.getters.getUserComplaints)
-        // this.complaints = this.$store.getters.getUserComplaints;
+      console.log(
+        "inside user template",
+        this.$store.getters.getUserComplaints
+      );
+      // this.complaints = this.$store.getters.getUserComplaints;
+    },
+    getEmployeeName(empId) {
+      axios
+        .get(
+          "http://127.0.0.1:8080/api/employees/" +
+            empId +
+            "/?format=json",
+          {
+            headers: { "Access-Control-Allow-Origin": "*" }
+          }
+        )
+        .then(response => {
+            console.log('employee name',response.data.name)
+        //   return response.data.name
+        })
+        .catch(e => {
+            console.log(e);
+        });
     }
   },
   created() {
-      this.complaints = this.$store.getters.getUserComplaints;
+    this.complaints = this.$store.getters.getUserComplaints;
   }
 };
 </script>

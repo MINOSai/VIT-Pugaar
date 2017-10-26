@@ -19,7 +19,6 @@ export const store = new Vuex.Store({
       }
     },
     getUserComplaints: state => {
-      console.log('inside getcomplaints',state.complaints[1].timestamp)
       return state.complaints;
     },
     mess: store => {

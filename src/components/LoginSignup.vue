@@ -132,16 +132,24 @@
             </v-tabs-items>
 
         </v-tabs>
+        <v-snackbar
+      :bottom='true'
+      v-model="snackbar"
+    >
+      error occured
+      <v-btn flat @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 import AppBar from "./AppBar.vue";
 export default {
   data: function() {
     return {
       dialog: false,
+      snackbar: false,
       login: {
         email: "",
         password: "",
@@ -187,23 +195,23 @@ export default {
   methods: {
     loginAction() {
       if (this.login.rules.valid) {
-        this.getUserData();
-        // this.$store.commit('putRegno',this.login.password);
-        // this.$emit("loginAction", true);
-      }
-    },
-    getUserData() {
-      axios
-        .get('http://127.0.0.1:8080/api/users/'+this.login.password+'/?format=json', {
-          headers: { "Access-Control-Allow-Origin": "*" }
-        })
-        .then(response => {
+        axios
+          .get(
+            "http://127.0.0.1:8000/api/users/" +
+              this.login.password +
+              "/?format=json",
+            {
+              headers: { "Access-Control-Allow-Origin": "*" }
+            }
+          )
+          .then(response => {
             this.$store.replaceState(response.data);
             this.$emit("loginAction", true);
-        })
-        .catch(e => {
-          this.errors.push(e);
-        });
+          })
+          .catch(e => {
+            this.errors.push(e);
+          });
+      }
     }
   }
 };

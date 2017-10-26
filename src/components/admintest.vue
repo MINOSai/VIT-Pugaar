@@ -10,13 +10,23 @@
                     <v-flex xs2>
                         <v-container fluid style="padding-left:10px;padding-right:5px;padding-top:5px;">
                             <v-card color="blue-grey darken-2" class="white--text">
-                                <v-list dense class="py-0" :class="{myactive: selectedComponent=='dashboard-view'}">
+                                <v-list dense class="py-0">
                                     <v-list-tile @click="selectedComponent='dashboard-view'">
                                         <v-list-tile-action>
                                             <v-icon>dashboard</v-icon>
                                         </v-list-tile-action>
                                         <v-list-tile-content>
                                             <v-list-tile-title>Complaints</v-list-tile-title>
+                                        </v-list-tile-content>
+                                    </v-list-tile>
+                                </v-list>
+                                <v-list dense class="py-0">
+                                    <v-list-tile @click="selectedComponent='employees-view'">
+                                        <v-list-tile-action>
+                                            <v-icon>person</v-icon>
+                                        </v-list-tile-action>
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>Employees</v-list-tile-title>
                                         </v-list-tile-content>
                                     </v-list-tile>
                                 </v-list>
@@ -54,6 +64,7 @@
 <script>
 import Dashboard from './admin/dashboard.vue';
 import Departments from './admin/Departments.vue'
+import Employees from './admin/Employees.vue'
 import AppBar from './AppBar.vue'
 export default {
     data() {
@@ -71,6 +82,7 @@ export default {
         'app-bar1': AppBar,
         'dashboard-view': Dashboard,
         'departments-view': Departments,
+        'employees-view': Employees
     }
 }
 </script>

@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       loggedIn: false,
-      isAdmin: false
+      isAdmin: true
     };
   },
   methods: {},

@@ -257,6 +257,9 @@ export default {
       this.dialog = false;
       this.complaints.splice(index, 1);
     }
+  },
+  created() {
+    console.log("inside users template", this.$store.getters.getUserDetails);
   }
 };
 </script>

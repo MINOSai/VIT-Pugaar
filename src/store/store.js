@@ -5,16 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-  state: {
-    registration_number: '16BCE0587',
-    first_name: 'Yaswant',
-    last_name: 'Narayan',
-    mess: 'F-Block Mess',
-    block: 'A-Block',
-    floor: '5',
-    room_no: '554',
-    complaints: []
-  },
+  state: {},
   getters: {
     getUserDetails: state => {
       return {

@@ -95,51 +95,36 @@
 
                         <v-stepper :value="complaint.statusNum" class="hidden-sm-and-down mx-3 elevation-0">
                             <v-stepper-header>
-                                <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
-                                    <!-- <small>Summarize if needed</small> -->
+                                <v-stepper-step step="1" :complete="true">Logged
                                 </v-stepper-step>
                                 <v-divider></v-divider>
-                                <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
-                                    <!-- <small>Summarize if needed</small> -->
+                                <v-stepper-step step="2" :complete="true">Processing
                                 </v-stepper-step>
                                 <v-divider></v-divider>
-                                <v-stepper-step step="3" :complete="complaint.statusNum >3">completed
-                                    <!-- <small>Summarize if needed</small> -->
+                                <v-stepper-step step="3" :complete="complaint.issue">completed
                                 </v-stepper-step>
                             </v-stepper-header>
                         </v-stepper>
 
                         <v-stepper :value="complaint.statusNum" vertical class="hidden-md-and-up mx-3 elevation-0">
-                            <v-stepper-step step="1" :complete="complaint.statusNum >1">Logged
-                                <!-- <small>Summarize if needed</small> -->
+                            <v-stepper-step step="1" :complete="true">Logged
                             </v-stepper-step>
-                            <v-stepper-step step="2" :complete="complaint.statusNum >2">Processing
-                                <!-- <small>Summarize if needed</small> -->
+                            <v-stepper-step step="2" :complete="true">Processing
                             </v-stepper-step>
-                            <v-stepper-step step="3" :complete="complaint.statusNum >3">Completed
-                                <!-- <small>Summarize if needed</small> -->
+                            <v-stepper-step step="3" :complete="complaint.issue">Completed
                             </v-stepper-step>
                         </v-stepper>
 
-                        <v-card-actions v-if="complaint.statusNum>2" style="margin:0px;">
-                            <v-spacer></v-spacer>
-                            <!-- <v-btn flat >raise issue</v-btn> -->
-                            <!-- <div class="text-xs-center">
-                                                                                                                                                                                    <v-btn round primary dark flat class="orange--text">raise issue</v-btn>
-                                                                                                                                                                                  </div> -->
-                            <v-spacer></v-spacer>
-                        </v-card-actions>
-
                         <v-expansion-panel class="elevation-0">
-                            <!-- <v-divider></v-divider> -->
                             <v-expansion-panel-content>
                                 <div slot="header">More details</div>
                                 <v-card>
-                                    <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
-                                    <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
+                                    <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text>
+                                    <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text>
+                                    <v-card-text v-if="complaint.issue"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn v-if="complaint.statusNum>2" dark flat class="orange--text">raise issue</v-btn>
+                                        <v-btn v-if="complaint.issue" dark flat class="orange--text" @click="complaint.issue_count++">raise issue</v-btn>
                                         <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
                                         <v-dialog v-else v-model="dialog" lazy absolute>
                                             <v-btn flat slot="activator">Cancel</v-btn>
@@ -262,6 +247,7 @@ export default {
     },
     getComplaints() {
         console.log('inside user template',this.$store.getters.getUserComplaints)
+        // this.complaints = this.$store.getters.getUserComplaints;
     }
   },
   created() {

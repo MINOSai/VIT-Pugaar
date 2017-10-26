@@ -37,10 +37,15 @@ const mutations = {
         state.room_no = payload.room;
     },
     putDetails: (state, payload) => {
-        state.registration_number = payload.registration_number;
-        state.first_name = payload.first_name;
-        state.last_name = payload.last_name;
-        state.complaints = payload.complaints;
+        console.log('inside putDetails mutations',payload);
+        // state.registration_number = payload.registration_number;
+        // state.first_name = payload.first_name;
+        // state.last_name = payload.last_name;
+        // state.complaints = payload.complaints;
+        state = payload;
+    },
+    putRegno: (state, payload) => {
+        state.registration_number = payload
     }
 };
 

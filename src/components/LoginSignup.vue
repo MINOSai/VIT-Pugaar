@@ -188,7 +188,8 @@ export default {
     loginAction() {
       if (this.login.rules.valid) {
         this.getUserData();
-        this.$emit("loginAction", true);
+        // this.$store.commit('putRegno',this.login.password);
+        // this.$emit("loginAction", true);
       }
     },
     getUserData() {
@@ -197,9 +198,8 @@ export default {
           headers: { "Access-Control-Allow-Origin": "*" }
         })
         .then(response => {
-            console.log(response.data)
-            this.$store.commit('putDetails',response.data);
-            console.log('login',this.$store.getters.getUserDetails)
+            this.$store.replaceState(response.data);
+            this.$emit("loginAction", true);
         })
         .catch(e => {
           this.errors.push(e);

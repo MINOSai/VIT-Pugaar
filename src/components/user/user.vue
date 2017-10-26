@@ -78,13 +78,15 @@
 
                 </template>
 
+                <v-btn flat @click="getComplaints()">get data</v-btn>
+
                 <template v-for="(complaint,index) in complaints">
 
-                    <v-card class="mx-3" :key="complaint.id">
+                    <v-card class="mx-3" :key="complaint.slug">
                         <v-card-title primary-title>
-                            <h3 class="headline mb-0">{{ complaint.id }}</h3>
+                            <h3 class="headline mb-0">{{ complaint.department.toUpperCase() }}</h3>
                             <v-spacer></v-spacer>
-                            <p>{{complaint.date}}</p>
+                            <p>{{complaint.timestamp.substring(0,10)}}</p>
                         </v-card-title>
 
                         <v-card-text>
@@ -133,6 +135,7 @@
                             <v-expansion-panel-content>
                                 <div slot="header">More details</div>
                                 <v-card>
+                                    <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
                                     <v-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
@@ -256,10 +259,13 @@ export default {
     removeComplaint(index) {
       this.dialog = false;
       this.complaints.splice(index, 1);
+    },
+    getComplaints() {
+        console.log('inside user template',this.$store.getters.getUserComplaints)
     }
   },
   created() {
-    console.log("inside users template", this.$store.getters.getUserDetails);
+      this.complaints = this.$store.getters.getUserComplaints;
   }
 };
 </script>

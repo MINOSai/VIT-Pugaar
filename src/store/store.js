@@ -1,5 +1,6 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 // import user from './modules/user'
 
 Vue.use(Vuex);
@@ -17,7 +18,8 @@ export const store = new Vuex.Store({
         'room': state.room_no
       }
     },
-    getComplaints: store => {
+    getUserComplaints: state => {
+      console.log('inside getcomplaints',state.complaints[1].timestamp)
       return state.complaints;
     },
     mess: store => {
@@ -31,20 +33,9 @@ export const store = new Vuex.Store({
       state.block = payload.block;
       state.floor = payload.floor;
       state.room_no = payload.room;
-    },
-    putDetails: (state, payload) => {
-      console.log('inside putDetails mutations', payload);
-      // state.registration_number = payload.registration_number;
-      // state.first_name = payload.first_name;
-      // state.last_name = payload.last_name;
-      // state.complaints = payload.complaints;
-      state = payload;
-    },
-    putRegno: (state, payload) => {
-      state.registration_number = payload
     }
   },
-//   modules: {
-//     user
-//   }
+  //   modules: {
+  //     user
+  //   }
 });

@@ -2,7 +2,7 @@
   <v-layout row justify-center>
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
       <v-btn flat class="white--text hidden-sm-and-down" style="height: 90px;margin:0px;" slot="activator">Account Edit</v-btn>
-      <v-list-tile-title slot="activator" class="hidden-md-and-up" @click="updateDetails()">Account Edit</v-list-tile-title>
+      <v-list-tile-title slot="activator" class="hidden-md-and-up">Account Edit</v-list-tile-title>
       <v-card>
 
         <v-toolbar dark color="primary">
@@ -13,7 +13,6 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark flat @click.native="saveData()">Save</v-btn>
-            <v-btn dark flat @click.native="updateDetails()">Refresh</v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
@@ -141,14 +140,12 @@ export default {
     },
     updateDetails() {
       this.details = this.$store.getters.getUserDetails;
-      console.log("alsjdflasjdflajsdf", this.$store.getters.getUserDetails);
       this.editInfo = {
         regnoEdit: false,
         nameEdit: false,
         messEdit: false,
         blockEdit: false
       };
-      console.log("acc edit hddkdtktyfytf", this.details);
     }
   },
   created: function() {

@@ -169,36 +169,36 @@ export default {
         isTip: false
       },
       complaints: [
-        {
-          id: "ABC1234",
-          description:
-            "1. This is a description and this will come in description section.",
-          statusNum: 1,
-          type: "Hostel",
-          place: "Floor",
-          department: "Cleaning",
-          date: "12/12/2012"
-        },
-        {
-          id: "DKB3887",
-          description:
-            "2. This is a description and this will come in description section.",
-          statusNum: 2,
-          type: "Hostel",
-          place: "Floor",
-          department: "Cleaning",
-          date: "12/12/2012"
-        },
-        {
-          id: "AOM4383",
-          description:
-            "3. This is a description and this will come in description section.",
-          statusNum: 3,
-          type: "Hostel",
-          place: "Floor",
-          department: "Cleaning",
-          date: "12/12/2012"
-        }
+        // {
+        //   id: "ABC1234",
+        //   description:
+        //     "1. This is a description and this will come in description section.",
+        //   statusNum: 1,
+        //   type: "Hostel",
+        //   place: "Floor",
+        //   department: "Cleaning",
+        //   date: "12/12/2012"
+        // },
+        // {
+        //   id: "DKB3887",
+        //   description:
+        //     "2. This is a description and this will come in description section.",
+        //   statusNum: 2,
+        //   type: "Hostel",
+        //   place: "Floor",
+        //   department: "Cleaning",
+        //   date: "12/12/2012"
+        // },
+        // {
+        //   id: "AOM4383",
+        //   description:
+        //     "3. This is a description and this will come in description section.",
+        //   statusNum: 3,
+        //   type: "Hostel",
+        //   place: "Floor",
+        //   department: "Cleaning",
+        //   date: "12/12/2012"
+        // }
       ],
       dialog: false
     };
@@ -225,7 +225,7 @@ export default {
         mm = "0" + mm;
       }
 
-      today = dd + "/" + mm + "/" + yyyy;
+      today = dd + "-" + mm + "-" + yyyy;
       return today;
     },
     addNewComplaint() {

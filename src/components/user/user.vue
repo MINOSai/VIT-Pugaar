@@ -67,8 +67,8 @@
                                     <v-switch v-if="type=='hostel'" label="Tip" v-model="isTip"></v-switch>
                                 </transition>
                                 <v-spacer></v-spacer>
-                                <v-btn class="orange--text darken-1" flat @click="invertEdit">cancel</v-btn>
-                                <v-btn class="blue--text darken-1" @click="addNewComplaint" flat>send</v-btn>
+                                <v-btn class="orange--text darken-1" flat @click.native="invertEdit">cancel</v-btn>
+                                <v-btn class="blue--text darken-1" @click.native="addNewComplaint" flat>send</v-btn>
                             </v-card-actions>
                         </transition>
 
@@ -77,8 +77,6 @@
                     <br>
 
                 </template>
-
-                <v-btn flat @click="getComplaints()">get data</v-btn>
 
                 <template v-for="(complaint,index) in complaints">
 
@@ -232,13 +230,12 @@ export default {
     },
     addNewComplaint() {
       this.complaints.unshift({
-        id: "ODN0928",
-        description: this.newComplaint.description,
-        statusNum: 1,
-        type: this.newComplaint.type,
-        place: this.newComplaint.place,
         department: this.newComplaint.department,
-        date: this.getCurrnetDate()
+        description: this.newComplaint.description,
+        status: false,
+        timestamp: this.getCurrnetDate(),
+        issue: false,
+        issue_count: 0
       });
       this.newComplaint.description = null;
       this.invertEdit();
@@ -256,20 +253,15 @@ export default {
     },
     getEmployeeName(empId) {
       axios
-        .get(
-          "http://127.0.0.1:8080/api/employees/" +
-            empId +
-            "/?format=json",
-          {
-            headers: { "Access-Control-Allow-Origin": "*" }
-          }
-        )
+        .get("http://127.0.0.1:8080/api/employees/" + empId + "/?format=json", {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        })
         .then(response => {
-            console.log('employee name',response.data.name)
-        //   return response.data.name
+          console.log("employee name", response.data.name);
+          //   return response.data.name
         })
         .catch(e => {
-            console.log(e);
+          console.log(e);
         });
     }
   },

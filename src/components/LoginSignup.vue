@@ -195,22 +195,28 @@ export default {
   methods: {
     loginAction() {
       if (this.login.rules.valid) {
-        axios
-          .get(
-            "http://127.0.0.1:8080/api/users/" +
-              this.login.password +
-              "/?format=json",
-            {
-              headers: { "Access-Control-Allow-Origin": "*" }
-            }
-          )
-          .then(response => {
-            this.$store.replaceState(response.data);
-            this.$emit("loginAction", true);
-          })
-          .catch(e => {
-            this.errors.push(e);
-          });
+        if (this.login.password == "admin") {
+          this.$emit("loginAction",true);
+          this.$emit("adminAction",true);
+        } else {
+          axios
+            .get(
+              "http://127.0.0.1:8080/api/users/" +
+                this.login.password +
+                "/?format=json",
+              {
+                headers: { "Access-Control-Allow-Origin": "*" }
+              }
+            )
+            .then(response => {
+              this.$store.replaceState(response.data);
+              this.$emit("loginAction", true);
+              this.$emit("adminAction",false);
+            })
+            .catch(e => {
+              this.errors.push(e);
+            });
+        }
       }
     }
   }

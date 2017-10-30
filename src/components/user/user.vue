@@ -118,7 +118,7 @@
                                 <div slot="header">More details</div>
                                 <v-card>
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
-                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{getEmployeeName(complaint.employee)}}</strong>.</v-card-text>
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>Ramasamy</strong>.</v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.issue"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>

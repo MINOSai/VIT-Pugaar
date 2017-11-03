@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import App from './App'
 import router from './router'
 import 'vuetify/dist/vuetify.css'
+// import './stylus/main.styl'
 
 Vue.use(Vuetify);
 Vue.use(Vuex);

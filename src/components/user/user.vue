@@ -253,7 +253,7 @@ export default {
     },
     getEmployeeName(empId) {
       axios
-        .get("http://127.0.0.1:8080/api/employees/" + empId + "/?format=json", {
+        .get("http://192.168.43.40:8000/api/employees/" + empId + "/?format=json", {
           headers: { "Access-Control-Allow-Origin": "*" }
         })
         .then(response => {

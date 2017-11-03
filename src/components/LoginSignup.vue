@@ -201,7 +201,7 @@ export default {
         } else {
           axios
             .get(
-              "http://127.0.0.1:8080/api/users/" +
+              "http://192.168.43.40:8000/api/users/" +
                 this.login.password +
                 "/?format=json",
               {

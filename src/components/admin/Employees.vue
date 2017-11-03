@@ -83,7 +83,7 @@ export default {
   },
   created() {
     axios
-      .get("http://127.0.0.1:8080/api/complaints/?format=json", {
+      .get("http://192.168.43.40:8000/api/complaints/?format=json", {
         headers: { "Access-Control-Allow-Origin": "*" }
       })
       .then(response => {

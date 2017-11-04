@@ -132,13 +132,10 @@
             </v-tabs-items>
 
         </v-tabs>
-        <v-snackbar
-      :bottom='true'
-      v-model="snackbar"
-    >
-      error occured
-      <v-btn flat @click.native="snackbar = false">Close</v-btn>
-    </v-snackbar>
+        <v-snackbar v-model="snackbar" timeout=3000>
+            Error occured
+            <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
     </div>
 </template>
 
@@ -194,6 +191,7 @@ export default {
   },
   methods: {
     loginAction() {
+      this.snackbar = true;
       if (this.login.rules.valid) {
         if (this.login.password == "admin") {
           this.$emit("loginAction", true);

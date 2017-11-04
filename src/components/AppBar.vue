@@ -26,7 +26,7 @@
 
 <script>
 import AccountEdit from "./user/AccountEdit.vue";
-import axios from 'axios';
+import axios from "axios";
 export default {
   data: {
     dialog: false,
@@ -35,6 +35,7 @@ export default {
   },
   methods: {
     logout() {
+      $store.replaceState({});
       this.$emit("logout", false);
     }
   },

@@ -229,14 +229,36 @@ export default {
       return today;
     },
     addNewComplaint() {
-      this.complaints.unshift({
+      //   this.complaints.unshift({
+      //     department: this.newComplaint.department,
+      //     description: this.newComplaint.description,
+      //     status: false,
+      //     timestamp: this.getCurrnetDate(),
+      //     issue: false,
+      //     issue_count: 0
+      //   });
+      var newPostComplaint = {
         department: this.newComplaint.department,
-        description: this.newComplaint.description,
-        status: false,
-        timestamp: this.getCurrnetDate(),
-        issue: false,
-        issue_count: 0
-      });
+        user_block: $store.getters.block,
+        user_floor: $store.getters.floor,
+        description: this.newComplaint.description
+      };
+      if (this.newComplaint.place == "Room") {
+        newPostComplaint.user_room = $store.getters.room;
+      }
+      axios
+        .post("http://192.168.43.40:8000/api/", newPostComplaint)
+        .then(response => {
+          console.log("New complaint post", response.data);
+          $store.commit("fetchUserDetails", {
+            regno: $store.getters.regno,
+            password: $store.getters.password
+          });
+          this.complaints = this.$store.getters.getUserComplaints;
+        })
+        .catch(e => {
+          console.log(e);
+        });
       this.newComplaint.description = null;
       this.invertEdit();
     },
@@ -253,9 +275,12 @@ export default {
     },
     getEmployeeName(empId) {
       axios
-        .get("http://192.168.43.40:8000/api/employees/" + empId + "/?format=json", {
-          headers: { "Access-Control-Allow-Origin": "*" }
-        })
+        .get(
+          "http://192.168.43.40:8000/api/employees/" + empId + "/?format=json",
+          {
+            headers: { "Access-Control-Allow-Origin": "*" }
+          }
+        )
         .then(response => {
           console.log("employee name", response.data.name);
           //   return response.data.name

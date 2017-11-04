@@ -196,8 +196,8 @@ export default {
     loginAction() {
       if (this.login.rules.valid) {
         if (this.login.password == "admin") {
-          this.$emit("loginAction",true);
-          this.$emit("adminAction",true);
+          this.$emit("loginAction", true);
+          this.$emit("adminAction", true);
         } else {
           axios
             .get(
@@ -209,9 +209,11 @@ export default {
               }
             )
             .then(response => {
-              this.$store.replaceState(response.data);
+              var customResponse = response.data;
+              customResponse.password = this.login.password;
+              this.$store.replaceState(customResponse);
               this.$emit("loginAction", true);
-              this.$emit("adminAction",false);
+              this.$emit("adminAction", false);
             })
             .catch(e => {
               this.errors.push(e);

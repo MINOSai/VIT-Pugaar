@@ -21,8 +21,20 @@ export const store = new Vuex.Store({
     getUserComplaints: state => {
       return state.complaints;
     },
-    mess: store => {
-      return state.mess;
+    password: store => {
+      return state.password;
+    },
+    block: store => {
+      return state.block;
+    },
+    floor: store => {
+      return state.floor;
+    },
+    room: store => {
+      return state.room_no;
+    },
+    regno: store => {
+      return state.registration_number;
     }
   },
   mutations: {
@@ -32,6 +44,25 @@ export const store = new Vuex.Store({
       state.block = payload.block;
       state.floor = payload.floor;
       state.room_no = payload.room;
+    },
+    fetchUserDetails: (state, payload) => {
+      axios.get(
+          "http://192.168.43.40:8000/api/users/" +
+          payload.regno +
+          "/?format=json", {
+            headers: {
+              "Access-Control-Allow-Origin": "*"
+            }
+          }
+        )
+        .then(response => {
+          var customResponse = response.data;
+          customResponse.password = state.password;
+          state = customResponse;
+        })
+        .catch(e => {
+          console.log("error fetching user data",e);
+        });
     }
   },
   //   modules: {

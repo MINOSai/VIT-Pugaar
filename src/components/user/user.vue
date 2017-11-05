@@ -44,7 +44,7 @@
                                                 <v-select label="Place" v-model="newComplaint.place" required :items="['FLoor', 'Room']"></v-select>
                                             </v-flex>
                                             <v-flex xs12 sm6>
-                                                <v-select label="Type" v-model="newComplaint.department" required :items="['Cleaning', 'Electrical', 'Carpentry', 'Plumbing']"></v-select>
+                                                <v-select label="Type" v-model="newComplaint.department" required :items="['toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
                                             </v-flex>
                                         </v-layout>
                                     </transition>
@@ -237,28 +237,82 @@ export default {
       //     issue: false,
       //     issue_count: 0
       //   });
+      console.log("before gettings deatils");
       var newPostComplaint = {
         department: this.newComplaint.department,
-        user_block: $store.getters.block,
-        user_floor: $store.getters.floor,
+        user_block: this.$store.getters.block,
+        user_floor: this.$store.getters.floor,
         description: this.newComplaint.description
       };
       if (this.newComplaint.place == "Room") {
-        newPostComplaint.user_room = $store.getters.room;
+        newPostComplaint.user_room = this.$store.getters.room;
       }
-      axios
-        .post("http://192.168.43.40:8000/api/", newPostComplaint)
-        .then(response => {
-          console.log("New complaint post", response.data);
-          $store.commit("fetchUserDetails", {
-            regno: $store.getters.regno,
-            password: $store.getters.password
-          });
-          this.complaints = this.$store.getters.getUserComplaints;
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      console.log("got all details");
+      // axios({
+      //   method: "post",
+      //   url: "http://127.0.0.1:8000/api/complaints/create/",
+      //   withCredentials: true,
+      //   headers: {
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Credentials":"true"
+      //   },
+      //   auth: {
+      //     username: this.$store.getters.regno,
+      //     password: this.$store.getters.password
+      //   },
+      //   data: newPostComplaint
+      // });
+
+      var regno = this.$store.getters.regno;
+      var pswd = this.$store.getters.password;
+      var basicauth = "Basic " + btoa(regno + ":" + pswd);
+
+      $.ajax({
+        crossDomain: true,
+        xhrFields: {
+          withCredentials: true
+        },
+        type: "POST",
+        url: "http://127.0.0.1:8000/api/complaints/create/",
+        data: newPostComplaint,
+        dataType: "json",
+        success: function(data) {
+          console.log(data);
+        },
+        beforeSend: function(req) {
+          req.setRequestHeader("Authorization", basicauth);
+        }
+      });
+
+      //   axios
+      //     .post(
+      //       "http://127.0.0.1:8000/api/complaints/create/",
+      //       newPostComplaint,
+      //       {
+      //         headers: {
+      //           "Access-Control-Allow-Origin": "*",
+      //           "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      //           "Access-Control-Allow-Headers":
+      //             "Origin, Authorization, Accept, Content-Type",
+      //           "Access-Control-Allow-Credentials": "true"
+      //         },
+      //         auth: {
+      //           username: this.$store.getters.regno,
+      //           password: this.$store.getters.password
+      //         }
+      //       }
+      //     )
+      //     .then(response => {
+      //       console.log("New complaint post", response.data);
+      //       this.$store.commit("fetchUserDetails", {
+      //         regno: this.$store.getters.regno,
+      //         password: this.$store.getters.password
+      //       });
+      //       this.complaints = this.$store.getters.getUserComplaints;
+      //     })
+      //     .catch(e => {
+      //       console.log(e);
+      //     });
       this.newComplaint.description = null;
       this.invertEdit();
     },
@@ -275,12 +329,9 @@ export default {
     },
     getEmployeeName(empId) {
       axios
-        .get(
-          "http://192.168.43.40:8000/api/employees/" + empId + "/?format=json",
-          {
-            headers: { "Access-Control-Allow-Origin": "*" }
-          }
-        )
+        .get("http://127.0.0.1:8000/api/employees/" + empId + "/?format=json", {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        })
         .then(response => {
           console.log("employee name", response.data.name);
           //   return response.data.name

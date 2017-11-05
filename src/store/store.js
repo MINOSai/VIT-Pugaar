@@ -21,19 +21,19 @@ export const store = new Vuex.Store({
     getUserComplaints: state => {
       return state.complaints;
     },
-    password: store => {
+    password: state => {
       return state.password;
     },
-    block: store => {
+    block: state => {
       return state.block;
     },
-    floor: store => {
+    floor: state => {
       return state.floor;
     },
-    room: store => {
+    room: state => {
       return state.room_no;
     },
-    regno: store => {
+    regno: state => {
       return state.registration_number;
     }
   },
@@ -47,7 +47,7 @@ export const store = new Vuex.Store({
     },
     fetchUserDetails: (state, payload) => {
       axios.get(
-          "http://192.168.43.40:8000/api/users/" +
+          "http://127.0.0.1:8000/api/users/" +
           payload.regno +
           "/?format=json", {
             headers: {

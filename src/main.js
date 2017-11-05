@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import App from './App'
 import router from './router'
 import 'vuetify/dist/vuetify.css'
+import axios from "axios";
 // import './stylus/main.styl'
 
 Vue.use(Vuetify);

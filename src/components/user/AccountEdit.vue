@@ -16,7 +16,7 @@
           </v-toolbar-items>
         </v-toolbar>
 
-        <v-list three-line subheader>
+        <!-- <v-list three-line subheader>
           <v-subheader>Reset Password</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-content>
@@ -33,8 +33,8 @@
 
         <br>
 
-        <v-divider></v-divider>
-        
+        <v-divider></v-divider> -->
+        <br>
         <v-list three-line subheader>
           <v-subheader>General</v-subheader>
           <v-layout row wrap>

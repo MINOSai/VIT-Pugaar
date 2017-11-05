@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     logout() {
-      $store.replaceState({});
+      this.$store.replaceState({});
       this.$emit("logout", false);
     }
   },

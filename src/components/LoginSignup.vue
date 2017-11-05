@@ -27,7 +27,7 @@
                                 <v-container flat grid-list-md>
                                     <v-layout flat wrap>
                                         <v-flex sm8 offset-sm2>
-                                            <v-text-field label="Email" :rules="login.rules.emailRule" v-model="login.email" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
+                                            <v-text-field label="Email" v-model="login.email" hint="Enter your student mail id" required></v-text-field>
                                         </v-flex>
                                         <v-flex sm8 offset-sm2>
                                             <v-text-field label="Password" :rules="login.rules.passwordRule" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
@@ -191,7 +191,6 @@ export default {
   },
   methods: {
     loginAction() {
-      this.snackbar = true;
       if (this.login.rules.valid) {
         if (this.login.password == "admin") {
           this.$emit("loginAction", true);
@@ -199,8 +198,8 @@ export default {
         } else {
           axios
             .get(
-              "http://192.168.43.40:8000/api/users/" +
-                this.login.password +
+              "http://127.0.0.1:8000/api/users/" +
+                this.login.email +
                 "/?format=json",
               {
                 headers: { "Access-Control-Allow-Origin": "*" }

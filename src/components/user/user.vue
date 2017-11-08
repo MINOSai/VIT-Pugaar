@@ -10,7 +10,7 @@
                     <v-card class="mx-3 card" :hover="isEdit">
 
                         <transition name="fade" mode="out-in">
-                            <v-card-text class="my-card" v-if="isEdit" @click="invertEdit">
+                            <v-card-text class="my-card" v-if="isEdit" @click="invertEditCopy">
                                 <p class="text-xs-center">
                                     <v-icon x-large>add</v-icon>
                                 </p>
@@ -44,7 +44,7 @@
                                                 <v-select label="Place" v-model="newComplaint.place" required :items="['FLoor', 'Room']"></v-select>
                                             </v-flex>
                                             <v-flex xs12 sm6>
-                                                <v-select label="Type" v-model="newComplaint.department" required :items="['toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
+                                                <v-select label="Type" v-model="newComplaint.department" required :items="['sample-department','toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
                                             </v-flex>
                                         </v-layout>
                                     </transition>
@@ -67,7 +67,7 @@
                                     <v-switch v-if="type=='hostel'" label="Tip" v-model="isTip"></v-switch>
                                 </transition>
                                 <v-spacer></v-spacer>
-                                <v-btn class="orange--text darken-1" flat @click.native="invertEdit">cancel</v-btn>
+                                <v-btn class="orange--text darken-1" flat @click.native="invertEditCopy">cancel</v-btn>
                                 <v-btn class="blue--text darken-1" @click.native="addNewComplaint" flat>send</v-btn>
                             </v-card-actions>
                         </transition>
@@ -118,7 +118,7 @@
                                 <div slot="header">More details</div>
                                 <v-card>
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
-                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>Ramasamy</strong>.</v-card-text>
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.issue"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
@@ -204,7 +204,54 @@ export default {
     };
   },
   methods: {
-    invertEdit() {
+    invertEdit(data) {
+      this.newComplaint.description = null;
+      if (this.isEdit == true) {
+        this.isEdit = false;
+      } else {
+        this.isEdit = true;
+      }
+      console.log("inside invertedit", data);
+      console.log(
+        "inside invertedit - before complaint update",
+        this.complaints
+      );
+      this.$store.commit("updateComplaints", data);
+      this.complaints = this.$store.getters.getUserComplaints;
+      console.log(
+        "after getting it from store",
+        this.$store.getters.getUserComplaints
+      );
+      console.log("after update complaints", this.complaints);
+      //   this.$store.commit("fetchUserDetails", {
+      //     regno: this.$store.getters.regno,
+      //     password: this.$store.getters.password
+      //   });
+      //   this.complaints = this.$store.getters.getUserComplaints;
+      //   axios
+      //     .get(
+      //       "http://127.0.0.1:8000/api/users/" +
+      //         this.$store.getters.regno +
+      //         "/?format=json",
+      //       {
+      //         headers: {
+      //           "Access-Control-Allow-Origin": "*"
+      //         }
+      //       }
+      //     )
+      //     .then(response => {
+      //       console.log("asdlfjasldfjladfjlaj", response.data.complaints);
+      //       var customResponse = response.data;
+      //       customResponse.password = this.$store.getters.password;
+      //       this.$store.replaceState(customResponse);
+      //       this.complaints = response.data.complaints;
+      //     })
+      //     .catch(e => {
+      //       console.log("error fetching user data", e);
+      //     });
+    },
+    invertEditCopy() {
+      this.newComplaint.description = null;
       if (this.isEdit == true) {
         this.isEdit = false;
       } else {
@@ -266,6 +313,7 @@ export default {
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
+      var self = this;
 
       $.ajax({
         crossDomain: true,
@@ -277,10 +325,20 @@ export default {
         data: newPostComplaint,
         dataType: "json",
         success: function(data) {
-          console.log(data);
+          console.log("POST DATA !!", data);
+          self.invertEdit(data);
+          //   self.$store.state.complaints.unhift(data);
         },
         beforeSend: function(req) {
           req.setRequestHeader("Authorization", basicauth);
+        },
+        statusCode: {
+          201: function(xhr) {
+            if (window.console) console.log("status 200 !!", xhr.data);
+          },
+          400: function(xhr) {
+            if (window.console) console.log("error 400", xhr);
+          }
         }
       });
 
@@ -313,8 +371,8 @@ export default {
       //     .catch(e => {
       //       console.log(e);
       //     });
-      this.newComplaint.description = null;
-      this.invertEdit();
+      //   this.newComplaint.description = null;
+      //   this.invertEdit();
     },
     removeComplaint(index) {
       this.dialog = false;
@@ -342,6 +400,7 @@ export default {
     }
   },
   created() {
+    console.log("inside created", this.$store.getters.getUserComplaints);
     this.complaints = this.$store.getters.getUserComplaints;
   }
 };

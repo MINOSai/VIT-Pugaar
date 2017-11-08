@@ -56,6 +56,7 @@ export const store = new Vuex.Store({
           }
         )
         .then(response => {
+          console.log("Inside store get details",response.data);
           var customResponse = response.data;
           customResponse.password = state.password;
           state = customResponse;
@@ -63,6 +64,12 @@ export const store = new Vuex.Store({
         .catch(e => {
           console.log("error fetching user data",e);
         });
+    },
+    updateComplaints: (state,payload) => {
+      console.log("inside updatecComplaints - before update",store.complaints);
+      console.log("inside update complaints - payload",payload);
+      state.complaints = payload;
+      console.log("inside updatecComplaints - after update",store.complaints);
     }
   },
   //   modules: {

@@ -208,6 +208,7 @@ export default {
             .then(response => {
               var customResponse = response.data;
               customResponse.password = this.login.password;
+              console.log("inside loginsignup",customResponse);
               this.$store.replaceState(customResponse);
               this.$emit("loginAction", true);
               this.$emit("adminAction", false);

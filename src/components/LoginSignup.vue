@@ -27,7 +27,7 @@
                                 <v-container flat grid-list-md>
                                     <v-layout flat wrap>
                                         <v-flex sm8 offset-sm2>
-                                            <v-text-field label="Email" v-model="login.email" hint="Enter your student mail id" required></v-text-field>
+                                            <v-text-field label="Email" v-model="login.email" hint="Enter your registration number" required></v-text-field>
                                         </v-flex>
                                         <v-flex sm8 offset-sm2>
                                             <v-text-field label="Password" :rules="login.rules.passwordRule" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
@@ -92,28 +92,34 @@
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md6>
-                                            <v-text-field label="Registration no." required></v-text-field>
+                                            <v-text-field label="Registration no." v-model="signup.regno" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md6>
-                                            <v-text-field label="Name" required></v-text-field>
+                                            <v-text-field label="Mobile no." v-model="signup.phno" :rules="signup.rules.phnoRule" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="First Name" v-model="signup.firstname" required></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md6>
+                                            <v-text-field label="Last Name" v-model="signup.lastname" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12>
-                                            <v-text-field label="Email" :rules="signup.rules.emailRule" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
+                                            <v-text-field label="Email" v-model="signup.email" :rules="signup.rules.emailRule" suffix="@vitstudent.ac.in" hint="Enter your student mail id" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12>
-                                            <v-text-field label="Password" :rules="signup.rules.passwordRule" type="password" hint="Password may not be same as v-top password" required></v-text-field>
+                                            <v-text-field label="Password" v-model="signup.password" :rules="signup.rules.passwordRule" type="password" hint="Password may not be same as v-top password" required></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6>
-                                            <v-select label="Mess" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                            <v-select label="Mess" v-model="signup.mess" required :items="['North veg', 'South non veg', 'Special 1', 'Special 2']"></v-select>
                                         </v-flex>
                                         <v-flex xs12 sm6>
-                                            <v-select label="Hostel" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                            <v-select label="Hostel" v-model="signupBlock" required :items="blockNames"></v-select>
                                         </v-flex>
                                         <v-flex xs12 sm6>
-                                            <v-select label="Floor" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
+                                            <v-select label="Floor" v-model="signup.floor" required :items="floorNames"></v-select>
                                         </v-flex>
                                         <v-flex xs12 sm6>
-                                            <v-text-field label="Room no." type="number" required></v-text-field>
+                                            <v-text-field v-model="signup.room" label="Room no." type="number" required></v-text-field>
                                         </v-flex>
                                     </v-layout>
                                 </v-container>
@@ -122,7 +128,7 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn round primary outline dark @click="loginAction()">signup</v-btn>
+                                <v-btn round primary outline dark @click="signupAction()">signup</v-btn>
                                 <v-spacer></v-spacer>
                             </v-card-actions>
                             <br>
@@ -147,6 +153,10 @@ export default {
     return {
       dialog: false,
       snackbar: false,
+      blockDetails: [],
+      blockNames: [],
+      floorNames: [],
+      signupBlock: "",
       login: {
         email: "",
         password: "",
@@ -163,10 +173,16 @@ export default {
         }
       },
       signup: {
-        name: "",
+        firstname: "",
+        lastname: "",
+        phno: "",
         regno: "",
         email: "",
         password: "",
+        mess: "",
+        block: "",
+        floor: "",
+        room: "",
         rules: {
           valid: false,
           emailRule: [
@@ -180,6 +196,10 @@ export default {
             v =>
               /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) ||
               "Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter"
+          ],
+          phnoRule: [
+            v => !!v || "Enter a phone number"
+            //   v => /^[0-9]{8,10}$/.test(v) || "Enter a valid phone number"
           ]
         }
       },
@@ -196,19 +216,18 @@ export default {
           this.$emit("loginAction", true);
           this.$emit("adminAction", true);
         } else {
-          axios
-            .get(
+          axios({
+            method: "get",
+            url:
               "http://127.0.0.1:8000/api/users/" +
-                this.login.email +
-                "/?format=json",
-              {
-                headers: { "Access-Control-Allow-Origin": "*" }
-              }
-            )
+              this.login.email +
+              "/?format=json",
+            withCredentials: true
+          })
             .then(response => {
               var customResponse = response.data;
               customResponse.password = this.login.password;
-              console.log("inside loginsignup",customResponse);
+              console.log("inside loginsignup", customResponse);
               this.$store.replaceState(customResponse);
               this.$emit("loginAction", true);
               this.$emit("adminAction", false);
@@ -218,7 +237,70 @@ export default {
             });
         }
       }
+    },
+    signupAction() {
+      if (this.signup.rules.valid) {
+        var newUser = {
+          registration_number: this.signup.regno,
+          email: this.signup.email + "@vitstudent.ac.in",
+          first_name: this.signup.firstname,
+          last_name: this.signup.lastname,
+          phone_number: this.signup.phno,
+          password: this.signup.password,
+          account_for: "s",
+          block: this.signupBlock,
+          floor: this.signup.floor,
+          room_no: this.signup.room
+        };
+        axios({
+          method: "post",
+          url: "http://127.0.0.1:8000/api/users/create/",
+          withCredentials: true,
+          data: newUser
+        })
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            this.errors.push(e);
+          });
+      }
+    },
+    updateFloor() {
+      for (var i = 0; i < this.blockDetails.length; i++) {
+        if (this.blockDetails[i].slug == this.signup.block) {
+          this.floorNames = this.blockDetails.floors;
+        }
+      }
     }
+  },
+  watch: {
+    signupBlock: function(newVal) {
+      console.log("new block", newVal);
+      for (var i = 0; i < this.blockDetails.length; i++) {
+        if (this.blockDetails[i].slug == newVal) {
+          console.log("inside if statement");
+          this.floorNames = this.blockDetails[i].floors;
+        }
+      }
+    }
+  },
+  created() {
+    axios({
+      method: "get",
+      url: "http://127.0.0.1:8000/api/blockdetails/",
+      withCredentials: true
+    })
+      .then(response => {
+        console.log("block details: ", response.data);
+        for (var i = 0; i < response.data.length; i++) {
+          this.blockDetails.push(response.data[i]);
+          this.blockNames.push(response.data[i].slug);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }
 };
 </script>

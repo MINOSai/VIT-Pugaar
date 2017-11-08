@@ -151,6 +151,10 @@
                 </template>
 
             </v-flex>
+            <v-snackbar v-model="snackbar" timeout=3000>
+            Error occured
+            <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
         </v-layout>
     </div>
 </template>
@@ -161,6 +165,7 @@ export default {
   data() {
     return {
       isEdit: true,
+      snackbar: false,
       newComplaint: {
         type: "hostel",
         place: null,
@@ -338,6 +343,8 @@ export default {
           },
           400: function(xhr) {
             if (window.console) console.log("error 400", xhr);
+            self.snackbar = true;
+            self.invertEditCopy();
           }
         }
       });

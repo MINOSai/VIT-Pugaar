@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!isResetPassword">
         <v-layout>
             <v-flex xs12 sm8 offset-sm2>
 
@@ -165,6 +165,7 @@ export default {
   data() {
     return {
       isEdit: true,
+      isResetPassword: false,
       snackbar: false,
       newComplaint: {
         type: "hostel",
@@ -344,7 +345,8 @@ export default {
           },
           400: function(xhr) {
             if (window.console) console.log("error 400", xhr);
-            self.snackbarText = "This complaint has already been registered. Your issue will soon be resolved";
+            self.snackbarText =
+              "This complaint has already been registered. Your issue will soon be resolved";
             self.snackbar = true;
             self.invertEditCopy();
           }
@@ -384,8 +386,29 @@ export default {
       //   this.invertEdit();
     },
     removeComplaint(index) {
+      var regno = this.$store.getters.regno;
+      var pswd = this.$store.getters.password;
+      var basicauth = "Basic " + btoa(regno + ":" + pswd);
+      var self = this;
+      axios({
+        method: "DELETE",
+        url: "http://127.0.0.1:8000/api/complaints/delete/",
+        data: {
+          pk: this.complaints[index].slug
+        },
+        withCredentials: true,
+        headers: {
+          Authorization: basicauth
+        }
+      })
+        .then(response => {
+          console.log("deleted complaint successfully");
+          this.complaints.splice(index, 1);
+        })
+        .catch(e => {
+          console.log("error deleting complaint");
+        });
       this.dialog = false;
-      this.complaints.splice(index, 1);
     },
     getComplaints() {
       console.log(

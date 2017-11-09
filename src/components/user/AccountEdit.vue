@@ -102,6 +102,8 @@
             </v-flex>
           </v-layout>
         </v-list>
+
+        <v-divider></v-divider>
       
       </v-card>
     </v-dialog>

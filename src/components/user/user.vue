@@ -223,6 +223,7 @@ export default {
       );
       this.$store.commit("updateComplaints", data);
       this.complaints = this.$store.getters.getUserComplaints;
+      this.complaints.reverse();
       console.log(
         "after getting it from store",
         this.$store.getters.getUserComplaints
@@ -343,6 +344,7 @@ export default {
           },
           400: function(xhr) {
             if (window.console) console.log("error 400", xhr);
+            self.snackbarText = "This complaint has already been registered. Your issue will soon be resolved";
             self.snackbar = true;
             self.invertEditCopy();
           }
@@ -409,6 +411,7 @@ export default {
   created() {
     console.log("inside created", this.$store.getters.getUserComplaints);
     this.complaints = this.$store.getters.getUserComplaints;
+    this.complaints.reverse();
   }
 };
 </script>

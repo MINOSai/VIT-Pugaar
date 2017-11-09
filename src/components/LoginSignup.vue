@@ -139,7 +139,7 @@
 
         </v-tabs>
         <v-snackbar v-model="snackbar" timeout=3000>
-            Error occured
+            {{snackbarText}}
             <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
     </div>
@@ -153,6 +153,7 @@ export default {
     return {
       dialog: false,
       snackbar: false,
+      snackbarText: "Error occured",
       blockDetails: [],
       blockNames: [],
       floorNames: [],
@@ -260,6 +261,20 @@ export default {
         })
           .then(response => {
             console.log(response.data);
+            this.$store.replaceState({
+              complaints: [],
+              registration_number: this.signup.regno,
+              email: this.signup.email + "@vitstudent.ac.in",
+              first_name: this.signup.firstname,
+              last_name: this.signup.lastname,
+              phone_number: this.signup.phno,
+              password: this.signup.password,
+              block: this.signupBlock,
+              floor: this.signup.floor,
+              room_no: this.signup.room
+            });
+            this.$emit("loginAction", true);
+            this.$emit("adminAction", false);
           })
           .catch(e => {
             this.errors.push(e);

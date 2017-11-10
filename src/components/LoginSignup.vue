@@ -16,7 +16,7 @@
                 <v-tabs-item href="#signupTab">
                     Signup
                 </v-tabs-item>
-                <v-tabs-slider class="primary"></v-tabs-slider>
+                <v-tabs-slider style="background-color: #3B5998;"></v-tabs-slider>
             </v-tabs-bar>
 
             <v-tabs-items flat class="tabs-content">
@@ -310,6 +310,7 @@ export default {
         console.log("block details: ", response.data);
         for (var i = 0; i < response.data.length; i++) {
           this.blockDetails.push(response.data[i]);
+          var blockname = response.data[i].slug.split('-');
           this.blockNames.push(response.data[i].slug);
         }
       })

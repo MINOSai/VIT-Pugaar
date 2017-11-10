@@ -41,7 +41,7 @@
                                     <transition name="fade-full">
                                         <v-layout v-if="newComplaint.type=='hostel'" wrap>
                                             <v-flex xs12 sm6>
-                                                <v-select label="Place" v-model="newComplaint.place" required :items="['FLoor', 'Room']"></v-select>
+                                                <v-select label="Place" v-model="newComplaint.place" required :items="['Floor', 'Room']"></v-select>
                                             </v-flex>
                                             <v-flex xs12 sm6>
                                                 <v-select label="Type" v-model="newComplaint.department" required :items="['sample-department','toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
@@ -99,7 +99,7 @@
                                 <v-stepper-step step="2" :complete="true">Processing
                                 </v-stepper-step>
                                 <v-divider></v-divider>
-                                <v-stepper-step step="3" :complete="complaint.issue">completed
+                                <v-stepper-step step="3" :complete="complaint.status">completed
                                 </v-stepper-step>
                             </v-stepper-header>
                         </v-stepper>
@@ -109,7 +109,7 @@
                             </v-stepper-step>
                             <v-stepper-step step="2" :complete="true">Processing
                             </v-stepper-step>
-                            <v-stepper-step step="3" :complete="complaint.issue">Completed
+                            <v-stepper-step step="3" :complete="complaint.status">Completed
                             </v-stepper-step>
                         </v-stepper>
 
@@ -120,10 +120,10 @@
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
                                     <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
-                                    <v-card-text v-if="complaint.issue"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
+                                    <v-card-text v-if="complaint.status"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn v-if="complaint.issue" dark flat class="orange--text" @click="complaint.issue_count++">raise issue</v-btn>
+                                        <v-btn v-if="complaint.status" dark flat class="orange--text" @click="complaint.issue_count++">raise issue</v-btn>
                                         <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
                                         <v-dialog v-else v-model="dialog" lazy absolute>
                                             <v-btn flat slot="activator">Cancel</v-btn>
@@ -165,7 +165,6 @@ export default {
   data() {
     return {
       isEdit: true,
-      isResetPassword: false,
       snackbar: false,
       newComplaint: {
         type: "hostel",
@@ -174,38 +173,7 @@ export default {
         description: null,
         isTip: false
       },
-      complaints: [
-        // {
-        //   id: "ABC1234",
-        //   description:
-        //     "1. This is a description and this will come in description section.",
-        //   statusNum: 1,
-        //   type: "Hostel",
-        //   place: "Floor",
-        //   department: "Cleaning",
-        //   date: "12/12/2012"
-        // },
-        // {
-        //   id: "DKB3887",
-        //   description:
-        //     "2. This is a description and this will come in description section.",
-        //   statusNum: 2,
-        //   type: "Hostel",
-        //   place: "Floor",
-        //   department: "Cleaning",
-        //   date: "12/12/2012"
-        // },
-        // {
-        //   id: "AOM4383",
-        //   description:
-        //     "3. This is a description and this will come in description section.",
-        //   statusNum: 3,
-        //   type: "Hostel",
-        //   place: "Floor",
-        //   department: "Cleaning",
-        //   date: "12/12/2012"
-        // }
-      ],
+      complaints: [],
       dialog: false
     };
   },
@@ -217,45 +185,9 @@ export default {
       } else {
         this.isEdit = true;
       }
-      console.log("inside invertedit", data);
-      console.log(
-        "inside invertedit - before complaint update",
-        this.complaints
-      );
       this.$store.commit("updateComplaints", data);
       this.complaints = this.$store.getters.getUserComplaints;
       this.complaints.reverse();
-      console.log(
-        "after getting it from store",
-        this.$store.getters.getUserComplaints
-      );
-      console.log("after update complaints", this.complaints);
-      //   this.$store.commit("fetchUserDetails", {
-      //     regno: this.$store.getters.regno,
-      //     password: this.$store.getters.password
-      //   });
-      //   this.complaints = this.$store.getters.getUserComplaints;
-      //   axios
-      //     .get(
-      //       "http://127.0.0.1:8000/api/users/" +
-      //         this.$store.getters.regno +
-      //         "/?format=json",
-      //       {
-      //         headers: {
-      //           "Access-Control-Allow-Origin": "*"
-      //         }
-      //       }
-      //     )
-      //     .then(response => {
-      //       console.log("asdlfjasldfjladfjlaj", response.data.complaints);
-      //       var customResponse = response.data;
-      //       customResponse.password = this.$store.getters.password;
-      //       this.$store.replaceState(customResponse);
-      //       this.complaints = response.data.complaints;
-      //     })
-      //     .catch(e => {
-      //       console.log("error fetching user data", e);
-      //     });
     },
     invertEditCopy() {
       this.newComplaint.description = null;
@@ -283,15 +215,6 @@ export default {
       return today;
     },
     addNewComplaint() {
-      //   this.complaints.unshift({
-      //     department: this.newComplaint.department,
-      //     description: this.newComplaint.description,
-      //     status: false,
-      //     timestamp: this.getCurrnetDate(),
-      //     issue: false,
-      //     issue_count: 0
-      //   });
-      console.log("before gettings deatils");
       var newPostComplaint = {
         department: this.newComplaint.department,
         user_block: this.$store.getters.block,
@@ -301,21 +224,6 @@ export default {
       if (this.newComplaint.place == "Room") {
         newPostComplaint.user_room = this.$store.getters.room;
       }
-      console.log("got all details");
-      // axios({
-      //   method: "post",
-      //   url: "http://127.0.0.1:8000/api/complaints/create/",
-      //   withCredentials: true,
-      //   headers: {
-      //     "Access-Control-Allow-Origin": "*",
-      //     "Access-Control-Allow-Credentials":"true"
-      //   },
-      //   auth: {
-      //     username: this.$store.getters.regno,
-      //     password: this.$store.getters.password
-      //   },
-      //   data: newPostComplaint
-      // });
 
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
@@ -352,38 +260,6 @@ export default {
           }
         }
       });
-
-      //   axios
-      //     .post(
-      //       "http://127.0.0.1:8000/api/complaints/create/",
-      //       newPostComplaint,
-      //       {
-      //         headers: {
-      //           "Access-Control-Allow-Origin": "*",
-      //           "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-      //           "Access-Control-Allow-Headers":
-      //             "Origin, Authorization, Accept, Content-Type",
-      //           "Access-Control-Allow-Credentials": "true"
-      //         },
-      //         auth: {
-      //           username: this.$store.getters.regno,
-      //           password: this.$store.getters.password
-      //         }
-      //       }
-      //     )
-      //     .then(response => {
-      //       console.log("New complaint post", response.data);
-      //       this.$store.commit("fetchUserDetails", {
-      //         regno: this.$store.getters.regno,
-      //         password: this.$store.getters.password
-      //       });
-      //       this.complaints = this.$store.getters.getUserComplaints;
-      //     })
-      //     .catch(e => {
-      //       console.log(e);
-      //     });
-      //   this.newComplaint.description = null;
-      //   this.invertEdit();
     },
     removeComplaint(index) {
       var regno = this.$store.getters.regno;
@@ -424,7 +300,6 @@ export default {
         })
         .then(response => {
           console.log("employee name", response.data.name);
-          //   return response.data.name
         })
         .catch(e => {
           console.log(e);

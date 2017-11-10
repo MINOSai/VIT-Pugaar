@@ -5,7 +5,7 @@
       <v-list-tile-title slot="activator" class="hidden-md-and-up">Account Edit</v-list-tile-title>
       <v-card>
 
-        <v-toolbar dark color="primary">
+        <v-toolbar dark style="background-color: #3B5998;">
           <v-btn icon @click.native="dialog = false" dark>
             <v-icon>close</v-icon>
           </v-btn>
@@ -15,25 +15,6 @@
             <v-btn dark flat @click.native="saveData()">Save</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-
-        <!-- <v-list three-line subheader>
-          <v-subheader>Reset Password</v-subheader>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-text-field v-model="password.old" label="Old Password" required></v-text-field>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile avatar>
-            <v-list-tile-content>
-              <v-text-field v-model="password.new" label="New Password" required></v-text-field>
-              <v-list-tile-title>Password may not be same as v-top password. Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list>
-
-        <br>
-
-        <v-divider></v-divider> -->
         <br>
         <v-list three-line subheader>
           <v-subheader>General</v-subheader>
@@ -104,6 +85,40 @@
         </v-list>
 
         <v-divider></v-divider>
+
+        <v-list three-line subheader>
+          <v-subheader>Reset Password</v-subheader>
+          <v-list-tile avatar>
+            <v-list-tile-content>
+              <v-text-field v-model="password.old" label="Old Password" required></v-text-field>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile avatar>
+            <v-list-tile-content>
+              <v-text-field v-model="password.new" label="New Password" required></v-text-field>
+              <v-list-tile-title>Password may not be same as v-top password. Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile >
+            <v-list-tile-content>
+              <v-btn style="background-color: #3B5998;" @click="resetPassword()" dark>Reset password</v-btn>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+
+        <br>
+
+        <v-divider></v-divider>
+
+        <v-list three-line subheader>
+          <v-subheader>Delete account</v-subheader>
+          <v-list-tile avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>All your details and complaints you made will be deleted.</v-list-tile-title><br>
+              <v-btn color="error" @click="deleteAcc()" dark>Delete account</v-btn>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
       
       </v-card>
     </v-dialog>
@@ -148,6 +163,23 @@ export default {
         messEdit: false,
         blockEdit: false
       };
+    },
+    resetPassword() {
+      var regno = this.$store.getters.regno;
+      var pswd = this.$store.getters.password;
+      var basicauth = "Basic " + btoa(regno + ":" + pswd);
+      var self = this;
+      axios({
+        method: "patch",
+        url: "http://127.0.0.1:8000/api/users/change_password/",
+        data: {
+          password: this.password.new
+        },
+        withCredentials: true,
+        headers: {
+          Authorization: basicauth
+        }
+      });
     }
   },
   created: function() {

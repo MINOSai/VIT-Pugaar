@@ -62,6 +62,10 @@ export default {
   height: 90px;
 }
 
+.newColor {
+  background-color: #3B5998;
+}
+
 .toolBarItem {
   height: 90px;
 }

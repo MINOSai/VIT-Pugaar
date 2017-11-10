@@ -114,7 +114,7 @@
           <v-subheader>Delete account</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-list-tile-title>All your details and complaints you made will be deleted.</v-list-tile-title><br>
+              <v-list-tile-title>All your details and the complaints you made will be deleted.</v-list-tile-title><br>
               <v-btn color="error" @click="deleteAcc()" dark>Delete account</v-btn>
             </v-list-tile-content>
           </v-list-tile>

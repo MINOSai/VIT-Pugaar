@@ -151,8 +151,8 @@
                 </template>
 
             </v-flex>
-            <v-snackbar v-model="snackbar" timeout=3000>
-            Error occured
+            <v-snackbar v-model="snackbar" timeout=5000>
+            {{snackbarText}}
             <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
         </v-layout>
@@ -166,6 +166,7 @@ export default {
     return {
       isEdit: true,
       snackbar: false,
+      snackbarText: 'Error occurred',
       newComplaint: {
         type: "hostel",
         place: null,
@@ -227,6 +228,10 @@ export default {
 
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
+      console.log("auth credentials",{
+        regno: regno,
+        password: pswd
+      })
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
       var self = this;
 
@@ -254,7 +259,7 @@ export default {
           400: function(xhr) {
             if (window.console) console.log("error 400", xhr);
             self.snackbarText =
-              "This complaint has already been registered. Your issue will soon be resolved";
+              "This complaint has already been registered.";
             self.snackbar = true;
             self.invertEditCopy();
           }

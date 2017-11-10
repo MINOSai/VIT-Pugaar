@@ -27,7 +27,7 @@
                                 <v-container flat grid-list-md>
                                     <v-layout flat wrap>
                                         <v-flex sm8 offset-sm2>
-                                            <v-text-field label="Email" v-model="login.email" hint="Enter your registration number" required></v-text-field>
+                                            <v-text-field label="Registration no." v-model="login.email" hint="Enter your registration number" required></v-text-field>
                                         </v-flex>
                                         <v-flex sm8 offset-sm2>
                                             <v-text-field label="Password" :rules="login.rules.passwordRule" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
@@ -221,7 +221,7 @@ export default {
             method: "get",
             url:
               "http://127.0.0.1:8000/api/users/" +
-              this.login.email +
+              this.login.email.toLowerCase() +
               "/?format=json",
             withCredentials: true
           })

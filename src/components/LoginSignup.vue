@@ -242,7 +242,7 @@ export default {
     signupAction() {
       if (this.signup.rules.valid) {
         var newUser = {
-          registration_number: this.signup.regno,
+          registration_number: this.signup.regno.toLowerCase(),
           email: this.signup.email + "@vitstudent.ac.in",
           first_name: this.signup.firstname,
           last_name: this.signup.lastname,
@@ -263,7 +263,7 @@ export default {
             console.log(response.data);
             this.$store.replaceState({
               complaints: [],
-              registration_number: this.signup.regno,
+              registration_number: this.signup.regno.toLowerCase(),
               email: this.signup.email + "@vitstudent.ac.in",
               first_name: this.signup.firstname,
               last_name: this.signup.lastname,

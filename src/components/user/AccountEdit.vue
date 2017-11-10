@@ -90,12 +90,12 @@
           <v-subheader>Reset Password</v-subheader>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-text-field v-model="password.old" label="Old Password" required></v-text-field>
+              <v-text-field v-model="password.old" type="password" label="Old Password" required></v-text-field>
             </v-list-tile-content>
           </v-list-tile>
           <v-list-tile avatar>
             <v-list-tile-content>
-              <v-text-field v-model="password.new" label="New Password" required></v-text-field>
+              <v-text-field v-model="password.new" type="password" label="New Password" required></v-text-field>
               <v-list-tile-title>Password may not be same as v-top password. Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -179,6 +179,8 @@ export default {
         headers: {
           Authorization: basicauth
         }
+      }).then(response => {
+        this.$emit("logout", false);
       });
     }
   },

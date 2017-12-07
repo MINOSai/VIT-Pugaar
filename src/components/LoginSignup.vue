@@ -215,7 +215,7 @@ export default {
           var pswd = this.login.password;
           var basicauth = "Basic " + btoa(regno + ":" + pswd);
           axios({
-            method: "get",
+            method: "post",
             url:
               "http://127.0.0.1:8000/api/userdetail/",
             withCredentials: true,

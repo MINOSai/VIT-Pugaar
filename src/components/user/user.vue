@@ -1,9 +1,12 @@
-<template>
+<template> 
     <div v-if="!isResetPassword">
+      <v-alert outline :color="alert.color" :icon="alert.icon" :value="alert.value">
+              {{alert.text}}
+            </v-alert>
         <v-layout>
             <v-flex xs12 sm8 offset-sm2>
 
-                <br>
+                <br> 
 
                 <template>
 
@@ -28,6 +31,8 @@
                             <v-card-text class="my-card" v-if="!isEdit">
 
                                 <v-container grid-list-md>
+
+                                  <v-form v-model="rules.valid" ref="newComplaintForm" lazy-validation>
                                     <v-flex xs12>
                                         <v-radio-group v-model="newComplaint.type" row>
                                             <v-spacer></v-spacer>
@@ -44,16 +49,17 @@
                                                 <v-select label="Place" v-model="newComplaint.place" required :items="['Floor', 'Room']"></v-select>
                                             </v-flex>
                                             <v-flex xs12 sm6>
-                                                <v-select label="Type" v-model="newComplaint.department" required :items="['sample-department','toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
+                                                <v-select label="Type" v-model="newComplaint.department" required :items="['Sample department','Toiletries', 'Electrical', 'Carpentry', 'Painting', ]"></v-select>
                                             </v-flex>
                                         </v-layout>
                                     </transition>
 
                                     <v-layout wrap>
                                         <v-flex xs12>
-                                            <v-text-field v-model="newComplaint.description" label="description" type="text" hint="This text will go through a spam filter" required></v-text-field>
+                                            <v-text-field v-model="newComplaint.description" :rules="rules.descriptionRule" label="Description" type="text" hint="This text will go through a spam filter" required></v-text-field>
                                         </v-flex>
                                     </v-layout>
+                                  </v-form>
 
                                 </v-container>
 
@@ -77,6 +83,8 @@
                     <br>
 
                 </template>
+
+                <h1 align="center" v-if="!complaints.length">No complaints to show</h1>
 
                 <template v-for="(complaint,index) in complaints">
 
@@ -118,16 +126,17 @@
                                 <div slot="header">More details</div>
                                 <v-card>
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
-                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> department.</v-card-text>
+                                    <v-card-text>This complaint has been assigned to the employee <strong>{{complaint.employee}}</strong></v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.status"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn v-if="complaint.status" dark flat class="orange--text" @click="complaint.issue_count++">raise issue</v-btn>
                                         <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
-                                        <v-dialog v-else v-model="dialog" lazy absolute>
+                                        <v-dialog v-else v-model="dialog" lazy absolute max-width="350">
                                             <v-btn flat slot="activator">Cancel</v-btn>
-                                            <v-card>
+                                            <v-card >
                                                 <v-card-title>
                                                     <div class="headline">Cancel complaint</div>
                                                 </v-card-title>
@@ -151,10 +160,14 @@
                 </template>
 
             </v-flex>
-            <v-snackbar v-model="snackbar" timeout=5000>
-            {{snackbarText}}
-            <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
-        </v-snackbar>
+            <v-snackbar v-model="snackbar.snackbar" timeout=7500 :class="snackbar.snackbarColor" bottom="true">
+                {{snackbar.snackbarText}}
+                <v-progress-circular v-if="snackbar.progressBar" indeterminate></v-progress-circular>
+                <v-btn v-else flat color="white" @click.native="snackbar.snackbar = false">Close</v-btn>
+            </v-snackbar>
+            <!-- <v-alert outline :color="alert.color" :icon="alert.icon" :value="alert.value">
+              {{alert.text}}
+            </v-alert> -->
         </v-layout>
     </div>
 </template>
@@ -165,8 +178,13 @@ export default {
   data() {
     return {
       isEdit: true,
-      snackbar: false,
-      snackbarText: 'Error occurred',
+      snackbar: {
+        snackbar: false,
+        snackbarText: "Error occurred",
+        snackbarColor: "primary",
+        progressBar: false
+      },
+      fab: true,
       newComplaint: {
         type: "hostel",
         place: null,
@@ -174,11 +192,33 @@ export default {
         description: null,
         isTip: false
       },
+      rules: {
+        valid: false,
+        descriptionRule: [v => !!v || "Description is required"]
+      },
       complaints: [],
-      dialog: false
+      dialog: false,
+      alert: {
+        color: "info",
+        text: "",
+        icon: "info",
+        value: false
+      }
     };
   },
   methods: {
+    createAlert(data) {
+      this.alert.color = data.color;
+      this.alert.text = data.text;
+      this.alert.icon = data.info;
+      this.alert.value = true;
+      setTimeout(() => {
+        this.alert.value = false;
+      }, 5000);
+    },
+    createSnackBar(data){
+      //TODO: create snackbar
+    },
     invertEdit(data) {
       this.newComplaint.description = null;
       if (this.isEdit == true) {
@@ -192,6 +232,8 @@ export default {
     },
     invertEditCopy() {
       this.newComplaint.description = null;
+      this.newComplaint.place = null;
+      this.newComplaint.department = null;
       if (this.isEdit == true) {
         this.isEdit = false;
       } else {
@@ -216,8 +258,17 @@ export default {
       return today;
     },
     addNewComplaint() {
+      this.snackbar.progressBar = true;
+      this.snackbar.snackbarText = "Please wait"
+      this.snackbar.snackbarColor = "primary"
+      this.snackbar.timeout = null
+      this.snackbar.snackbar = true;
+
       var newPostComplaint = {
-        department: this.newComplaint.department,
+        department: this.newComplaint.department
+          .toLowerCase()
+          .split(" ")
+          .join("-"),
         user_block: this.$store.getters.block,
         user_floor: this.$store.getters.floor,
         description: this.newComplaint.description
@@ -228,10 +279,10 @@ export default {
 
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
-      console.log("auth credentials",{
+      console.log("auth credentials", {
         regno: regno,
         password: pswd
-      })
+      });
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
       var self = this;
 
@@ -246,27 +297,51 @@ export default {
         dataType: "json",
         success: function(data) {
           console.log("POST DATA !!", data);
-          self.invertEdit(data);
+          //   self.invertEdit(data);
           //   self.$store.state.complaints.unhift(data);
+          self.$store.commit("updateComplaints", data);
+          self.complaints = self.$store.getters.getUserComplaints;
+          self.complaints.reverse();
+
+          self.snackbar.snackbar = false;
+          self.snackbar.progressBar = false;
+          self.snackbar.snackbarText = "Complaint created successfully";
+          self.snackbar.snackbarColor = "green";
+          self.snackbar.snackbar = true;
         },
         beforeSend: function(req) {
           req.setRequestHeader("Authorization", basicauth);
         },
         statusCode: {
-          201: function(xhr) {
-            if (window.console) console.log("status 200 !!", xhr.data);
-          },
           400: function(xhr) {
-            if (window.console) console.log("error 400", xhr);
-            self.snackbarText =
-              "This complaint has already been registered.";
-            self.snackbar = true;
-            self.invertEditCopy();
+            self.snackbar.progressBar = false;
+            self.snackbar.snackbar = false;
+            if (window.console)
+              console.log("error 400", xhr.responseJSON.details);
+            if (xhr.responseJSON.details.startsWith("UNIQUE")) {
+              self.snackbar.snackbarText = "This complaint has already been registered.";
+              self.snackbar.snackbarColor = "primary";
+            }else if(xhr.responseJSON.details.startsWith("NOT NULL")){
+              self.snackbar.snackbarText = "Internal error";
+              self.snackbar.snackbarColor = "error";
+            } else {
+              self.snackbar.snackbarText = xhr.responseJSON.details;
+              self.snackbar.snackbarColor = "error";
+            }
+            self.snackbar.snackbar = true;
+            // self.invertEditCopy();
           }
         }
       });
+      this.invertEditCopy();
     },
     removeComplaint(index) {
+      this.snackbar.progressBar = true;
+      this.snackbar.snackbarText = "Please wait"
+      this.snackbar.snackbarColor = "primary"
+      this.snackbar.timeout = null
+      this.snackbar.snackbar = true
+
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
@@ -284,10 +359,20 @@ export default {
       })
         .then(response => {
           console.log("deleted complaint successfully");
+          this.snackbar.progressBar = false;
+          this.snackbar.snackbar = false;
+          this.snackbar.snackbarText = "Complaint removed";
+          this.snackbar.snackbarColor = "primary";
+          this.snackbar.snackbar = true;
           this.complaints.splice(index, 1);
         })
         .catch(e => {
-          console.log("error deleting complaint");
+          console.log("error deleting complaint: ", e);
+          this.snackbar.progressBar = false;
+          this.snackbar = false;
+          this.snackbarText = "An error occurred";
+          this.snackbarColor = "error";
+          this.snackbar = true;
         });
       this.dialog = false;
     },
@@ -315,6 +400,7 @@ export default {
     console.log("inside created", this.$store.getters.getUserComplaints);
     this.complaints = this.$store.getters.getUserComplaints;
     this.complaints.reverse();
+    console.log("complaints length: ", this.complaints.length);
   }
 };
 </script>

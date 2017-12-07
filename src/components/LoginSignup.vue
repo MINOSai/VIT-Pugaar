@@ -22,12 +22,12 @@
             <v-tabs-items flat class="tabs-content">
                 <v-tabs-content flat id="loginTab" class="no-border">
                     <v-card flat class="transparent tabs-content">
-                        <v-form v-model="login.rules.valid" ref="form" lazy-validation>
+                        <v-form v-model="login.rules.valid" ref="loginform" lazy-validation>
                             <v-card-text flat>
                                 <v-container flat grid-list-md>
                                     <v-layout flat wrap>
                                         <v-flex sm8 offset-sm2>
-                                            <v-text-field label="Registration no." v-model="login.email" hint="Enter your registration number" required></v-text-field>
+                                            <v-text-field label="Registration no." :rules="login.rules.regnoRule" v-model="login.email" hint="Enter your registration number" required></v-text-field>
                                         </v-flex>
                                         <v-flex sm8 offset-sm2>
                                             <v-text-field label="Password" :rules="login.rules.passwordRule" v-model="login.password" type="password" hint="Password may not be the same as v-top password" :append-icon="login.pShow ? 'visibility' : 'visibility_off'" :append-icon-cb="() => (login.pShow = !login.pShow)" :type="login.pShow ? 'password' : 'text'" required></v-text-field>
@@ -87,7 +87,7 @@
 
                 <v-tabs-content id="signupTab" class="transparent">
                     <v-card class="transparent">
-                        <v-form v-model="signup.rules.valid" ref="form" lazy-validation>
+                        <v-form v-model="signup.rules.valid" ref="signupform" lazy-validation>
                             <v-card-text>
                                 <v-container grid-list-md>
                                     <v-layout wrap>
@@ -164,11 +164,8 @@ export default {
         pShow: true,
         rules: {
           valid: false,
-          emailRule: [
-            v => !!v || "E-mail is required",
-            v =>
-              /^[a-z0-9._%+-]+(@vitstudent.ac.in|)$/.test(v) ||
-              "E-mail must be valid"
+          regnoRule: [
+            v => !!v || "Registration no. is required"
           ],
           passwordRule: [v => !!v || "Enter a password"]
         }
@@ -195,8 +192,8 @@ export default {
           passwordRule: [
             v => !!v || "Enter a password",
             v =>
-              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) ||
-              "Password must contain 6 or more characters that are of at least one number, and one uppercase and lowercase letter"
+              /^.{6,}/.test(v) ||
+              "Password must contain 6 or more characters"
           ],
           phnoRule: [
             v => !!v || "Enter a phone number"
@@ -212,7 +209,7 @@ export default {
   },
   methods: {
     loginAction() {
-      if (this.login.rules.valid) {
+      if (this.$refs.loginform.validate()) {
         if (this.login.password == "admin") {
           this.$emit("loginAction", true);
           this.$emit("adminAction", true);
@@ -235,12 +232,14 @@ export default {
             })
             .catch(e => {
               this.errors.push(e);
+              this.snackbarText = "Invalid credentials";
+              this.snackbar = true;
             });
         }
       }
     },
     signupAction() {
-      if (this.signup.rules.valid) {
+      if (this.$refs.signupform.validate()) {
         var newUser = {
           registration_number: this.signup.regno.toLowerCase(),
           email: this.signup.email + "@vitstudent.ac.in",
@@ -310,7 +309,7 @@ export default {
         console.log("block details: ", response.data);
         for (var i = 0; i < response.data.length; i++) {
           this.blockDetails.push(response.data[i]);
-          var blockname = response.data[i].slug.split('-');
+          var blockname = response.data[i].slug.split("-");
           this.blockNames.push(response.data[i].slug);
         }
       })

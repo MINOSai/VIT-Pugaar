@@ -28,6 +28,8 @@
                             <v-card-text class="my-card" v-if="!isEdit">
 
                                 <v-container grid-list-md>
+
+                                  <v-form>
                                     <v-flex xs12>
                                         <v-radio-group v-model="newComplaint.type" row>
                                             <v-spacer></v-spacer>
@@ -54,6 +56,7 @@
                                             <v-text-field v-model="newComplaint.description" label="description" type="text" hint="This text will go through a spam filter" required></v-text-field>
                                         </v-flex>
                                     </v-layout>
+                                  </v-form>
 
                                 </v-container>
 
@@ -127,7 +130,7 @@
                                         <v-spacer></v-spacer>
                                         <v-btn v-if="complaint.status" dark flat class="orange--text" @click="complaint.issue_count++">raise issue</v-btn>
                                         <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
-                                        <v-dialog v-else v-model="dialog" lazy absolute>
+                                        <v-dialog v-else v-model="dialog" lazy absolute max-width="350">
                                             <v-btn flat slot="activator">Cancel</v-btn>
                                             <v-card >
                                                 <v-card-title>
@@ -153,9 +156,10 @@
                 </template>
 
             </v-flex>
-            <v-snackbar v-model="snackbar" timeout=5000>
+            <v-snackbar v-model="snackbar" timeout=5000 bottom="true">
                 {{snackbarText}}
-                <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
+                <v-progress-circular v-if="progressBar" indeterminate :color="snackbarColor"></v-progress-circular>
+                <v-btn v-else flat :color="snackbarColor" @click.native="snackbar = false">Close</v-btn>
             </v-snackbar>
         </v-layout>
     </div>
@@ -169,13 +173,19 @@ export default {
       isEdit: true,
       snackbar: false,
       snackbarText: "Error occurred",
+      snackbarColor: "primary",
       fab: true,
+      progressBar: false,
       newComplaint: {
         type: "hostel",
         place: null,
         department: null,
         description: null,
         isTip: false
+      },
+      rules: {
+        valid: false,
+        descriptionRule: [v => !!v || "Description is required"]
       },
       complaints: [],
       dialog: false
@@ -219,6 +229,11 @@ export default {
       return today;
     },
     addNewComplaint() {
+      this.progressBar = true;
+      this.snackbarText = "Please wait";
+      this.snackbarColor = "primary";
+      this.snackbar = true;
+
       var newPostComplaint = {
         department: this.newComplaint.department,
         user_block: this.$store.getters.block,
@@ -254,15 +269,20 @@ export default {
           self.$store.commit("updateComplaints", data);
           self.complaints = self.$store.getters.getUserComplaints;
           self.complaints.reverse();
+
+          self.snackbar = false;
+          self.progressBar = false;
+          self.snackbarText = "Complaint created successfully";
+          self.snackbarColor = "green";
+          self.snackbar = true;
         },
         beforeSend: function(req) {
           req.setRequestHeader("Authorization", basicauth);
         },
         statusCode: {
-          201: function(xhr) {
-            if (window.console) console.log("status 200 !!", xhr.data);
-          },
           400: function(xhr) {
+            self.progressBar = false;
+            self.snackbar = false;
             if (window.console)
               console.log("error 400", xhr.responseJSON.details);
             if (xhr.responseJSON.details.startsWith("UNIQUE")) {
@@ -270,6 +290,7 @@ export default {
             } else {
               self.snackbarText = xhr.responseJSON.details;
             }
+            self.snackbarColor = "orange";
             self.snackbar = true;
             // self.invertEditCopy();
           }
@@ -278,11 +299,15 @@ export default {
       this.invertEditCopy();
     },
     removeComplaint(index) {
+      this.progressBar = true;
+      this.snackbarText = "Please wait";
+      this.snackbarColor = "primary";
+      this.snackbar = true;
+
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
       var self = this;
-      console.log("delete complaint slug: ", this.complaints[index].slug);
       axios({
         method: "DELETE",
         url:
@@ -299,11 +324,19 @@ export default {
       })
         .then(response => {
           console.log("deleted complaint successfully");
+          this.progressBar = false;
+          this.snackbar = false;
+          this.snackbarText = "Complaint removed";
+          this.snackbarColor = "primary";
+          this.snackbar = true;
           this.complaints.splice(index, 1);
         })
         .catch(e => {
           console.log("error deleting complaint: ", e);
+          this.progressBar = false;
+          this.snackbar = false;
           this.snackbarText = "An error occurred";
+          this.snackbarColor = "orange";
           this.snackbar = true;
         });
       this.dialog = false;

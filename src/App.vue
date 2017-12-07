@@ -19,7 +19,7 @@
 
       <app-bar @logout="loggedIn = $event"></app-bar>
 
-      <user></user>
+      <user @accountEdit="loggedIn = $event"></user>
 
     </v-app>
 

@@ -164,9 +164,7 @@ export default {
         pShow: true,
         rules: {
           valid: false,
-          regnoRule: [
-            v => !!v || "Registration no. is required"
-          ],
+          regnoRule: [v => !!v || "Registration no. is required"],
           passwordRule: [v => !!v || "Enter a password"]
         }
       },
@@ -192,8 +190,7 @@ export default {
           passwordRule: [
             v => !!v || "Enter a password",
             v =>
-              /^.{6,}/.test(v) ||
-              "Password must contain 6 or more characters"
+              /^.{6,}/.test(v) || "Password must contain 6 or more characters"
           ],
           phnoRule: [
             v => !!v || "Enter a phone number"
@@ -214,13 +211,17 @@ export default {
           this.$emit("loginAction", true);
           this.$emit("adminAction", true);
         } else {
+          var regno = this.login.email;
+          var pswd = this.login.password;
+          var basicauth = "Basic " + btoa(regno + ":" + pswd);
           axios({
             method: "get",
             url:
-              "http://127.0.0.1:8000/api/users/" +
-              this.login.email.toLowerCase() +
-              "/?format=json",
-            withCredentials: true
+              "http://127.0.0.1:8000/api/userdetail/",
+            withCredentials: true,
+            headers: {
+              Authorization: basicauth
+            }
           })
             .then(response => {
               var customResponse = response.data;

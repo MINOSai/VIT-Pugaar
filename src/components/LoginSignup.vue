@@ -235,8 +235,13 @@ export default {
             })
             .catch(e => {
               this.errors.push(e);
+              this.snackbarText = "Invalid credentials";
+              this.snackbar = true;
             });
         }
+      } else {
+        this.snackbarText = "Invalid credentials";
+        this.snackbar = true;
       }
     },
     signupAction() {
@@ -310,7 +315,7 @@ export default {
         console.log("block details: ", response.data);
         for (var i = 0; i < response.data.length; i++) {
           this.blockDetails.push(response.data[i]);
-          var blockname = response.data[i].slug.split('-');
+          var blockname = response.data[i].slug.split("-");
           this.blockNames.push(response.data[i].slug);
         }
       })

@@ -78,6 +78,8 @@
 
                 </template>
 
+                <h1 align="center" v-if="!complaints.length">No complaints to show</h1>
+
                 <template v-for="(complaint,index) in complaints">
 
                     <v-card class="mx-3" :key="complaint.slug">
@@ -118,7 +120,7 @@
                                 <div slot="header">More details</div>
                                 <v-card>
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
-                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> department and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.status"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
@@ -127,7 +129,7 @@
                                         <!-- <v-btn @click="removeComplaint(index)" v-else flat>Cancel</v-btn> -->
                                         <v-dialog v-else v-model="dialog" lazy absolute>
                                             <v-btn flat slot="activator">Cancel</v-btn>
-                                            <v-card>
+                                            <v-card >
                                                 <v-card-title>
                                                     <div class="headline">Cancel complaint</div>
                                                 </v-card-title>
@@ -152,9 +154,9 @@
 
             </v-flex>
             <v-snackbar v-model="snackbar" timeout=5000>
-            {{snackbarText}}
-            <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
-        </v-snackbar>
+                {{snackbarText}}
+                <v-btn flat color="orange" @click.native="snackbar = false">Close</v-btn>
+            </v-snackbar>
         </v-layout>
     </div>
 </template>
@@ -166,7 +168,8 @@ export default {
     return {
       isEdit: true,
       snackbar: false,
-      snackbarText: 'Error occurred',
+      snackbarText: "Error occurred",
+      fab: true,
       newComplaint: {
         type: "hostel",
         place: null,
@@ -228,10 +231,10 @@ export default {
 
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
-      console.log("auth credentials",{
+      console.log("auth credentials", {
         regno: regno,
         password: pswd
-      })
+      });
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
       var self = this;
 
@@ -246,8 +249,11 @@ export default {
         dataType: "json",
         success: function(data) {
           console.log("POST DATA !!", data);
-          self.invertEdit(data);
+          //   self.invertEdit(data);
           //   self.$store.state.complaints.unhift(data);
+          self.$store.commit("updateComplaints", data);
+          self.complaints = self.$store.getters.getUserComplaints;
+          self.complaints.reverse();
         },
         beforeSend: function(req) {
           req.setRequestHeader("Authorization", basicauth);
@@ -257,26 +263,35 @@ export default {
             if (window.console) console.log("status 200 !!", xhr.data);
           },
           400: function(xhr) {
-            if (window.console) console.log("error 400", xhr);
-            self.snackbarText =
-              "This complaint has already been registered.";
+            if (window.console)
+              console.log("error 400", xhr.responseJSON.details);
+            if (xhr.responseJSON.details.startsWith("UNIQUE")) {
+              self.snackbarText = "This complaint has already been registered.";
+            } else {
+              self.snackbarText = xhr.responseJSON.details;
+            }
             self.snackbar = true;
-            self.invertEditCopy();
+            // self.invertEditCopy();
           }
         }
       });
+      this.invertEditCopy();
     },
     removeComplaint(index) {
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
       var basicauth = "Basic " + btoa(regno + ":" + pswd);
       var self = this;
+      console.log("delete complaint slug: ", this.complaints[index].slug);
       axios({
         method: "DELETE",
-        url: "http://127.0.0.1:8000/api/complaints/delete/",
-        data: {
-          pk: this.complaints[index].slug
-        },
+        url:
+          "http://127.0.0.1:8000/api/complaints/delete/" +
+          "?pk=" +
+          this.complaints[index].slug,
+        // data: {
+        //   pk: this.complaints[index].slug
+        // },
         withCredentials: true,
         headers: {
           Authorization: basicauth
@@ -287,7 +302,9 @@ export default {
           this.complaints.splice(index, 1);
         })
         .catch(e => {
-          console.log("error deleting complaint");
+          console.log("error deleting complaint: ", e);
+          this.snackbarText = "An error occurred";
+          this.snackbar = true;
         });
       this.dialog = false;
     },
@@ -315,6 +332,7 @@ export default {
     console.log("inside created", this.$store.getters.getUserComplaints);
     this.complaints = this.$store.getters.getUserComplaints;
     this.complaints.reverse();
+    console.log("complaints length: ", this.complaints.length);
   }
 };
 </script>

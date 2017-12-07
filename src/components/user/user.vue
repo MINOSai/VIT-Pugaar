@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div v-if="!isResetPassword">
         <v-layout>
             <v-flex xs12 sm8 offset-sm2>

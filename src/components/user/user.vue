@@ -1,5 +1,8 @@
 <template> 
     <div v-if="!isResetPassword">
+      <v-alert outline :color="alert.color" :icon="alert.icon" :value="alert.value">
+              {{alert.text}}
+            </v-alert>
         <v-layout>
             <v-flex xs12 sm8 offset-sm2>
 
@@ -29,7 +32,7 @@
 
                                 <v-container grid-list-md>
 
-                                  <v-form>
+                                  <v-form v-model="rules.valid" ref="newComplaintForm" lazy-validation>
                                     <v-flex xs12>
                                         <v-radio-group v-model="newComplaint.type" row>
                                             <v-spacer></v-spacer>
@@ -46,14 +49,14 @@
                                                 <v-select label="Place" v-model="newComplaint.place" required :items="['Floor', 'Room']"></v-select>
                                             </v-flex>
                                             <v-flex xs12 sm6>
-                                                <v-select label="Type" v-model="newComplaint.department" required :items="['sample-department','toiletries', 'electrical', 'carpentry', 'painting', ]"></v-select>
+                                                <v-select label="Type" v-model="newComplaint.department" required :items="['Sample department','Toiletries', 'Electrical', 'Carpentry', 'Painting', ]"></v-select>
                                             </v-flex>
                                         </v-layout>
                                     </transition>
 
                                     <v-layout wrap>
                                         <v-flex xs12>
-                                            <v-text-field v-model="newComplaint.description" label="description" type="text" hint="This text will go through a spam filter" required></v-text-field>
+                                            <v-text-field v-model="newComplaint.description" :rules="rules.descriptionRule" label="Description" type="text" hint="This text will go through a spam filter" required></v-text-field>
                                         </v-flex>
                                     </v-layout>
                                   </v-form>
@@ -123,7 +126,8 @@
                                 <div slot="header">More details</div>
                                 <v-card>
                                     <!-- <v-card-text><strong>Department:</strong> {{complaint.department}}</v-card-text> -->
-                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> department and has been assigned to the employee <strong>{{complaint.employee}}</strong>.</v-card-text>
+                                    <v-card-text>This complaint belongs to <strong>{{complaint.department}}</strong> department.</v-card-text>
+                                    <v-card-text>This complaint has been assigned to the employee <strong>{{complaint.employee}}</strong></v-card-text>
                                     <!-- <v-card-text><strong>Employee:</strong> {{complaint.employee}}</v-card-text> -->
                                     <v-card-text v-if="complaint.status"><strong>Issue count:</strong> {{complaint.issue_count}}</v-card-text>
                                     <v-card-actions>
@@ -156,11 +160,14 @@
                 </template>
 
             </v-flex>
-            <v-snackbar v-model="snackbar" timeout=5000 bottom="true">
-                {{snackbarText}}
-                <v-progress-circular v-if="progressBar" indeterminate :color="snackbarColor"></v-progress-circular>
-                <v-btn v-else flat :color="snackbarColor" @click.native="snackbar = false">Close</v-btn>
+            <v-snackbar v-model="snackbar.snackbar" timeout=7500 :class="snackbar.snackbarColor" bottom="true">
+                {{snackbar.snackbarText}}
+                <v-progress-circular v-if="snackbar.progressBar" indeterminate></v-progress-circular>
+                <v-btn v-else flat color="white" @click.native="snackbar.snackbar = false">Close</v-btn>
             </v-snackbar>
+            <!-- <v-alert outline :color="alert.color" :icon="alert.icon" :value="alert.value">
+              {{alert.text}}
+            </v-alert> -->
         </v-layout>
     </div>
 </template>
@@ -171,11 +178,13 @@ export default {
   data() {
     return {
       isEdit: true,
-      snackbar: false,
-      snackbarText: "Error occurred",
-      snackbarColor: "primary",
+      snackbar: {
+        snackbar: false,
+        snackbarText: "Error occurred",
+        snackbarColor: "primary",
+        progressBar: false
+      },
       fab: true,
-      progressBar: false,
       newComplaint: {
         type: "hostel",
         place: null,
@@ -188,10 +197,28 @@ export default {
         descriptionRule: [v => !!v || "Description is required"]
       },
       complaints: [],
-      dialog: false
+      dialog: false,
+      alert: {
+        color: "info",
+        text: "",
+        icon: "info",
+        value: false
+      }
     };
   },
   methods: {
+    createAlert(data) {
+      this.alert.color = data.color;
+      this.alert.text = data.text;
+      this.alert.icon = data.info;
+      this.alert.value = true;
+      setTimeout(() => {
+        this.alert.value = false;
+      }, 5000);
+    },
+    createSnackBar(data){
+      //TODO: create snackbar
+    },
     invertEdit(data) {
       this.newComplaint.description = null;
       if (this.isEdit == true) {
@@ -205,6 +232,8 @@ export default {
     },
     invertEditCopy() {
       this.newComplaint.description = null;
+      this.newComplaint.place = null;
+      this.newComplaint.department = null;
       if (this.isEdit == true) {
         this.isEdit = false;
       } else {
@@ -229,13 +258,17 @@ export default {
       return today;
     },
     addNewComplaint() {
-      this.progressBar = true;
-      this.snackbarText = "Please wait";
-      this.snackbarColor = "primary";
-      this.snackbar = true;
+      this.snackbar.progressBar = true;
+      this.snackbar.snackbarText = "Please wait"
+      this.snackbar.snackbarColor = "primary"
+      this.snackbar.timeout = null
+      this.snackbar.snackbar = true;
 
       var newPostComplaint = {
-        department: this.newComplaint.department,
+        department: this.newComplaint.department
+          .toLowerCase()
+          .split(" ")
+          .join("-"),
         user_block: this.$store.getters.block,
         user_floor: this.$store.getters.floor,
         description: this.newComplaint.description
@@ -270,28 +303,32 @@ export default {
           self.complaints = self.$store.getters.getUserComplaints;
           self.complaints.reverse();
 
-          self.snackbar = false;
-          self.progressBar = false;
-          self.snackbarText = "Complaint created successfully";
-          self.snackbarColor = "green";
-          self.snackbar = true;
+          self.snackbar.snackbar = false;
+          self.snackbar.progressBar = false;
+          self.snackbar.snackbarText = "Complaint created successfully";
+          self.snackbar.snackbarColor = "green";
+          self.snackbar.snackbar = true;
         },
         beforeSend: function(req) {
           req.setRequestHeader("Authorization", basicauth);
         },
         statusCode: {
           400: function(xhr) {
-            self.progressBar = false;
-            self.snackbar = false;
+            self.snackbar.progressBar = false;
+            self.snackbar.snackbar = false;
             if (window.console)
               console.log("error 400", xhr.responseJSON.details);
             if (xhr.responseJSON.details.startsWith("UNIQUE")) {
-              self.snackbarText = "This complaint has already been registered.";
+              self.snackbar.snackbarText = "This complaint has already been registered.";
+              self.snackbar.snackbarColor = "primary";
+            }else if(xhr.responseJSON.details.startsWith("NOT NULL")){
+              self.snackbar.snackbarText = "Internal error";
+              self.snackbar.snackbarColor = "error";
             } else {
-              self.snackbarText = xhr.responseJSON.details;
+              self.snackbar.snackbarText = xhr.responseJSON.details;
+              self.snackbar.snackbarColor = "error";
             }
-            self.snackbarColor = "orange";
-            self.snackbar = true;
+            self.snackbar.snackbar = true;
             // self.invertEditCopy();
           }
         }
@@ -299,10 +336,11 @@ export default {
       this.invertEditCopy();
     },
     removeComplaint(index) {
-      this.progressBar = true;
-      this.snackbarText = "Please wait";
-      this.snackbarColor = "primary";
-      this.snackbar = true;
+      this.snackbar.progressBar = true;
+      this.snackbar.snackbarText = "Please wait"
+      this.snackbar.snackbarColor = "primary"
+      this.snackbar.timeout = null
+      this.snackbar.snackbar = true
 
       var regno = this.$store.getters.regno;
       var pswd = this.$store.getters.password;
@@ -310,13 +348,10 @@ export default {
       var self = this;
       axios({
         method: "DELETE",
-        url:
-          "http://127.0.0.1:8000/api/complaints/delete/" +
-          "?pk=" +
-          this.complaints[index].slug,
-        // data: {
-        //   pk: this.complaints[index].slug
-        // },
+        url: "http://127.0.0.1:8000/api/complaints/delete/",
+        data: {
+          pk: this.complaints[index].slug
+        },
         withCredentials: true,
         headers: {
           Authorization: basicauth
@@ -324,19 +359,19 @@ export default {
       })
         .then(response => {
           console.log("deleted complaint successfully");
-          this.progressBar = false;
-          this.snackbar = false;
-          this.snackbarText = "Complaint removed";
-          this.snackbarColor = "primary";
-          this.snackbar = true;
+          this.snackbar.progressBar = false;
+          this.snackbar.snackbar = false;
+          this.snackbar.snackbarText = "Complaint removed";
+          this.snackbar.snackbarColor = "primary";
+          this.snackbar.snackbar = true;
           this.complaints.splice(index, 1);
         })
         .catch(e => {
           console.log("error deleting complaint: ", e);
-          this.progressBar = false;
+          this.snackbar.progressBar = false;
           this.snackbar = false;
           this.snackbarText = "An error occurred";
-          this.snackbarColor = "orange";
+          this.snackbarColor = "error";
           this.snackbar = true;
         });
       this.dialog = false;
